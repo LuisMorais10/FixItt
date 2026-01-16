@@ -4,6 +4,8 @@ from .models import Service
 
 @admin.register(Service)
 class ServiceAdmin(admin.ModelAdmin):
-    list_display = ('name', 'active', 'created_at')
+    list_display = ("nome", "tipo", "ativo", "criado_em")
+    list_filter = ("tipo", "ativo")
+    search_fields = ("nome", "descricao")
 
 
