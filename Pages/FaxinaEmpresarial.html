@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Faxina Empresarial - FixIt</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #e3f2fd 0%, #ffffff 100%);
+      color: #333;
+    }
+
+    /* HEADER */
+    header {
+      background-color: #0d47a1;
+      padding: 18px;
+      color: white;
+    }
+
+    nav {
+      max-width: 1200px;
+      margin: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo-fixit-header img {
+      height: 42px;
+      display: block;
+    }
+
+    .nav-right {
+      display: flex;
+      gap: 12px;
+    }
+
+    .nav-btn {
+      background: white;
+      color: #0d47a1;
+      padding: 10px 18px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      border: 2px solid white;
+      transition: transform 0.25s ease, border-color 0.25s ease;
+    }
+
+    .nav-btn:hover {
+      transform: translateY(-3px);
+      border-color: #bbdefb;
+      color: #0d47a1 !important;
+    }
+
+    /* TÍTULO */
+    .titulo-servico {
+      text-align: center;
+      margin-top: 40px;
+      color: #0d47a1;
+      font-size: 2rem;
+      font-weight: 600;
+    }
+
+    /* FORMULÁRIO */
+    .form-container {
+      max-width: 750px;
+      background: white;
+      margin: 40px auto;
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 4px 24px rgba(13, 71, 161, 0.10);
+    }
+
+    .form-container h2 {
+      color: #0d47a1;
+      margin-bottom: 20px;
+      font-size: 1.4rem;
+    }
+
+    label {
+      font-weight: 600;
+      color: #0d47a1;
+      margin-bottom: 6px;
+      display: block;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 16px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      transition: border-color 0.3s ease;
+    }
+
+    input:focus, select:focus {
+      border-color: #0d47a1;
+      outline: none;
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      background: #0d47a1;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background: #08306b;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- HEADER PADRÃO FIXIT -->
+  <header>
+    <nav>
+      <div class="logo-fixit-header">
+        <img src="../Assets/Images/logo_fixit.png" alt="FixIt Logo">
+      </div>
+
+      <div class="nav-right">
+        <a href="../index.html" class="nav-btn">Início</a>
+        <a href="Entrar.html" class="nav-btn">Entrar</a>
+        <a href="criar_conta.html" class="nav-btn">Criar Conta</a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- TÍTULO -->
+  <h1 class="titulo-servico">Solicitar Faxina Empresarial</h1>
+
+  <!-- FORMULÁRIO -->
+  <div class="form-container">
+    <h2>Informações do local</h2>
+
+    <form>
+
+      <label for="tipo-estabelecimento">Tipo de Estabelecimento</label>
+      <select id="tipo-estabelecimento" required>
+        <option value="">Selecione</option>
+        <option value="Escritório">Escritório</option>
+        <option value="Loja">Loja</option>
+        <option value="Consultório">Consultório</option>
+        <option value="Empresa Industrial">Empresa Industrial</option>
+        <option value="Outro">Outro</option>
+      </select>
+
+      <label for="salas">Número de Salas / Ambientes</label>
+      <input type="number" id="salas" placeholder="Ex: 6" required>
+
+      <label for="banheiros">Número de Banheiros</label>
+      <input type="number" id="banheiros" placeholder="Ex: 2" required>
+
+      <label for="metragem">Metragem Aproximada (m²)</label>
+      <input type="number" id="metragem" placeholder="Ex: 180" required>
+
+      <label for="cep">CEP</label>
+      <input type="text" id="cep" placeholder="Digite o CEP" required>
+
+      <label for="logradouro">Logradouro</label>
+      <input type="text" id="logradouro" placeholder="Rua, Avenida..." required>
+
+      <label for="numero">Número</label>
+      <input type="text" id="numero" placeholder="Ex: 320" required>
+
+      <label for="complemento">Complemento</label>
+      <input type="text" id="complemento" placeholder="Sala, Andar, Bloco (opcional)">
+
+      <button type="submit">Solicitar Orçamento</button>
+
+    </form>
+  </div>
+
+</body>
+</html>

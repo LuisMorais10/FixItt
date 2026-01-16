@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clube FixIt — Benefícios Exclusivos</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #e3f2fd 0%, #ffffff 100%);
+      color: #333;
+      line-height: 1.6;
+    }
+    header {
+      background-color: #0d47a1;
+      padding: 20px;
+    }
+    nav {
+      max-width: 1200px;
+      margin: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .logo-fixit img {
+      height: 42px;
+      display: block;
+    }
+    .nav-right a {
+      background: white;
+      color: #0d47a1;
+      padding: 8px 16px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      margin-left: 10px;
+      border: 2px solid white;
+      transition: transform 0.25s ease, border-color 0.25s ease;
+    }
+    .nav-right a:hover {
+      transform: translateY(-2px);
+      border-color: #0d47a1;
+      background: white;
+    }
+    main {
+      max-width: 1000px;
+      margin: 50px auto;
+      padding: 0 20px;
+    }
+    .hero {
+      text-align: center;
+      padding: 40px 20px;
+      background: #e3f2fd;
+      border-radius: 16px;
+      box-shadow: 0 4px 24px rgba(13,71,161,0.1);
+    }
+    .hero h1 {
+      color: #0d47a1;
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+    }
+    .hero p {
+      font-size: 1.1rem;
+      margin-bottom: 20px;
+    }
+    .btn-primary {
+      background: #0d47a1;
+      color: white;
+      padding: 14px 30px;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .btn-primary:hover {
+      background: #08306b;
+      transform: translateY(-2px);
+    }
+    .beneficios {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      margin-top: 40px;
+    }
+    .beneficio-card {
+      background: white;
+      padding: 24px;
+      border-radius: 16px;
+      box-shadow: 0 4px 24px rgba(13,71,161,0.08);
+      text-align: center;
+    }
+    .beneficio-card h3 {
+      color: #0d47a1;
+      margin-bottom: 10px;
+    }
+    .beneficio-card p {
+      font-size: 0.98rem;
+      color: #555;
+    }
+    .descricao-geral {
+      margin-top: 30px;
+      font-size: 1rem;
+      text-align: center;
+      color: #444;
+    }
+    footer {
+      margin-top: 60px;
+      background-color: #0d47a1;
+      color: white;
+      text-align: center;
+      padding: 20px;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <nav>
+      <a href="../index.html" class="logo-fixit">
+        <img src="../Assets/Images/logo_fixit.png" alt="FixIt Logo">
+      </a>
+      <div class="nav-right">
+        <a href="../index.html">Início</a>
+        <a href="Entrar.html">Entrar</a>
+        <a href="criar_conta.html">Criar Conta</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h1>Clube FixIt</h1>
+      <p>Vantagens, benefícios e descontos exclusivos para quem usa nossos serviços com frequência.</p>
+      <a href="#beneficios" class="btn-primary">Descubra os Benefícios</a>
+    </section>
+
+    <section id="beneficios" class="beneficios">
+      <div class="beneficio-card">
+        <h3>Descontos Exclusivos</h3>
+        <p>Receba ofertas especiais em serviços FixIt e parceiros — mais economia para você.</p>
+      </div>
+      <div class="beneficio-card">
+        <h3>Cronograma Preferencial</h3>
+        <p>Acesso antecipado à agenda de atendimentos, garantindo o melhor horário para você.</p>
+      </div>
+      <div class="beneficio-card">
+        <h3>Suporte VIP</h3>
+        <p>Atendimento diferenciado e prioritário para membros do Clube FixIt.</p>
+      </div>
+      <div class="beneficio-card">
+        <h3>Cupons de Fidelidade</h3>
+        <p>Ganhe cupons de desconto adicionais conforme utilização mensal dos serviços.</p>
+      </div>
+    </section>
+
+    <p class="descricao-geral">
+      Faça parte do Clube FixIt e transforme a maneira como você contrata serviços: mais benefícios, conforto
+      e economia.
+    </p>
+
+    <div style="text-align: center; margin-top: 30px;">
+      <a href="criar_conta.html" class="btn-primary">Quero Ser Membro</a>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 FixIt - Todos os direitos reservados</p>
+  </footer>
+</body>
+</html>

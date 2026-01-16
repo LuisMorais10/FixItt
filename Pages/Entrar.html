@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Entrar - FixIt</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #e3f2fd 0%, #ffffff 100%);
+      color: #333;
+      line-height: 1.6;
+    }
+
+    /* ---------------- HEADER ---------------- */
+
+    header {
+      background-color: #0d47a1;
+      padding: 15px 0;
+      color: white;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: auto;
+      padding: 0 20px;
+    }
+
+    /* container da logo */
+    .logo-fixit {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-left: -20px; /* ajuste fino para a esquerda */
+    }
+
+    .logo-fixit img {
+      height: 42px;
+      width: auto;
+      object-fit: contain;
+      display: block;
+      background: none !important;
+      padding: 0;
+      margin: 0;
+      transition: transform 0.25s ease;
+    }
+
+    .logo-fixit img:hover {
+      transform: scale(1.05);
+    }
+
+    .logo-fixit strong {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: white;
+    }
+
+    /* Botões do header iguais aos do index */
+    nav .nav-btn {
+      background: white;
+      color: #0A3AFF;
+      padding: 10px 18px;
+      border-radius: 8px;
+      font-weight: 600;
+      text-decoration: none;
+      border: 2px solid white;
+      transition: transform 0.25s ease, border-color 0.25s ease, color 0.25s ease;
+    }
+
+    nav .nav-btn:hover {
+      transform: translateY(-3px);
+      background: white;
+      border-color: #0A3AFF;
+      color: #0A3AFF !important;
+      box-shadow: none !important;
+    }
+
+    /* ---------------- LOGIN BOX ---------------- */
+
+    .login-container {
+      max-width: 450px;
+      margin: 60px auto;
+      padding: 40px;
+      background: #ffffff;
+      border-radius: 20px;
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
+      animation: fadeIn 0.7s ease-in-out;
+    }
+
+    h2 {
+      text-align: center;
+      font-weight: 600;
+      color: #0d47a1;
+      margin-bottom: 25px;
+    }
+
+    label {
+      font-weight: 600;
+      color: #0d47a1;
+      margin-bottom: 5px;
+      display: block;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      margin-bottom: 18px;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    input:focus {
+      border-color: #0d47a1;
+      box-shadow: 0 0 6px rgba(13, 71, 161, 0.3);
+      outline: none;
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      background: #0d47a1;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s ease, transform 0.2s ease;
+      margin-top: 10px;
+    }
+
+    button:hover {
+      background: #08306b;
+      transform: scale(1.03);
+    }
+
+    .extra-links {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .extra-links a {
+      font-weight: 600;
+      color: #0d47a1;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .extra-links a:hover {
+      color: #08306b;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    footer {
+      background-color: #0d47a1;
+      color: white;
+      padding: 20px;
+      text-align: center;
+      margin-top: 40px;
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <nav>
+
+      <!-- LOGO CORRIGIDA -->
+      <a href="../index.html" class="logo-fixit">
+        <img src="../Assets/Images/logo_fixit.png" alt="Logo FixIt">
+    </a>
+
+      <!-- BOTÕES ORIGINAIS, agora com estilo correto -->
+      <div style="display: flex; gap: 12px;">
+        <a href="../index.html" class="nav-btn">Início</a>
+        <a href="criar_conta.html" class="nav-btn">Criar Conta</a>
+      </div>
+
+    </nav>
+  </header>
+
+  <div class="login-container">
+    <h2>Entrar na sua conta</h2>
+
+    <form>
+      <label for="email">E-mail</label>
+      <input id="email" type="email" placeholder="Digite seu e-mail" required />
+
+      <label for="senha">Senha</label>
+      <input id="senha" type="password" placeholder="Digite sua senha" required />
+
+      <button type="submit">Acessar</button>
+    </form>
+
+    <div class="extra-links">
+      <p><a href="#">Esqueceu sua senha?</a></p>
+      <p>Não possui conta? <a href="criar_conta.html">Registre-se</a></p>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 FixIt - Todos os direitos reservados</p>
+  </footer>
+
+</body>
+</html>

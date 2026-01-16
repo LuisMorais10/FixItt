@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FixIt - Serviços Gerais</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #e3f2fd 0%, #ffffff 100%);
+      color: #333;
+    }
+
+    header {
+      background-color: #0d47a1;
+      padding: 20px;
+    }
+
+    nav {
+      max-width: 1200px;
+      margin: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo-fixit img {
+      height: 42px;
+      transition: transform 0.2s ease;
+    }
+
+    .logo-fixit img:hover {
+      transform: scale(1.05);
+    }
+
+    .nav-right {
+      display: flex;
+      gap: 15px;
+    }
+
+    .nav-btn {
+      background: white;
+      color: #0d47a1;
+      padding: 8px 16px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .nav-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 16px rgba(13, 71, 161, 0.25);
+    }
+
+    main {
+      max-width: 800px;
+      margin: 50px auto;
+      padding: 0 20px;
+    }
+
+    .card-form {
+      background: white;
+      border-radius: 16px;
+      padding: 30px;
+      box-shadow: 0 4px 24px rgba(13, 71, 161, 0.1);
+    }
+
+    h1 {
+      color: #0d47a1;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+
+    .descricao {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #555;
+    }
+
+    label {
+      font-weight: 600;
+      color: #0d47a1;
+      margin-bottom: 6px;
+      display: block;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 18px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 0.95rem;
+    }
+
+    input:focus,
+    textarea:focus {
+      outline: none;
+      border-color: #0d47a1;
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      background: #0d47a1;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background: #08306b;
+    }
+
+    .voltar {
+      display: inline-block;
+      margin-top: 20px;
+      text-decoration: none;
+      color: #0d47a1;
+      font-weight: 600;
+    }
+
+    .voltar:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <nav>
+      <a href="../index.html" class="logo-fixit">
+        <img src="../Assets/Images/logo_fixit.png" alt="FixIt Logo">
+      </a>
+
+      <div class="nav-right">
+        <a href="../index.html" class="nav-btn">Início</a>
+        <a href="SejaUmColaborador.html" class="nav-btn">Seja um colaborador</a>
+        <a href="sobre.html" class="nav-btn">Sobre nós</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <div class="card-form">
+      <h1>Serviços Gerais</h1>
+      <p class="descricao">
+        Pequenos reparos, manutenções e serviços diversos para sua casa ou empresa.
+      </p>
+
+      <form>
+        <label for="tipo">Tipo de serviço</label>
+        <input type="text" id="tipo" placeholder="Ex: reparo, montagem, manutenção" required>
+
+        <label for="descricao">Descreva o que precisa ser feito</label>
+        <textarea id="descricao" rows="4" placeholder="Explique o serviço desejado" required></textarea>
+
+        <label for="cep">CEP</label>
+        <input type="text" id="cep" placeholder="00000-000" required>
+
+        <label for="endereco">Endereço</label>
+        <input type="text" id="endereco" placeholder="Rua, número e complemento" required>
+
+        <button type="submit">Solicitar orçamento</button>
+      </form>
+
+      <a href="index.html" class="voltar">← Voltar para os serviços</a>
+    </div>
+  </main>
+
+</body>
+</html>

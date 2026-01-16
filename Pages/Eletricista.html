@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eletricista - FixIt</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #e3f2fd 0%, #ffffff 100%);
+      color: #333;
+    }
+
+    header {
+      background-color: #0d47a1;
+      padding: 20px;
+    }
+
+    nav {
+      max-width: 1200px;
+      margin: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo-fixit img {
+      height: 42px;
+      display: block;
+    }
+
+    .nav-right a {
+      background: white;
+      color: #0d47a1;
+      padding: 8px 16px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      margin-left: 10px;
+      border: 2px solid white;
+      transition: transform 0.25s ease, border-color 0.25s ease;
+    }
+
+    .nav-right a:hover {
+      transform: translateY(-2px);
+      border-color: #0d47a1;
+      background: white;
+    }
+
+    main {
+      max-width: 900px;
+      margin: 60px auto;
+      padding: 0 20px;
+    }
+
+    h1 {
+      color: #0d47a1;
+      margin-bottom: 10px;
+    }
+
+    p.subtitle {
+      margin-bottom: 40px;
+      color: #555;
+    }
+
+    .form-card {
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 40px;
+      box-shadow: 0 4px 24px rgba(13, 71, 161, 0.1);
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 600;
+      color: #0d47a1;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-family: 'Inter', sans-serif;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: #0d47a1;
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      background: #0d47a1;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+
+    button:hover {
+      background: #08306b;
+      transform: translateY(-2px);
+    }
+
+    footer {
+      margin-top: 80px;
+      background-color: #0d47a1;
+      color: white;
+      text-align: center;
+      padding: 20px;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <nav>
+    <a href="../index.html" class="logo-fixit">
+      <img src="../Assets/Images/logo_fixit.png" alt="FixIt Logo">
+    </a>
+
+    <div class="nav-right">
+      <a href="../index.html">Início</a>  
+      <a href="Entrar.html">Entrar</a>
+      <a href="criar_conta.html">Criar Conta</a>
+    </div>
+  </nav>
+</header>
+
+<main>
+  <h1>Serviço de Eletricista</h1>
+  <p class="subtitle">
+    Profissionais qualificados para instalações, manutenções e reparos elétricos com total segurança.
+  </p>
+
+  <div class="form-card">
+    <form>
+
+      <label for="tipo-imovel">Tipo de imóvel</label>
+      <select id="tipo-imovel" required>
+        <option value="">Selecione</option>
+        <option>Casa</option>
+        <option>Apartamento</option>
+        <option>Comercial</option>
+      </select>
+
+      <label for="descricao">Descreva o serviço necessário</label>
+      <textarea id="descricao" rows="4" placeholder="Ex: troca de disjuntor, instalação de tomadas, curto-circuito..." required></textarea>
+
+      <label for="cep">CEP</label>
+      <input id="cep" type="text" placeholder="00000-000" required>
+
+      <label for="logradouro">Logradouro</label>
+      <input id="logradouro" type="text" placeholder="Rua, avenida, etc." required>
+
+      <label for="numero">Número</label>
+      <input id="numero" type="text" placeholder="Número do imóvel" required>
+
+      <label for="complemento">Complemento</label>
+      <input id="complemento" type="text" placeholder="Opcional">
+
+      <button type="submit">Solicitar Eletricista</button>
+
+    </form>
+  </div>
+</main>
+
+<footer>
+  <p>&copy; 2025 FixIt - Todos os direitos reservados</p>
+</footer>
+
+</body>
+</html>

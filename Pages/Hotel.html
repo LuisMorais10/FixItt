@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Apoio a Redes Hoteleiras - FixIt</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #e3f2fd 0%, #ffffff 100%);
+      color: #333;
+      line-height: 1.6;
+    }
+
+    header, footer {
+      background-color: #0d47a1;
+      color: white;
+      padding: 20px;
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    .logo-fixit img {
+      height: 42px;
+      object-fit: contain;
+    }
+
+    .top-buttons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .top-buttons a {
+      background: white;
+      color: #0d47a1;
+      padding: 8px 16px;
+      border-radius: 5px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: transform 0.25s ease;
+    }
+
+    .top-buttons a:hover {
+      transform: translateY(-2px);
+    }
+
+    main {
+      max-width: 700px;
+      margin: 60px auto;
+      padding: 40px;
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 4px 24px rgba(13,71,161,0.12);
+      animation: fadeIn 0.6s ease;
+    }
+
+    h1 {
+      text-align: center;
+      color: #0d47a1;
+      margin-bottom: 10px;
+    }
+
+    .descricao {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #555;
+    }
+
+    label {
+      font-weight: 600;
+      color: #0d47a1;
+      margin-bottom: 6px;
+      display: block;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      margin-bottom: 18px;
+      font-family: inherit;
+      transition: border-color 0.3s ease;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: #0d47a1;
+      outline: none;
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      background: #0d47a1;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+
+    button:hover {
+      background: #08306b;
+      transform: scale(1.02);
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      font-size: 0.9rem;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <nav>
+    <a href="../index.html" class="logo-fixit">
+      <img src="../Assets/Images/logo_fixit.png" alt="FixIt">
+    </a>
+
+    <div class="top-buttons">
+      <a href="../index.html">Início</a>  
+      <a href="Entrar.html">Entrar</a>
+      <a href="criar_conta.html">Criar Conta</a>
+    </div>
+  </nav>
+</header>
+
+<main>
+  <h1>Apoio a Redes Hoteleiras</h1>
+  <p class="descricao">
+    Solicite equipes especializadas para limpeza e organização de hotéis, pousadas e flats.
+  </p>
+
+  <form>
+    <label for="tipo">Tipo de estabelecimento</label>
+    <select id="tipo" required>
+      <option value="">Selecione</option>
+      <option>Hotel</option>
+      <option>Pousada</option>
+      <option>Flat</option>
+      <option>Outro</option>
+    </select>
+
+    <label for="quartos">Quantidade de quartos</label>
+    <input type="number" id="quartos" placeholder="Ex: 45" required>
+
+    <label for="areas">Áreas comuns inclusas</label>
+    <textarea id="areas" rows="3" placeholder="Ex: recepção, corredores, salão de eventos"></textarea>
+
+    <label for="frequencia">Frequência do serviço</label>
+    <select id="frequencia" required>
+      <option value="">Selecione</option>
+      <option>Diária</option>
+      <option>Semanal</option>
+      <option>Quinzenal</option>
+      <option>Conforme demanda</option>
+    </select>
+
+    <label for="cep">CEP</label>
+    <input type="text" id="cep" placeholder="00000-000" required>
+
+    <label for="logradouro">Logradouro</label>
+    <input type="text" id="logradouro" placeholder="Rua / Avenida" required>
+
+    <label for="numero">Número</label>
+    <input type="text" id="numero" placeholder="Número" required>
+
+    <label for="complemento">Complemento</label>
+    <input type="text" id="complemento" placeholder="Opcional">
+
+    <button type="submit">Solicitar Orçamento</button>
+  </form>
+</main>
+
+<footer>
+  <p>&copy; 2025 FixIt — Todos os direitos reservados</p>
+</footer>
+
+</body>
+</html>

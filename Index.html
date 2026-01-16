@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FixIt - O seu portal de serviços</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <style>    
+    nav { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: auto; }
+    nav a { color: white; margin: 0 10px; text-decoration: none; font-weight: 600; transition: color 0.3s ease; }
+    nav a:hover { color: #bbdefb; }
+    .nav-right {display: flex; align-items: center; gap: 15px; }
+    .dropdown { position: relative; }
+    .dropdown button {
+      background: white;
+      color: #0d47a1;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 5px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+    .dropdown button:hover {
+      background: #e3f2fd;
+      color: #0d47a1;
+    }
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      right: 0;
+      background-color: #f1f1f1;
+      min-width: 180px;
+      box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+      z-index: 1;
+    }
+    .dropdown-content a {
+      color: #0d47a1;
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+      transition: background 0.3s ease;
+    }
+    .dropdown-content a:hover {
+      background-color: #e3f2fd;
+    }
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
+    .hero { padding: 60px 20px; text-align: center; background-color: #e3f2fd; }
+    .hero h1 { font-size: 2.5rem; margin-bottom: 10px; }
+    .hero p { font-size: 1.2rem; margin-bottom: 20px; }
+    .hero button {
+      padding: 12px 25px;
+      font-size: 1rem;
+      background: #0d47a1;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    .hero button:hover {
+      background: #08306b;
+    }
+    section { max-width: 1200px; margin: 40px auto; padding: 0 20px; }
+    .servicos, .depoimentos, .galeria, .contato { margin-top: 40px; }
+    .servicos h2, .depoimentos h2, .galeria h2, .contato h2 { margin-bottom: 20px; color: #0d47a1; }
+    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+    .card {
+      padding: 20px;
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 4px 24px rgba(13, 71, 161, 0.08);
+      transition: transform 0.3s, box-shadow 0.3s;
+      min-height: 340px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      box-sizing: border-box;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 32px rgba(13, 71, 161, 0.13);
+    }
+    .avaliacao {
+      color: #fbc02d;
+      font-size: 1.2rem;
+      margin: 10px 0;
+    }
+    form input, form textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      transition: border-color 0.3s ease;
+    }
+    form input:focus, form textarea:focus {
+      border-color: #0d47a1;
+      outline: none;
+    }
+    form button {
+      background: #0d47a1;
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    form button:hover {
+      background: #08306b;
+    }
+    .redes a {
+      margin: 0 10px;
+      color: white;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    .redes a:hover {
+      color: #bbdefb;
+    }
+    .top-buttons {
+      display: flex;
+      gap: 10px;
+      margin-left: 20px;
+    }
+    .top-buttons a {
+      background-color: white;
+      color: #0d47a1;
+      padding: 8px 16px;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background 0.3s ease;
+    }
+    .top-buttons a:hover {
+      background-color: #e3f2fd;
+    }
+    .card img {
+      width: 100%;
+      border-radius: 12px;
+      margin-top: 10px;
+      transition: transform 0.3s;
+    }
+    .card:hover img {
+      transform: scale(1.04);
+    }
+    .depoimentos .card img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-top: 15px;
+      margin-bottom: 10px;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .depoimentos .cards {
+      display: flex;
+      justify-content: center;
+      gap: 32px;
+      flex-wrap: wrap;
+    }
+    .depoimentos .card {
+      height: 260px;
+      min-height: 0;
+      max-width: 320px;
+    }
+    label {
+      font-weight: 600;
+      color: #0d47a1;
+      margin-bottom: 5px;
+      display: block;
+    }
+    .servicos .card img {
+  width: 100%;
+  height: 280px;
+  object-fit: cover;
+  border-radius: 12px;
+  display: block;
+}
+.address-search-container {
+  max-width: 700px;
+  margin: 40px auto 20px auto;
+  text-align: center;
+}
+
+.address-search {
+  display: flex;
+  align-items: center;
+  background: #ffffff;
+  border-radius: 50px;
+  padding: 12px 20px;
+  box-shadow: 0 4px 20px rgba(13,71,161,0.10);
+  gap: 10px;
+}
+
+.address-search input {
+  flex: 1;
+  padding: 12px;
+  border: none;
+  font-size: 1rem;
+  outline: none;
+}
+
+.address-search button {
+  background: #0d47a1;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 50px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.address-search button:hover {
+  background: #08306b;
+}
+
+.search-icon {
+  font-size: 1.3rem;
+  color: #0d47a1;
+}
+
+.address-helper {
+  margin-top: 8px;
+  color: #555;
+  font-size: 0.9rem;
+}
+.nav-right .nav-btn {
+  background-color: white;
+  color: #0d47a1;
+  padding: 8px 16px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background 0.3s ease;
+}
+
+.nav-right .nav-btn:hover {
+  background-color: #e3f2fd;
+}
+/* Estilo da imagem da logo */
+.logo-fixit img {
+  height: 42px; 
+  width: auto;
+  display: block;
+  object-fit: contain;
+  background: none !important; 
+  padding: 0;
+  border-radius: 0;
+  filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.15));
+  transition: transform 0.2s ease;
+  margin-left: -300px;       
+  margin-right: 500px;       
+}
+
+/* Efeito hover */
+.logo-fixit img:hover {
+  transform: scale(1.05);
+}
+
+/* Container da logo */
+.logo-fixit img{
+  background: none !important;
+  padding: 0;
+  margin: 0;
+  border: none;
+}
+.nav-btn,
+.top-buttons a {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.nav-btn:hover,
+.top-buttons a:hover {
+  transform: translateY(-3px);                   
+  box-shadow: 0 4px 18px rgba(13, 71, 161, 0.25); 
+}
+.nav-btn:hover,
+.top-buttons a:hover {
+  background-color: white !important; 
+  box-shadow: none !important;        
+  transform: translateY(-2px);        
+}
+.nav-btn:hover,
+.top-buttons a:hover,
+.header-buttons a:hover {
+    color: navy !important;    
+}
+  </style>
+</head>
+<body>
+  <header>
+    <nav>
+      <div style="display: flex; align-items: center; gap: 20px;">
+  
+  <a href="index.html" class="logo-fixit">
+    <img src="Assets/Images/logo_fixit.png" alt="FixIt Logo">
+  </a>
+
+  <div class="top-buttons">
+    <a href="Pages/Entrar.html">Entrar</a>
+    <a href="Pages/Criar_conta.html">Criar Conta</a>
+  </div>
+
+</div>
+      <div class="nav-right">
+          <a class="nav-btn" href="Pages/Clube.html">Faça parte do clube</a>
+          <a class="nav-btn" href="Pages/Sobre.html">Sobre nós</a>
+          <a class="nav-btn" href="Pages/SejaUmColaborador.html">Seja um colaborador</a>
+      <div class="dropdown">
+        </div>
+      </div>
+    </nav>
+  </header>
+   <div class="address-search-container">
+  <div class="address-search">
+    <span class="search-icon">📍</span>
+    <input type="text" id="endereco" placeholder="Informe seu endereço ou CEP">
+    <button onclick="buscarEndereco()">Buscar</button>
+  </div>
+
+  <p class="address-helper">Usamos seu endereço para mostrar serviços disponíveis na sua região.</p>
+</div>
+
+  <div class="hero">
+    <h1>O seu portal de serviços</h1>
+    <p>Ambientes limpos, clientes felizes. Atendemos residências, empresas e redes hoteleiras.</p>
+    <button onclick="document.getElementById('contato').scrollIntoView({behavior: 'smooth'})">Agendar Agora</button>
+  </div>
+
+  <section id="servicos" class="servicos">
+    <h2>Nossos Serviços</h2>
+    <div class="cards">
+
+  <a href="Pages/FaxinaResidencial.html" class="card" style="text-decoration: none; color: inherit;">
+    <h3>Faxina Residencial</h3>
+    <p>Limpeza completa em casas, apartamentos e condomínios. Conforto e bem-estar para seu lar.</p>
+    <img src="Assets/Images/Residencial.png" alt="Faxina Residencial">
+  </a>
+
+  <a href="Pages/FaxinaEmpresarial.html" class="card" style="text-decoration: none; color: inherit;">
+    <h3>Faxina Empresarial</h3>
+    <p>Limpeza profissional em escritórios, consultórios e estabelecimentos comerciais.</p>
+    <img src="Assets/Images/Empresarial.png" alt="Faxina Empresarial">
+  </a>
+
+  <a href="Pages/Hotel.html" class="card" style="text-decoration: none; color: inherit;">
+    <h3>Apoio a Redes Hoteleiras</h3>
+    <p>Equipe treinada para limpeza de quartos, recepções e áreas comuns de hotéis.</p>
+    <img src="Assets/Images/Hotel.png" alt="Faxina Hotel">
+  </a>
+
+  <a href="Pages/Mudanca.html" class="card" style="text-decoration: none; color: inherit;">
+    <h3>Caminhão de Mudança</h3>
+    <p>Transporte seguro e eficiente para mudanças residenciais e comerciais.</p>
+    <img src="Assets/Images/Mudanca.png" alt="Caminhão de Mudança">
+  </a>
+
+  <a href="Pages/Eletrodomestico.html" class="card" style="text-decoration: none; color: inherit;">
+    <h3>Técnico de Eletrodomésticos</h3>
+    <p>Conserto e manutenção de geladeiras, fogões, máquinas de lavar e mais.</p>
+    <img src="Assets/Images/Eletrodomestico.png" alt="Técnico de Eletrodomésticos">
+  </a>
+  
+  <a href="Pages/Eletricista.html" class="card" style="text-decoration: none; color: inherit;">
+    <h3>Eletricista</h3>
+    <p>Serviços elétricos com segurança e qualidade, desde instalações até reparos.</p>
+    <img src="Assets/Images/Eletricista.png" alt="Eletricista">
+  </a>
+  
+  <a href="Pages/ServicosGerais.html" class="card" style="text-decoration: none; color: inherit;">
+    <h3>Serviços Gerais</h3>
+    <p>Manutenções diversas, pequenos reparos e o que mais você precisar para seu espaço.</p>
+    <img src="Assets/Images/Servicos_gerais.png" alt="Serviços Gerais">
+  </a>
+
+  <a href="Pages/Clube.html" class="card" style="text-decoration: none; color: inherit;">
+    <h3>Clube</h3>
+    <p>Aproveite os melhores serviços por um valor mensal.</p>
+    <img src="Assets/Images/Clube.png" alt="Clube FixIt">
+  </a>
+
+</div>
+   
+  </section>
+
+  <section id="depoimentos" class="depoimentos">
+    <h2>O que dizem nossos clientes</h2>
+    <div class="cards">
+      <div class="card">
+        <p>"Serviço excelente! Recomendo."</p>
+        <div class="avaliacao">★★★★★</div>
+        <strong>- Maria Silva</strong>
+        <img src="Assets/Images/Clientes_1.png" alt="Depoimento Maria Silva">
+      </div>
+      <div class="card">
+        <p>"Atendimento rápido e profissional."</p>
+        <div class="avaliacao">★★★★☆</div>
+        <strong>- Carlos Oliveira</strong>
+        <img src="Assets/Images/Clientes_2.png" alt="Depoimento Carlos Oliveira">
+      </div>
+      <div class="card">
+        <p>"Hotel sempre limpo e organizado."</p>
+        <div class="avaliacao">★★★★★</div>
+        <strong>- Ana Beatriz</strong>
+        <img src="Assets/Images/Clientes_3.png" alt="Depoimento Ana Beatriz">
+      </div>
+    </div>
+  </section>
+
+  <section id="galeria" class="galeria">
+    <h2>Galeria de Fotos</h2>
+    <p>Confira alguns dos nossos resultados.</p>
+    <div class="cards">
+      <div class="card"><img src="Assets/Images/Galeria_1.png" alt="Antes e Depois 1"></div>
+      <div class="card"><img src="Assets/Images/Galeria_2.png" alt="Antes e Depois 2"></div>
+      <div class="card"><img src="Assets/Images/Galeria_3.png" alt="Antes e Depois 3"></div>
+    </div>
+  </section>
+
+  <section id="contato" class="contato">
+    <h2>Agende seu atendimento</h2>
+    <form>
+      <label for="nome">Nome completo</label>
+      <input id="nome" name="nome" type="text" placeholder="Nome completo" required>
+      <label for="email">E-mail</label>
+      <input id="email" name="email" type="email" placeholder="E-mail" required>
+      <label for="telefone">Telefone</label>
+      <input id="telefone" name="telefone" type="tel" placeholder="Telefone" required>
+      <label for="descricao">Descreva o tipo de faxina e a data desejada</label>
+      <textarea id="descricao" name="descricao" placeholder="Descreva o tipo de faxina e a data desejada" rows="5" required></textarea>
+      <button type="submit">Enviar</button>
+    </form>
+  </section>
+  <script>
+function buscarEndereco() {
+  const valor = document.getElementById("endereco").value.trim();
+
+  if (valor === "") {
+    alert("Por favor, informe um endereço ou CEP.");
+    return;
+  }
+
+  console.log("Endereço buscado:", valor);
+
+  alert("Buscando serviços para: " + valor);
+}
+</script>
+
+  <footer>
+    <p>Siga-nos nas redes sociais</p>
+    <div class="redes">
+      <a href="#">Instagram</a>
+      <a href="#">Facebook</a>
+      <a href="#">WhatsApp</a>
+    </div>
+    <p>&copy; 2025 FixIt - Todos os direitos reservados</p>

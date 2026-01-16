@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sobre Nós - FixIt</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #e3f2fd 0%, #ffffff 100%);
+      color: #333;
+      line-height: 1.6;
+    }
+
+    /* HEADER (mesmo padrão do index) */
+    header {
+      background-color: #0d47a1;
+      padding: 20px 0;
+    }
+
+    nav {
+      max-width: 1200px;
+      margin: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 20px;
+    }
+
+    .logo-fixit img {
+      height: 42px;
+      width: auto;
+      display: block;
+      filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.15));
+    }
+
+    .nav-right {
+      display: flex;
+      gap: 15px;
+    }
+
+    .nav-btn {
+      background: white;
+      color: #0d47a1;
+      padding: 8px 16px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: transform 0.25s ease;
+    }
+
+    .nav-btn:hover {
+      transform: translateY(-2px);
+    }
+
+    /* HERO */
+    .hero-sobre {
+      background: #e3f2fd;
+      padding: 80px 20px;
+      text-align: center;
+    }
+
+    .hero-sobre h1 {
+      font-size: 2.6rem;
+      color: #0d47a1;
+      margin-bottom: 15px;
+    }
+
+    .hero-sobre p {
+      font-size: 1.2rem;
+      max-width: 800px;
+      margin: auto;
+    }
+
+    /* SEÇÕES */
+    section {
+      max-width: 1200px;
+      margin: 80px auto;
+      padding: 0 20px;
+    }
+
+    .blocos {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 30px;
+    }
+
+    .bloco {
+      background: white;
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 4px 24px rgba(13,71,161,0.08);
+      transition: transform 0.3s ease;
+    }
+
+    .bloco:hover {
+      transform: translateY(-5px);
+    }
+
+    .bloco h3 {
+      color: #0d47a1;
+      margin-bottom: 10px;
+    }
+
+    /* TEXTO INSTITUCIONAL */
+    .institucional {
+      text-align: center;
+      max-width: 900px;
+      margin: auto;
+    }
+
+    .institucional h2 {
+      color: #0d47a1;
+      margin-bottom: 20px;
+    }
+
+    /* FOOTER */
+    footer {
+      background-color: #0d47a1;
+      color: white;
+      text-align: center;
+      padding: 30px 20px;
+      margin-top: 80px;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <nav>
+    <a href="../index.html" class="logo-fixit">
+      <img src="../Assets/Images/logo_fixit.png" alt="FixIt">
+    </a>
+
+    <div class="nav-right">
+      <a class="nav-btn" href="../index.html">Início</a>
+      <a class="nav-btn" href="Clube.html">Clube</a>
+      <a class="nav-btn" href="SejaUmColaborador.html">Seja um colaborador</a>
+    </div>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section class="hero-sobre">
+  <h1>Conectamos pessoas a serviços com excelência</h1>
+  <p>
+    A FixIt nasceu para simplificar o acesso a serviços essenciais, conectando clientes a profissionais qualificados com segurança, transparência e qualidade.
+  </p>
+</section>
+
+<!-- PROPÓSITO -->
+<section class="institucional">
+  <h2>Nosso propósito</h2>
+  <p>
+    Facilitar a vida das pessoas por meio de soluções confiáveis, acessíveis e bem executadas, valorizando quem presta e quem contrata o serviço.
+  </p>
+</section>
+
+<!-- MISSÃO, VISÃO, VALORES -->
+<section>
+  <div class="blocos">
+    <div class="bloco">
+      <h3>Missão</h3>
+      <p>
+        Oferecer uma plataforma intuitiva e eficiente que conecte clientes a profissionais capacitados, garantindo experiências positivas do início ao fim.
+      </p>
+    </div>
+
+    <div class="bloco">
+      <h3>Visão</h3>
+      <p>
+        Ser referência nacional em intermediação de serviços, reconhecida pela confiança, qualidade e impacto positivo nas relações de trabalho.
+      </p>
+    </div>
+
+    <div class="bloco">
+      <h3>Valores</h3>
+      <p>
+        Ética, transparência, excelência operacional, valorização humana e compromisso com a satisfação do cliente.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- FECHAMENTO -->
+<section class="institucional">
+  <h2>Mais do que serviços, conexões de confiança</h2>
+  <p>
+    Na FixIt, cada atendimento é tratado com responsabilidade e cuidado. Trabalhamos todos os dias para garantir qualidade, respeito e eficiência em cada detalhe.
+  </p>
+</section>
+
+<footer>
+  <p>&copy; 2025 FixIt — Todos os direitos reservados</p>
+</footer>
+
+</body>
+</html>

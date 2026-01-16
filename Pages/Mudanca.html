@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Caminhão de Mudança - FixIt</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #e3f2fd 0%, #ffffff 100%);
+      color: #333;
+    }
+
+    header {
+      background-color: #0d47a1;
+      padding: 20px;
+    }
+
+    nav {
+      max-width: 1200px;
+      margin: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo-fixit img {
+      height: 42px;
+    }
+
+    .top-buttons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .top-buttons a {
+      background: white;
+      color: #0d47a1;
+      padding: 8px 16px;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: transform 0.25s ease;
+    }
+
+    .top-buttons a:hover {
+      transform: translateY(-2px);
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 60px auto;
+      background: white;
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 6px 28px rgba(13,71,161,0.15);
+    }
+
+    h1 {
+      color: #0d47a1;
+      margin-bottom: 10px;
+    }
+
+    p {
+      margin-bottom: 30px;
+      font-size: 1.05rem;
+    }
+
+    label {
+      font-weight: 600;
+      color: #0d47a1;
+      margin-top: 15px;
+      display: block;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 12px;
+      margin-top: 6px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+
+    input:focus, select:focus {
+      border-color: #0d47a1;
+      outline: none;
+    }
+
+    button {
+      margin-top: 30px;
+      width: 100%;
+      padding: 14px;
+      background: #0d47a1;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background: #08306b;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <nav>
+    <a href="../index.html" class="logo-fixit">
+      <img src="../Assets/Images/logo_fixit.png" alt="FixIt Logo">
+    </a>
+
+    <div class="top-buttons">
+      <a href="../index.html">Início</a>
+      <a href="Entrar.html">Entrar</a>
+      <a href="criar_conta.html">Criar Conta</a>
+    </div>
+  </nav>
+</header>
+
+<main class="container">
+  <h1>Caminhão de Mudança</h1>
+  <p>Solicite seu serviço de mudança com segurança, agilidade e profissionais capacitados.</p>
+
+  <form>
+    <label>Tipo de imóvel</label>
+    <select>
+      <option>Casa</option>
+      <option>Apartamento</option>
+      <option>Empresa</option>
+    </select>
+
+    <label>Endereço de origem (CEP)</label>
+    <input type="text" placeholder="CEP de origem">
+
+    <label>Endereço de destino (CEP)</label>
+    <input type="text" placeholder="CEP de destino">
+
+    <label>Quantidade aproximada de móveis</label>
+    <select>
+      <option>Poucos (até 10 itens)</option>
+      <option>Médio porte</option>
+      <option>Grande volume</option>
+    </select>
+
+    <label>Data desejada</label>
+    <input type="date">
+
+    <button type="submit">Solicitar Orçamento</button>
+  </form>
+</main>
+
+</body>
+</html>
