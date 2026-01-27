@@ -1,0 +1,187 @@
+/* =========================
+   RESET E BASE
+========================= */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: linear-gradient(135deg, #e3f2fd 0%, #ffffff 100%);
+  color: #333;
+  line-height: 1.6;
+}
+
+/* =========================
+   HEADER / NAV
+========================= */
+
+header {
+  background-color: #0d47a1;
+  width: 100%;
+  padding: 20px;
+}
+
+header nav {
+  max-width: 1200px;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* =========================
+   BOTÕES
+========================= */
+
+/* (nav-btn, top-buttons etc.) */
+
+/* =========================
+   CARDS / SERVIÇOS
+========================= */
+.services {
+  padding: 80px 20px;
+  max-width: 1200px;
+  margin: auto;
+  text-align: center;
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 30px;
+  margin-top: 40px;
+}
+
+.service-card {
+  background: white;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 08px 22px rgba(0,0,0,0.08);
+  transition: 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.service-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 35px rgba(0,0,0,0.12);
+}
+
+.service-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  object-position: center;  
+  display: block;
+}
+
+.service-card h3 {
+  margin: 15px 0 10px;
+  color: #0d47a1;
+}
+
+.service-card p {
+  padding: 0 15px 20px;
+  font-size: 0.95rem;
+  color: #555;
+}
+/* (cards, hover, imagens etc.) */
+
+/* =========================
+   SEÇÕES ESPECÍFICAS
+========================= */
+
+/* hero, depoimentos, galeria, forms */
+/* =========================
+   HERO SECTION
+========================= */
+
+.hero {
+  padding: 100px 20px;
+  text-align: center;
+}
+
+.hero h1 {
+  font-size: 2.8rem;
+  color: #0d47a1;
+  margin-bottom: 20px;
+}
+
+.hero p {
+  font-size: 1.2rem;
+  margin-bottom: 30px;
+}
+
+.hero-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.btn-primary {
+  background: #0d47a1;
+  color: white;
+  padding: 12px 22px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.btn-secondary {
+  background: white;
+  color: #0d47a1;
+  padding: 12px 22px;
+  border-radius: 8px;
+  border: 2px solid #0d47a1;
+  text-decoration: none;
+  font-weight: 600;
+}
+/* =========================
+   SERVICES SECTION
+========================= */
+
+/* =========================
+   FOOTER
+========================= */
+/* ===== LOGO ===== */
+.logo-fixit img {
+  height: 55px;
+}
+
+/* ===== GRUPO ESQUERDO (logo + entrar) ===== */
+.top-buttons {
+  display: flex;
+  gap: 15px;
+}
+
+.top-buttons a {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+/* ===== BOTÕES DA DIREITA ===== */
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.nav-btn {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  padding: 8px 14px;
+  border-radius: 6px;
+  transition: background 0.2s ease;
+}
+
+.nav-btn:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
