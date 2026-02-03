@@ -23,11 +23,6 @@ function Home() {
         
         <div className="hero-content">
           <h1>O seu portal de serviços</h1>
-          <p>Ambientes limpos, clientes felizes. Atendemos residências, empresas e redes hoteleiras.</p>
-          <div className="hero-buttons">
-            <a href="#" className="btn-primary">Encontrar serviços</a>
-            <a href="#" className="btn-secondary">Seja um profissional</a>
-          </div>
         </div>
       </section>
 
