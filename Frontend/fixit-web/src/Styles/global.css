@@ -294,34 +294,117 @@ header nav {
 /* =========================
    Login
 ========================= */
-.login-section {
-  padding: 120px 20px 60px;
+/* LOGIN PAGE/CRIAR CONTA */
+.login-page {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 130px 20px 40px;
 }
 
-.login-container {
-  max-width: 450px;
-  margin: 0 auto;
+.login-box {
+  background: white;
   padding: 40px;
-  background: #ffffff;
-  border-radius: 20px;
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
-  animation: fadeIn 0.7s ease-in-out;
+  border-radius: 18px;
+  width: 100%;
+  max-width: 420px;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.08);
 }
 
-.extra-links {
+.login-box h2 {
   text-align: center;
-  margin-top: 20px;
+  margin-bottom: 30px;
+  color: #0d47a1;
 }
 
-.link-action {
+.login-box label {
+  display: block;
+  margin-bottom: 6px;
   font-weight: 600;
   color: #0d47a1;
+}
+
+.login-box input {
+  width: 100%;
+  padding: 14px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  margin-bottom: 18px;
+  font-size: 0.95rem;
+}
+
+.login-box button {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 10px;
+  background: #0d47a1;
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.login-box button:hover {
+  background: #09357a;
+}
+
+.login-link {
+  margin-top: 18px;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+.login-link a {
+  color: #0d47a1;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.login-link a:hover {
+  text-decoration: underline;
+}
+
+/* BUTTON */
+.btn-primary {
+  width: 100%;
+  padding: 14px;
+  margin-top: 10px;
+  background: #0d47a1;
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.btn-primary:hover {
+  background: #08306b;
+}
+
+/* LINKS */
+.login-links {
+  margin-top: 28px;
+}
+
+.login-links p {
+  margin-top: 8px;
+}
+
+.link {
+  color: #0d47a1;
+  font-weight: 600;
   cursor: pointer;
 }
 
-.link-action:hover {
-  color: #08306b;
+.link:hover {
+  text-decoration: underline;
 }
+
 /* =========================
    FOOTER
 ========================= */

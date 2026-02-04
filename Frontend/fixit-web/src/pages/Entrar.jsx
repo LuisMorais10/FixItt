@@ -1,62 +1,96 @@
+import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 
 function Entrar() {
   const navigate = useNavigate()
 
-  const handleSubmit = (e) => {
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [loading, setLoading] = useState(false)
+
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    // integração com backend depois
+    setLoading(true)
+
+    try {
+      const response = await fetch("http://127.0.0.1:8000/api/login/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: email, // 👈 SimpleJWT usa username
+          password: password,
+        }),
+      })
+
+      if (!response.ok) {
+        throw new Error("Credenciais inválidas")
+      }
+
+      const data = await response.json()
+
+      // salvar tokens
+      localStorage.setItem("accessToken", data.access)
+      localStorage.setItem("refreshToken", data.refresh)
+
+      // redirecionar
+      navigate("/")
+
+    } catch (error) {
+      alert("E-mail ou senha incorretos")
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
-    <>
-      <section className="login-section">
-        <div className="login-container">
-          <h2>Entrar na sua conta</h2>
+    <section className="login-page">
+      <div className="login-box">
+        <h2>Entrar na sua conta</h2>
 
-          <form onSubmit={handleSubmit}>
-            <label htmlFor="email">E-mail</label>
+        <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label>E-mail</label>
             <input
-              id="email"
               type="email"
               placeholder="Digite seu e-mail"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               required
             />
+          </div>
 
-            <label htmlFor="senha">Senha</label>
+          <div className="form-group">
+            <label>Senha</label>
             <input
-              id="senha"
               type="password"
               placeholder="Digite sua senha"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               required
             />
-
-            <button type="submit">Acessar</button>
-          </form>
-
-          <div className="extra-links">
-            <p>
-              <span
-                className="link-action"
-                onClick={() => navigate("/recuperar-senha")}
-              >
-                Esqueceu sua senha?
-              </span>
-            </p>
-
-            <p>
-              Não possui conta?{" "}
-              <span
-                className="link-action"
-                onClick={() => navigate("/criar-conta")}
-              >
-                Registre-se
-              </span>
-            </p>
           </div>
+
+          <button type="submit" className="btn-primary" disabled={loading}>
+            {loading ? "Entrando..." : "Acessar"}
+          </button>
+        </form>
+
+        <div className="login-links">
+          <span className="link" onClick={() => navigate("/recuperar-senha")}>
+            Esqueceu sua senha?
+          </span>
+
+          <p>
+            Não possui conta?{" "}
+            <span className="link" onClick={() => navigate("/criar-conta")}>
+              Registre-se
+            </span>
+          </p>
         </div>
-      </section>
-    </>
+      </div>
+    </section>
   )
 }
 
