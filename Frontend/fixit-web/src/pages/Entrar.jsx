@@ -1,8 +1,10 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
+import { useAuth } from "../context/AuthContext"
 
 function Entrar() {
   const navigate = useNavigate()
+  const { login } = useAuth()
 
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
@@ -30,11 +32,12 @@ function Entrar() {
 
       const data = await response.json()
 
-      // salvar tokens
-      localStorage.setItem("accessToken", data.access)
-      localStorage.setItem("refreshToken", data.refresh)
+      login({
+         access: data.access,
+         refresh: data.refresh,
+         email: email,
+           })
 
-      // redirecionar
       navigate("/")
 
     } catch (error) {

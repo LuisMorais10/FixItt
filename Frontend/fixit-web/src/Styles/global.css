@@ -32,6 +32,55 @@ header nav {
   justify-content: space-between;
   align-items: center;
 }
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.user-area {
+  position: relative;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 48px;
+  right: 0;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+  width: 220px;
+  padding: 6px 0;
+  z-index: 1000;
+}
+
+.dropdown-menu span {
+  display: block;
+  padding: 10px 16px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.dropdown-menu span:hover {
+  background: #f3f3f3;
+}
+
+.dropdown-menu hr {
+  border: none;
+  border-top: 1px solid #eee;
+  margin: 6px 0;
+}
+
+.dropdown-menu .logout {
+  color: #d32f2f;
+  font-weight: 500;
+}
 
 /* =========================
    Página Faxina
