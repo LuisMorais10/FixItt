@@ -50,6 +50,55 @@ function Home() {
 </div>
 
         </div>
+         <section id="contato" className="contato">
+  <h2>Agende seu atendimento</h2>
+
+  <div className="form-wrapper">
+    <form className="agendamento-form">
+      <label htmlFor="nome">Nome completo</label>
+      <input
+        id="nome"
+        name="nome"
+        type="text"
+        placeholder="Nome completo"
+        required
+      />
+
+      <label htmlFor="email">E-mail</label>
+      <input
+        id="email"
+        name="email"
+        type="email"
+        placeholder="E-mail"
+        required
+      />
+
+      <label htmlFor="telefone">Telefone</label>
+      <input
+        id="telefone"
+        name="telefone"
+        type="tel"
+        placeholder="Telefone"
+        required
+      />
+
+      <label htmlFor="descricao">
+        Descreva o tipo de serviço e a data desejada
+      </label>
+      <textarea
+        id="descricao"
+        name="descricao"
+        placeholder="Descreva o tipo de serviço e a data desejada"
+        rows={5}
+        required
+      />
+
+      <button type="submit">Enviar</button>
+    </form>
+  </div>
+</section>
+
+
       </section>
     </>
   )

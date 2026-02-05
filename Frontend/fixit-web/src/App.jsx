@@ -1,6 +1,8 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Layout from './components/Layout'
 import Home from './pages/Home'
+import PrivateRoute from "./routes/PrivateRoute"
+import Agendamento from "./pages/Agendamento"
 import Faxina from "./pages/Faxina";
 import Entrar from "./pages/Entrar";
 import CriarConta from "./pages/CriarConta"
@@ -8,13 +10,24 @@ import CriarConta from "./pages/CriarConta"
 function App() {
   return (
       <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route index element={<Home />} />
-          <Route path="/faxina" element={<Faxina />} />
-          <Route path="/Entrar" element={<Entrar />} />
-          <Route path="/criar-conta" element={<CriarConta />} />
-        </Route>
-      </Routes>
+  <Route path="/" element={<Layout />}>
+    <Route index element={<Home />} />
+    <Route path="faxina" element={<Faxina />} />
+
+    {/* 🔒 AGENDAMENTO PROTEGIDO */}
+    <Route
+      path="faxina/:tipo"
+      element={
+        <PrivateRoute>
+          <Agendamento />
+        </PrivateRoute>
+      }
+    />
+
+    <Route path="entrar" element={<Entrar />} />
+    <Route path="criar-conta" element={<CriarConta />} />
+  </Route>
+</Routes>
   )
 }
 

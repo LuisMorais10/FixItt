@@ -22,12 +22,13 @@ body {
 header {
   background-color: #0d47a1;
   width: 100%;
-  padding: 20px;
+  padding: 0px;
 }
 
 header nav {
   max-width: 1200px;
   margin: auto;
+  padding: 20px 8px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -175,6 +176,81 @@ header nav {
   color: #555;
 }
 /* (cards, hover, imagens etc.) */
+/* Espaçamento geral da seção */
+.contato {
+  margin-top: 80px;
+  padding: 60px 20px;
+  background: linear-gradient(to bottom, #f8fbff, #eef4ff);
+  text-align: center;
+}
+
+.contato h2 {
+  font-size: 2rem;
+  margin-bottom: 30px;
+  color: #0d47a1;
+}
+
+/* Card do formulário */
+.form-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.agendamento-form {
+  width: 100%;
+  max-width: 600px;
+  background: white;
+  padding: 40px;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(13, 71, 161, 0.12);
+  text-align: left;
+}
+
+/* Labels */
+.agendamento-form label {
+  font-weight: 600;
+  color: #0d47a1;
+  margin-bottom: 6px;
+  display: block;
+}
+
+/* Inputs */
+.agendamento-form input,
+.agendamento-form textarea {
+  width: 100%;
+  padding: 14px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  border: 1px solid #cfd8dc;
+  font-size: 1rem;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.agendamento-form input:focus,
+.agendamento-form textarea:focus {
+  outline: none;
+  border-color: #0d47a1;
+  box-shadow: 0 0 0 2px rgba(13, 71, 161, 0.15);
+}
+
+/* Botão */
+.agendamento-form button {
+  width: 100%;
+  padding: 14px;
+  background: #0d47a1;
+  color: white;
+  font-size: 1.1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.3s ease;
+}
+
+.agendamento-form button:hover {
+  background: #08306b;
+  transform: translateY(-2px);
+}
 
 /* =========================
    SEÇÕES ESPECÍFICAS (Image Slider)
@@ -492,5 +568,113 @@ header nav {
 
 .nav-btn:hover {
   background-color: rgba(255, 255, 255, 0.15);
+}
+
+/* =========================
+   PÁGINA AGENDAMENTO (CALENDARIO)
+========================= */
+.agendamento-page {
+  max-width: 900px;
+  margin: 60px auto;
+  padding: 20px;
+}
+
+.agendamento-page h2 {
+  margin-bottom: 24px;
+  font-size: 24px;
+}
+
+.calendar-container {
+  background: white;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  margin-bottom: 32px;
+}
+
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.calendar-header button {
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.calendar-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  text-align: center;
+  font-size: 12px;
+  color: #666;
+  margin-bottom: 8px;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+}
+
+.calendar-day {
+  padding: 12px 0;
+  text-align: center;
+  border-radius: 10px;
+  cursor: pointer;
+  background: #f4f6f8;
+  transition: 0.2s;
+}
+
+.calendar-day:hover {
+  background: #e3f2fd;
+}
+
+.calendar-day.selected {
+  background: #1e88e5;
+  color: white;
+  font-weight: 600;
+}
+
+.turno {
+  margin-bottom: 32px;
+}
+
+.turno label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.turno select {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+.btn-avancar {
+  width: 100%;
+  padding: 14px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  font-weight: 600;
+  background: #ccc;
+  color: #666;
+  cursor: not-allowed;
+}
+
+.btn-avancar.ativo {
+  background: #1e88e5;
+  color: white;
+  cursor: pointer;
 }
 

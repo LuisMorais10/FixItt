@@ -81,7 +81,7 @@ export default function Header() {
         <div className="nav-right">
           <Link className="nav-btn" to="/clube">Faça parte do clube</Link>
           <Link className="nav-btn" to="/sobre">Sobre nós</Link>
-          <Link className="nav-btn" to="/seja-colaborador">Seja um colaborador</Link>
+          <Link className="nav-btn" to="/seja-colaborador">Portal do colaborador</Link>
         </div>
       </nav>
     </header>
