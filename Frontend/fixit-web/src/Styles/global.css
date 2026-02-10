@@ -120,7 +120,6 @@ header nav {
 .clickable {
   cursor: pointer;
 }
-/* (nav-btn, top-buttons etc.) */
 
 /* =========================
    CARDS / SERVIÇOS
@@ -371,7 +370,6 @@ header nav {
   box-shadow: 0 8px 18px rgba(13, 71, 161, 0.25);
 }
 
-/* hero, depoimentos, galeria, forms */
 /* =========================
    HERO SECTION
 ========================= */
@@ -533,6 +531,58 @@ header nav {
 /* =========================
    FOOTER
 ========================= */
+
+.fixit-footer {
+  background-color: #0f172a; /* mesmo azul do header */
+  padding: 20px 0;
+  margin-top: 60px;
+}
+
+.fixit-footer-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.fixit-footer p {
+  color: #e5e7eb;
+  font-size: 0.85rem;
+}
+
+/* Botão Instagram */
+.fixit-instagram-btn {
+  padding: 8px 16px;
+  border-radius: 20px;
+
+  background: linear-gradient(135deg, #38bdf8, #2563eb);
+  color: #ffffff;
+
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none;
+
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.fixit-instagram-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(56, 189, 248, 0.35);
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .fixit-footer-inner {
+    flex-direction: column;
+    gap: 12px;
+    text-align: center;
+  }
+}
+
+
 /* ===== LOGO ===== */
 .logo-fixit img {
   height: 55px;
@@ -678,3 +728,210 @@ header nav {
   cursor: pointer;
 }
 
+/* =========================
+   Formulário faxina residencial
+========================= */
+
+.form-container {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #eef6ff, #f8fbff);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 16px;
+}
+
+.form-card {
+  background: #ffffff;
+  width: 100%;
+  max-width: 520px;
+  border-radius: 16px;
+  padding: 32px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.form-card h2 {
+  color: #0b3fa5;
+  margin-bottom: 24px;
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 16px;
+}
+
+.form-group label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #0b3fa5;
+  margin-bottom: 6px;
+}
+
+.form-group input,
+.form-group select {
+  height: 44px;
+  border-radius: 8px;
+  border: 1px solid #cfd8e3;
+  padding: 0 12px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-group input::placeholder {
+  color: #9aa4b2;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  border-color: #0b3fa5;
+  box-shadow: 0 0 0 2px rgba(11, 63, 165, 0.15);
+}
+
+.btn-submit {
+  width: 100%;
+  height: 48px;
+  margin-top: 12px;
+  background: #0b3fa5;
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.btn-submit:hover {
+  background: #09348a;
+}
+
+.btn-submit:active {
+  transform: scale(0.98);
+}
+/* ============================= */
+/* ESCOLHA DE PROFISSIONAL */
+/* ============================= */
+
+.escolha-profissional-page {
+  max-width: 1100px;
+  margin: 60px auto;
+  padding: 0 20px;
+}
+
+.escolha-profissional-page h2 {
+  color: #0d47a1;
+  margin-bottom: 8px;
+}
+
+.escolha-profissional-page .subtitle {
+  color: #555;
+  margin-bottom: 40px;
+}
+
+/* Títulos de seção */
+.escolha-profissional-page h3 {
+  margin: 30px 0 16px;
+  color: #0d47a1;
+}
+
+/* GRID */
+.profissionais-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+/* CARD */
+.profissional-card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 20px;
+  text-align: center;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(13, 71, 161, 0.08);
+  transition: all 0.25s ease;
+  border: 2px solid transparent;
+}
+
+.profissional-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 28px rgba(13, 71, 161, 0.15);
+}
+
+/* SELECIONADO */
+.profissional-card.selected {
+  border-color: #0d47a1;
+  background: #e3f2fd;
+}
+
+/* FOTO */
+.profissional-card img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 12px;
+}
+
+/* TEXTO */
+.profissional-card strong {
+  display: block;
+  font-size: 1rem;
+  margin-bottom: 4px;
+}
+
+.profissional-card span {
+  display: block;
+  color: #fbc02d;
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+
+.profissional-card small {
+  color: #666;
+}
+
+/* SEM PREFERÊNCIA */
+.sem-preferencia {
+  text-align: center;
+  margin: 40px 0;
+}
+
+.sem-preferencia button {
+  background: transparent;
+  border: 2px dashed #0d47a1;
+  color: #0d47a1;
+  padding: 12px 24px;
+  border-radius: 30px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.25s ease;
+}
+
+.sem-preferencia button:hover {
+  background: #e3f2fd;
+}
+
+/* BOTÃO AVANÇAR */
+.escolha-profissional-page .btn-avancar {
+  display: block;
+  margin: 0 auto;
+  background: #0d47a1;
+  color: white;
+  padding: 14px 40px;
+  border: none;
+  border-radius: 30px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.escolha-profissional-page .btn-avancar:hover {
+  background: #08306b;
+  transform: translateY(-2px);
+}

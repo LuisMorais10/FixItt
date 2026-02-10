@@ -1,37 +1,74 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import Layout from './components/Layout'
-import Home from './pages/Home'
+import { Routes, Route } from "react-router-dom"
+import Layout from "./components/Layout"
+import Home from "./pages/Home"
 import PrivateRoute from "./routes/PrivateRoute"
 import Agendamento from "./pages/Agendamento"
-import Faxina from "./pages/Faxina";
-import Entrar from "./pages/Entrar";
+import FormularioFaxina from "./pages/FormularioFaxinaR"
+import EscolhaProfissional from "./pages/EscolhaProfissional"
+import Pagamento from "./pages/PaginaPagamento/PaginaPagamento"
+import Faxina from "./pages/Faxina"
+import Entrar from "./pages/Entrar"
 import CriarConta from "./pages/CriarConta"
 
 function App() {
   return (
-      <Routes>
-  <Route path="/" element={<Layout />}>
-    <Route index element={<Home />} />
-    <Route path="faxina" element={<Faxina />} />
+    <Routes>
+      <Route path="/" element={<Layout />}>
+        <Route index element={<Home />} />
+        <Route path="faxina" element={<Faxina />} />
 
-    {/* 🔒 AGENDAMENTO PROTEGIDO */}
-    <Route
-      path="faxina/:tipo"
-      element={
-        <PrivateRoute>
-          <Agendamento />
-        </PrivateRoute>
-      }
-    />
+        {/* 🔒 FAXINA AGENDADA */}
+        <Route
+          path="faxina/residencial-agendada"
+          element={
+            <PrivateRoute>
+              <Agendamento />
+            </PrivateRoute>
+          }
+        />
 
-    <Route path="entrar" element={<Entrar />} />
-    <Route path="criar-conta" element={<CriarConta />} />
-  </Route>
-</Routes>
+        <Route
+          path="faxina/residencial-agendada/formulario"
+          element={
+            <PrivateRoute>
+              <FormularioFaxina />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="faxina/residencial-agendada/profissionais"
+          element={
+            <PrivateRoute>
+               <EscolhaProfissional />
+            </PrivateRoute>
+         }
+       />
+
+        {/* 🔒 FAXINA FLASH */}
+        <Route
+          path="faxina/residencial-flash"
+          element={
+            <PrivateRoute>
+              <FormularioFaxina />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="faxina/pagamento"
+          element={
+           <PrivateRoute>
+             <Pagamento />
+           </PrivateRoute>
+         }
+       />
+
+        <Route path="entrar" element={<Entrar />} />
+        <Route path="criar-conta" element={<CriarConta />} />
+      </Route>
+    </Routes>
   )
 }
 
 export default App
-
-
-

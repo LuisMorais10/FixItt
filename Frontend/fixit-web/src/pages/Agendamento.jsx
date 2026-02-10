@@ -1,6 +1,8 @@
 import { useState } from "react"
+import { useNavigate } from "react-router-dom"
 
 function Agendamento() {
+  const navigate = useNavigate()
   const [selectedDate, setSelectedDate] = useState(null)
   const [turno, setTurno] = useState("")
   const [currentDate, setCurrentDate] = useState(new Date())
@@ -84,6 +86,7 @@ function Agendamento() {
       <button
         className={`btn-avancar ${canAdvance ? "ativo" : ""}`}
         disabled={!canAdvance}
+        onClick={() => navigate("/faxina/residencial-agendada/formulario")}
       >
         Avançar
       </button>
