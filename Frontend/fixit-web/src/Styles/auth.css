@@ -1,0 +1,196 @@
+.auth-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f5f7fa, #e4e9f0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 420px;
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 32px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  text-align: center;
+}
+
+.auth-card h1 {
+  font-size: 22px;
+  margin-bottom: 8px;
+  color: #1f2937;
+}
+
+.auth-card p {
+  font-size: 14px;
+  color: #6b7280;
+  margin-bottom: 24px;
+}
+
+.auth-card strong {
+  color: #111827;
+}
+
+.auth-card input {
+  width: 100%;
+  height: 44px;
+  padding: 0 12px;
+  font-size: 14px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  outline: none;
+  margin-bottom: 12px;
+  transition: border 0.2s;
+}
+
+.auth-card input:focus {
+  border-color: #2563eb;
+}
+
+.auth-card button {
+  width: 100%;
+  height: 44px;
+  background: #2563eb;
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.auth-card button:hover {
+  background: #1d4ed8;
+}
+
+.auth-card button:disabled {
+  background: #93c5fd;
+  cursor: not-allowed;
+}
+
+.auth-card button:active {
+  transform: scale(0.98);
+}
+
+.error {
+  font-size: 13px;
+  color: #dc2626;
+  margin-bottom: 12px;
+}
+
+/* =========================
+   VERIFY PAGE MODERN STYLE
+========================= */
+
+
+.verify-card {
+  max-width: 460px;
+  padding: 48px 40px;
+  border-radius: 20px;
+  box-shadow:
+    0 20px 40px rgba(0, 0, 0, 0.08),
+    0 8px 16px rgba(37, 99, 235, 0.05);
+  animation: fadeUp 0.4s ease;
+}
+
+.verify-card h1 {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: #111827;
+}
+
+.verify-card p {
+  font-size: 15px;
+  color: #6b7280;
+  margin-bottom: 32px;
+}
+
+.verify-card input {
+  height: 56px;
+  font-size: 20px;
+  letter-spacing: 8px;
+  border-radius: 14px;
+  border: 1.5px solid #e5e7eb;
+  background: #f9fafb;
+  transition: all 0.2s ease;
+}
+
+.verify-card input:focus {
+  border-color: #2563eb;
+  background: #ffffff;
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.15);
+}
+
+.verify-card button {
+  height: 56px;
+  font-size: 16px;
+  border-radius: 14px;
+  margin-top: 6px;
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  box-shadow: 0 6px 14px rgba(37, 99, 235, 0.3);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.verify-card button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 22px rgba(37, 99, 235, 0.35);
+}
+
+.verify-card .resend {
+  display: block;
+  margin-top: 18px;
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.verify-card .resend a {
+  color: #2563eb;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.verify-card .resend a:hover {
+  text-decoration: underline;
+}
+
+/* animation */
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.code-inputs {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.code-inputs input {
+  width: 52px;
+  height: 60px;
+  font-size: 22px;
+  font-weight: 600;
+  text-align: center;
+  border-radius: 14px;
+  border: 1.5px solid #e5e7eb;
+  background: #f9fafb;
+  transition: all 0.2s ease;
+}
+
+.code-inputs input:focus {
+  border-color: #2563eb;
+  background: #ffffff;
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.15);
+}

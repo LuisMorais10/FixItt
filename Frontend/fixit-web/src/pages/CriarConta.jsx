@@ -1,14 +1,34 @@
 import { useState } from "react"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
+import PhoneInput from "react-phone-input-2"
+import "react-phone-input-2/lib/style.css"
+import "../Styles/auth.css"
 
 function CriarConta() {
+  const navigate = useNavigate()
+  
+  
   const [nome, setNome] = useState("")
   const [email, setEmail] = useState("")
+  const [telefone, setTelefone] = useState("")
   const [senha, setSenha] = useState("")
   const [confirmarSenha, setConfirmarSenha] = useState("")
 
+  const validarSenha = (senha) => {
+    const regex =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$%^&*!])[A-Za-z\d@#$%^&*!]{8,}$/
+    return regex.test(senha)
+  }
+
   const handleSubmit = async (e) => {
-    e.preventDefault() // 🔥 impede reload da página
+    e.preventDefault()
+
+    if (!validarSenha(senha)) {
+      alert(
+        "A senha deve ter no mínimo 8 caracteres, uma letra maiúscula, uma minúscula, um número e um caractere especial."
+      )
+      return
+    }
 
     if (senha !== confirmarSenha) {
       alert("As senhas não coincidem")
@@ -24,6 +44,7 @@ function CriarConta() {
         body: JSON.stringify({
           username: email, // Django usa username
           email: email,
+          telefone: telefone,
           password: senha,
         }),
       })
@@ -35,7 +56,9 @@ function CriarConta() {
         return
       }
 
-      alert("Conta criada com sucesso!")
+       navigate("/verificar-codigo", {
+        state: { email }
+     })
     } catch (error) {
       console.error(error)
       alert("Erro de conexão com o servidor")
@@ -54,6 +77,7 @@ function CriarConta() {
             placeholder="Digite seu nome completo"
             value={nome}
             onChange={(e) => setNome(e.target.value)}
+            required
           />
 
           <label>E-mail</label>
@@ -62,6 +86,27 @@ function CriarConta() {
             placeholder="Digite seu e-mail"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+
+          <label>Telefone para contato</label>
+          <PhoneInput
+            country={"br"}
+            value={telefone}
+            onChange={setTelefone}
+            inputStyle={{
+             width: "100%",
+             height: "44px",
+             fontSize: "14px",
+                  }}
+            buttonStyle={{
+             borderTopLeftRadius: "6px",
+             borderBottomLeftRadius: "6px",
+                  }}
+            containerStyle={{
+             marginBottom: "16px",
+                  }}
+            placeholder="Digite seu telefone"
           />
 
           <label>Senha</label>
@@ -70,6 +115,7 @@ function CriarConta() {
             placeholder="Crie uma senha"
             value={senha}
             onChange={(e) => setSenha(e.target.value)}
+            required
           />
 
           <label>Confirmar senha</label>
@@ -78,6 +124,7 @@ function CriarConta() {
             placeholder="Confirme sua senha"
             value={confirmarSenha}
             onChange={(e) => setConfirmarSenha(e.target.value)}
+            required
           />
 
           <button type="submit">Criar Conta</button>
