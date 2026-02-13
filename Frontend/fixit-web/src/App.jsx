@@ -10,6 +10,7 @@ import Faxina from "./pages/Faxina"
 import Entrar from "./pages/Entrar"
 import CriarConta from "./pages/CriarConta"
 import VerificarCodigo from "./pages/VerificarCodigo"
+import ContaVerificada from "./pages/ContaVerificada"
 
 function App() {
   return (
@@ -68,6 +69,7 @@ function App() {
         <Route path="entrar" element={<Entrar />} />
         <Route path="criar-conta" element={<CriarConta />} />
         <Route path="verificar-codigo" element={<VerificarCodigo />} />
+        <Route path="/conta-verificada" element={<ContaVerificada />} />
       </Route>
     </Routes>
   )

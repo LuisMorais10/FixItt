@@ -52,8 +52,9 @@ function CriarConta() {
       const data = await response.json()
 
       if (!response.ok) {
-        alert(data.error || "Erro ao criar conta")
-        return
+        const firstError = Object.values(data)[0]
+        alert(Array.isArray(firstError) ? firstError[0] : "Erro ao criar conta")
+      return
       }
 
        navigate("/verificar-codigo", {

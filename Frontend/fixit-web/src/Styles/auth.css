@@ -194,3 +194,17 @@
   background: #ffffff;
   box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.15);
 }
+
+.success-card {
+  text-align: center;
+  gap: 20px;
+}
+
+.success-card h1 {
+  font-size: 22px;
+  margin-top: 20px;
+}
+
+.success-card button {
+  margin-top: 20px;
+}
