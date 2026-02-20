@@ -11,15 +11,23 @@ import Entrar from "./pages/Entrar"
 import CriarConta from "./pages/CriarConta"
 import VerificarCodigo from "./pages/VerificarCodigo"
 import ContaVerificada from "./pages/ContaVerificada"
+import PagamentoConfirmado from "./pages/PagamentoConfirmado"
+import MeusPedidos from "./pages/MeusPedidos"
 
 function App() {
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
+
+        {/* PÚBLICAS */}
         <Route index element={<Home />} />
         <Route path="faxina" element={<Faxina />} />
+        <Route path="entrar" element={<Entrar />} />
+        <Route path="criar-conta" element={<CriarConta />} />
+        <Route path="verificar-codigo" element={<VerificarCodigo />} />
+        <Route path="conta-verificada" element={<ContaVerificada />} />
 
-        {/* 🔒 FAXINA AGENDADA */}
+        {/* PROTEGIDAS */}
         <Route
           path="faxina/residencial-agendada"
           element={
@@ -42,12 +50,11 @@ function App() {
           path="faxina/residencial-agendada/profissionais"
           element={
             <PrivateRoute>
-               <EscolhaProfissional />
+              <EscolhaProfissional />
             </PrivateRoute>
-         }
-       />
+          }
+        />
 
-        {/* 🔒 FAXINA FLASH */}
         <Route
           path="faxina/residencial-flash"
           element={
@@ -57,19 +64,34 @@ function App() {
           }
         />
 
+        {/* ✅ PAGAMENTO GLOBAL */}
         <Route
-          path="faxina/pagamento"
+          path="pagamento"
           element={
-           <PrivateRoute>
-             <Pagamento />
-           </PrivateRoute>
-         }
-       />
+            <PrivateRoute>
+              <Pagamento />
+            </PrivateRoute>
+          }
+        />
 
-        <Route path="entrar" element={<Entrar />} />
-        <Route path="criar-conta" element={<CriarConta />} />
-        <Route path="verificar-codigo" element={<VerificarCodigo />} />
-        <Route path="/conta-verificada" element={<ContaVerificada />} />
+        <Route
+          path="pagamento-confirmado"
+          element={
+            <PrivateRoute>
+              <PagamentoConfirmado />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="meus-pedidos"
+          element={
+            <PrivateRoute>
+              <MeusPedidos />
+            </PrivateRoute>
+          }
+        />
+
       </Route>
     </Routes>
   )

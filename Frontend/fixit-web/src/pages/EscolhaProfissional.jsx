@@ -46,7 +46,7 @@ function EscolhaProfissional() {
 
   const handleAvancar = () => {
     // aqui depois você envia o ID do profissional (ou null)
-    navigate("/faxina/pagamento")
+    navigate("/pagamento")
   }
 
   return (
@@ -103,7 +103,7 @@ function EscolhaProfissional() {
       <div className="sem-preferencia">
         <button
          type="button"
-         onClick={() => navigate("/faxina/pagamento")}
+         onClick={() => navigate("/pagamento")}
        >
         Não tenho preferência
        </button>

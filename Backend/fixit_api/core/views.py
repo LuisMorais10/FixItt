@@ -6,6 +6,17 @@ from .serializers import RegisterSerializer
 from django.contrib.auth.models import User
 from .models import EmailVerification
 from .utils import send_verification_email
+from rest_framework import generics, permissions
+from .models import Order
+from .serializers import OrderSerializer
+
+
+class CreateOrderView(generics.CreateAPIView):
+    serializer_class = OrderSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
 
 
 class RegisterView(APIView):

@@ -6,8 +6,14 @@ function FormularioFaxina() {
   const handleSubmit = (e) => {
     e.preventDefault()
 
-    // 👉 aqui depois você pode validar os dados ou salvar no contexto
-    navigate("/faxina/residencial-agendada/profissionais")
+    const orderData = {
+      service: "faxina_residencial",
+      value: 150
+    }
+
+    localStorage.setItem("pendingOrder", JSON.stringify(orderData))
+
+    navigate("/pagamento")
   }
 
   return (

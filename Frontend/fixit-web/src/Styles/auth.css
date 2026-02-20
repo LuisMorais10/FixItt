@@ -208,3 +208,45 @@
 .success-card button {
   margin-top: 20px;
 }
+
+.pedidos-card {
+  width: 100%;
+  max-width: 600px;
+  text-align: left;
+}
+
+.ticket {
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 20px;
+  margin-top: 20px;
+  background: #f9fafb;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
+}
+
+.ticket-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.status {
+  color: #2563eb;
+}
+
+.ticket-body p {
+  margin: 4px 0;
+  font-size: 14px;
+}
+
+.ticket-footer {
+  margin-top: 15px;
+  text-align: right;
+}
+
+.valor {
+  font-size: 18px;
+  font-weight: bold;
+  color: #2563eb;
+}

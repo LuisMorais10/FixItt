@@ -2,6 +2,14 @@ import re
 from rest_framework import serializers
 from django.contrib.auth.models import User
 from .models import Profile
+from .models import Order
+
+
+class OrderSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Order
+        fields = '__all__'
+        read_only_fields = ['user', 'status', 'created_at']
 
 
 class RegisterSerializer(serializers.ModelSerializer):

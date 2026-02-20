@@ -1,8 +1,14 @@
 import { useState } from "react"
 import "./PaginaPagamento.css"
+import { useNavigate } from "react-router-dom"
 
 export default function PaginaPagamento() {
   const [metodo, setMetodo] = useState("pix")
+  const navigate = useNavigate()
+
+  const handlePayment = () => {
+    navigate("/pagamento-confirmado")
+  }
 
   return (
     <div className="checkout-container">
@@ -14,9 +20,7 @@ export default function PaginaPagamento() {
         </p>
 
         <div className="payment-methods">
-          <label
-            className={`payment-option ${metodo === "pix" ? "active" : ""}`}
-          >
+          <label className={`payment-option ${metodo === "pix" ? "active" : ""}`}>
             <input
               type="radio"
               name="pagamento"
@@ -29,9 +33,7 @@ export default function PaginaPagamento() {
             </div>
           </label>
 
-          <label
-            className={`payment-option ${metodo === "cartao" ? "active" : ""}`}
-          >
+          <label className={`payment-option ${metodo === "cartao" ? "active" : ""}`}>
             <input
               type="radio"
               name="pagamento"
@@ -77,7 +79,11 @@ export default function PaginaPagamento() {
           <strong>R$ 150,00</strong>
         </div>
 
-        <button className="pay-button">
+        <button 
+          className="pay-button"
+          type="button"
+          onClick={handlePayment}
+        >
           Finalizar pagamento
         </button>
 
@@ -88,3 +94,4 @@ export default function PaginaPagamento() {
     </div>
   )
 }
+
