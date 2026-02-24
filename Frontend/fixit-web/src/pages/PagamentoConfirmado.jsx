@@ -1,20 +1,28 @@
 import { useNavigate } from "react-router-dom"
 import { CheckCircle } from "lucide-react"
 import "../Styles/auth.css"
-import { useEffect } from "react"
+import { useEffect,useRef } from "react"
 
 export default function PagamentoConfirmado() {
   const navigate = useNavigate()
+  const hasCreated = useRef(false)
 
   useEffect(() => {
     const createOrder = async () => {
-      const token = localStorage.getItem("token")
+
+      if (hasCreated.current) return
+      hasCreated.current = true
+
+      const token = localStorage.getItem("access")
       const orderData = JSON.parse(localStorage.getItem("pendingOrder"))
 
-      if (!orderData || !token) return
+      if (!orderData || !token) {
+        console.log("Sem pedido ou token")
+        return
+      }
 
       try {
-        await fetch("http://localhost:8000/api/orders/create/", {
+        const response = await fetch("http://localhost:8000/api/orders/create/", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -23,7 +31,17 @@ export default function PagamentoConfirmado() {
           body: JSON.stringify(orderData)
         })
 
+        if (!response.ok) {
+          const error = await response.json()
+          console.error("Erro backend:", error)
+          return
+        }
+
+        const data = await response.json()
+        console.log("Pedido criado:", data)
+
         localStorage.removeItem("pendingOrder")
+
       } catch (error) {
         console.error("Erro ao criar pedido:", error)
       }

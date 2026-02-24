@@ -3,7 +3,6 @@ from django.contrib.auth.models import User
 import random
 from django.utils import timezone
 from datetime import timedelta
-from django.contrib.auth.models import User
 
 
 class EmailVerification(models.Model):

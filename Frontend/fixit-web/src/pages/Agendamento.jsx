@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom"
 
 function Agendamento() {
   const navigate = useNavigate()
+
   const [selectedDate, setSelectedDate] = useState(null)
   const [turno, setTurno] = useState("")
   const [currentDate, setCurrentDate] = useState(new Date())
@@ -26,13 +27,25 @@ function Agendamento() {
     setCurrentDate(new Date(year, month + 1, 1))
   }
 
+  const handleAdvance = () => {
+    if (!selectedDate || !turno) return
+
+    localStorage.setItem(
+      "agendamentoData",
+      JSON.stringify(selectedDate)
+    )
+
+    localStorage.setItem("agendamentoTurno", turno)
+
+    navigate("/faxina/residencial-agendada/formulario")
+  }
+
   const canAdvance = selectedDate && turno
 
   return (
     <div className="agendamento-page">
       <h2>Escolha a data do serviço</h2>
 
-      {/* 📅 CALENDÁRIO */}
       <div className="calendar-container">
         <div className="calendar-header">
           <button onClick={handlePrevMonth}>←</button>
@@ -73,7 +86,6 @@ function Agendamento() {
         </div>
       </div>
 
-      {/* 🕘 TURNO */}
       <div className="turno">
         <label>Turno</label>
         <select value={turno} onChange={(e) => setTurno(e.target.value)}>
@@ -82,11 +94,10 @@ function Agendamento() {
         </select>
       </div>
 
-      {/* ➡️ AVANÇAR */}
       <button
         className={`btn-avancar ${canAdvance ? "ativo" : ""}`}
         disabled={!canAdvance}
-        onClick={() => navigate("/faxina/residencial-agendada/formulario")}
+        onClick={handleAdvance}
       >
         Avançar
       </button>
@@ -95,5 +106,3 @@ function Agendamento() {
 }
 
 export default Agendamento
-
-

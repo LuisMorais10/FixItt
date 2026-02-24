@@ -9,7 +9,15 @@ from .utils import send_verification_email
 from rest_framework import generics, permissions
 from .models import Order
 from .serializers import OrderSerializer
+from rest_framework.permissions import IsAuthenticated
 
+
+class MyOrdersView(generics.ListAPIView):
+    serializer_class = OrderSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return Order.objects.filter(user=self.request.user)
 
 class CreateOrderView(generics.CreateAPIView):
     serializer_class = OrderSerializer

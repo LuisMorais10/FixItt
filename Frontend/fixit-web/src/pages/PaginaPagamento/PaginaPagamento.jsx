@@ -6,9 +6,45 @@ export default function PaginaPagamento() {
   const [metodo, setMetodo] = useState("pix")
   const navigate = useNavigate()
 
-  const handlePayment = () => {
-    navigate("/pagamento-confirmado")
+  const handlePayment = async () => {
+  const token = localStorage.getItem("access")
+  const rawOrder = localStorage.getItem("pendingOrder")
+  const orderData = rawOrder ? JSON.parse(rawOrder) : null
+
+  if (!token) {
+    console.log("Usuário não autenticado")
+    return
   }
+
+  if (!orderData) {
+    console.log("Nenhum pedido pendente encontrado")
+    return
+  }
+
+  try {
+    const response = await fetch("http://localhost:8000/api/orders/create/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      },
+      body: JSON.stringify(orderData)
+    })
+
+    if (!response.ok) {
+      const error = await response.json()
+      console.error("Erro ao criar pedido:", error)
+      return
+    }
+
+    localStorage.removeItem("pendingOrder")
+
+    navigate("/pagamento-confirmado")
+
+  } catch (error) {
+    console.error("Erro:", error)
+  }
+}
 
   return (
     <div className="checkout-container">

@@ -5,23 +5,25 @@ export default function MeusPedidos() {
   const [orders, setOrders] = useState([])
 
   useEffect(() => {
-  const fetchOrders = async () => {
-    const token = localStorage.getItem("token")
+  const token = localStorage.getItem("access")
+  console.log("TOKEN:", localStorage.getItem("access"))
 
-    const response = await fetch("http://localhost:8000/api/orders/my/", {
+    fetch("http://localhost:8000/api/orders/my/", {
       headers: {
-        Authorization: `Bearer ${token}`
+        "Authorization": `Bearer ${token}`,
+        "Content-Type": "application/json"
       }
     })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error("Erro ao buscar pedidos")
+        }
+        return response.json()
+      })
+      .then(data => setOrders(data))
+      .catch(error => console.error(error))
+  }, [])
 
-    const data = await response.json()
-    console.log("Pedidos recebidos:", data)
-
-    setOrders(data)
-  }
-
-  fetchOrders()
-}, [])
 
   return (
     <div>
