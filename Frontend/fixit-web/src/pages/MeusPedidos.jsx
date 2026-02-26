@@ -26,16 +26,36 @@ export default function MeusPedidos() {
 
 
   return (
-    <div>
-      <h1>Meus Pedidos</h1>
+  <div className="pedidos-card">
+    <h1>Meus Pedidos</h1>
 
-      {orders.map(order => (
-        <div key={order.id}>
-          <p>Serviço: {order.service}</p>
-          <p>Valor: R$ {order.value}</p>
-          <p>Status: {order.status}</p>
+    {orders.length === 0 ? (
+      <p>Você ainda não possui pedidos.</p>
+    ) : (
+      orders.map(order => (
+        <div key={order.id} className="ticket">
+          
+          <div className="ticket-header">
+            <span>Pedido #{order.id}</span>
+            <span className={`status ${order.status}`}>
+              {order.status}
+            </span>
+          </div>
+
+          <div className="ticket-body">
+            <p><strong>Serviço:</strong> {order.service}</p>
+            <p><strong>Status:</strong> {order.status}</p>
+          </div>
+
+          <div className="ticket-footer">
+            <span className="valor">
+              R$ {Number(order.value).toFixed(2)}
+            </span>
+          </div>
+
         </div>
-      ))}
-    </div>
-  )
+      ))
+    )}
+  </div>
+)
 }

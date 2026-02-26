@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom"
 import { CheckCircle } from "lucide-react"
 import "../Styles/auth.css"
 import { useEffect,useRef } from "react"
+import { authFetch } from "../Services/api"
 
 export default function PagamentoConfirmado() {
   const navigate = useNavigate()
@@ -13,7 +14,7 @@ export default function PagamentoConfirmado() {
       if (hasCreated.current) return
       hasCreated.current = true
 
-      const token = localStorage.getItem("access")
+      
       const orderData = JSON.parse(localStorage.getItem("pendingOrder"))
 
       if (!orderData || !token) {
@@ -22,13 +23,9 @@ export default function PagamentoConfirmado() {
       }
 
       try {
-        const response = await fetch("http://localhost:8000/api/orders/create/", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${token}`
-          },
-          body: JSON.stringify(orderData)
+          const response = await authFetch("http://localhost:8000/api/orders/create/", {
+            method: "POST",
+            body: JSON.stringify(orderData)
         })
 
         if (!response.ok) {

@@ -8,10 +8,11 @@ export function AuthProvider({ children }) {
 
   useEffect(() => {
     const access = localStorage.getItem("access")
+    const refresh = localStorage.getItem("refresh")
     const email = localStorage.getItem("user_email")
 
-    if (access && email) {
-      setUser({ email })
+    if (access && refresh && email) {
+      setUser({ access, refresh, email })
     }
 
     setLoading(false)
@@ -22,7 +23,7 @@ export function AuthProvider({ children }) {
     localStorage.setItem("refresh", refresh)
     localStorage.setItem("user_email", email)
 
-    setUser({ email })
+    setUser({ access, refresh, email })
   }
 
   const logout = () => {

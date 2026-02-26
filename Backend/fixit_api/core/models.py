@@ -63,9 +63,9 @@ class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     service = models.ForeignKey('Service', on_delete=models.CASCADE)
 
-    address = models.CharField(max_length=255)
+    address = models.CharField(max_length=255, blank=True, null=True)
     date = models.DateField()
-    time = models.TimeField()
+    time = models.TimeField(blank=True, null=True)
 
     description = models.TextField(blank=True)
 
