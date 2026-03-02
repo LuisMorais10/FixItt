@@ -1,8 +1,18 @@
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useLocation } from "react-router-dom"
 import { useState } from "react"
+
 
 function FormularioFaxina() {
   const navigate = useNavigate()
+  const location = useLocation()
+
+      let serviceId = 1
+
+      if (location.pathname.includes("residencial-flash")) {
+          serviceId = 2
+        }
+
+
   const [tipoImovel, setTipoImovel] = useState("")
   const [quartos, setQuartos] = useState("")
   const [banheiros, setBanheiros] = useState("")
@@ -26,7 +36,7 @@ function FormularioFaxina() {
     e.preventDefault()
 
     const orderData = {
-      service: 1,
+      service: serviceId,
       date: formattedDate,
       description: `
       Turno: ${savedTurno}

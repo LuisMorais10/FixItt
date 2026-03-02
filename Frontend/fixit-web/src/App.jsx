@@ -13,6 +13,7 @@ import VerificarCodigo from "./pages/VerificarCodigo"
 import ContaVerificada from "./pages/ContaVerificada"
 import PagamentoConfirmado from "./pages/PagamentoConfirmado"
 import MeusPedidos from "./pages/MeusPedidos"
+import PaginaContatoEmpresarial from "./pages/PaginaContatoEmpresarial"
 
 function App() {
   return (
@@ -22,10 +23,13 @@ function App() {
         {/* PÚBLICAS */}
         <Route index element={<Home />} />
         <Route path="faxina" element={<Faxina />} />
+        <Route path="faxina/comercial" element={<PaginaContatoEmpresarial />} />
+        <Route path="faxina/hotelaria" element={<PaginaContatoEmpresarial />} />
         <Route path="entrar" element={<Entrar />} />
         <Route path="criar-conta" element={<CriarConta />} />
         <Route path="verificar-codigo" element={<VerificarCodigo />} />
         <Route path="conta-verificada" element={<ContaVerificada />} />
+
 
         {/* PROTEGIDAS */}
         <Route

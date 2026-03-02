@@ -37,7 +37,7 @@ function Faxina() {
             <ImageSlider images={[residencial1, residencial2, residencial3]} />
             <h3>Faxina Residencial Agendada</h3>
             <p>
-              Limpeza completa agendada com antecedência, ideal para manter sua
+              Limpeza completa agendada com 48 horas de antecedência, ideal para manter sua
               casa sempre organizada.
             </p>
           </div>

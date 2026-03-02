@@ -11,6 +11,13 @@ function Agendamento() {
   const year = currentDate.getFullYear()
   const month = currentDate.getMonth()
 
+  // 🔵 DATA MÍNIMA (HOJE + 2 DIAS)
+  const today = new Date()
+  today.setHours(0, 0, 0, 0)
+
+  const minDate = new Date(today)
+  minDate.setDate(minDate.getDate() + 2)
+
   const daysInMonth = new Date(year, month + 1, 0).getDate()
   const firstDay = new Date(year, month, 1).getDay()
 
@@ -19,8 +26,19 @@ function Agendamento() {
     year: "numeric",
   })
 
+  // 🔵 BLOQUEAR VOLTAR PARA MESES ANTERIORES
   const handlePrevMonth = () => {
-    setCurrentDate(new Date(year, month - 1, 1))
+    const firstAllowedMonth = new Date(
+      minDate.getFullYear(),
+      minDate.getMonth(),
+      1
+    )
+
+    const previousMonth = new Date(year, month - 1, 1)
+
+    if (previousMonth >= firstAllowedMonth) {
+      setCurrentDate(previousMonth)
+    }
   }
 
   const handleNextMonth = () => {
@@ -66,6 +84,12 @@ function Agendamento() {
 
           {[...Array(daysInMonth)].map((_, i) => {
             const day = i + 1
+
+            const currentDayDate = new Date(year, month, day)
+            currentDayDate.setHours(0, 0, 0, 0)
+
+            const isDisabled = currentDayDate < minDate
+
             const isSelected =
               selectedDate?.day === day &&
               selectedDate?.month === month &&
@@ -74,10 +98,14 @@ function Agendamento() {
             return (
               <div
                 key={day}
-                className={`calendar-day ${isSelected ? "selected" : ""}`}
-                onClick={() =>
-                  setSelectedDate({ day, month, year })
-                }
+                className={`calendar-day 
+                  ${isSelected ? "selected" : ""} 
+                  ${isDisabled ? "disabled" : ""}`}
+                onClick={() => {
+                  if (!isDisabled) {
+                    setSelectedDate({ day, month, year })
+                  }
+                }}
               >
                 {day}
               </div>
