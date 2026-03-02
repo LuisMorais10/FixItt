@@ -13,6 +13,7 @@ function FormularioFaxina() {
         }
 
 
+  const [tipoFaxina, setTipoFaxina] = useState("")      
   const [tipoImovel, setTipoImovel] = useState("")
   const [quartos, setQuartos] = useState("")
   const [banheiros, setBanheiros] = useState("")
@@ -38,16 +39,15 @@ function FormularioFaxina() {
     const orderData = {
       service: serviceId,
       date: formattedDate,
-      description: `
-      Turno: ${savedTurno}
-      Tipo: ${tipoImovel}
-      Quartos: ${quartos}
-      Banheiros: ${banheiros}
-      Metragem: ${metragem}m²
-      Endereço: ${logradouro}, ${numero}
-      Complemento: ${complemento}
-      CEP: ${cep}
-      `,
+      tipo_faxina: tipoFaxina,
+      tipo_imovel: tipoImovel,
+      quartos,
+      banheiros,
+      metragem,
+      cep,
+      logradouro,
+      numero,
+      complemento,
       value: 150
       }
 
@@ -62,6 +62,21 @@ function FormularioFaxina() {
         <h2>Preencha as informações abaixo</h2>
 
         <form onSubmit={handleSubmit}>
+
+          <div className="form-group">
+            <label>Tipo de Faxina</label>
+            <select
+              required
+              value={tipoFaxina}
+              onChange={(e) => setTipoFaxina(e.target.value)}
+            >
+              <option value="">Selecione</option>
+              <option value="padrao">Faxina Padrão</option>
+              <option value="diaria-completa">Diária Completa</option>
+            </select>
+          </div>
+
+
           <div className="form-group">
             <label>Casa ou Apartamento</label>
             <select
@@ -72,7 +87,7 @@ function FormularioFaxina() {
               <option value="casa">Casa</option>
               <option value="apartamento">Apartamento</option>
 
-</select>
+            </select>
           </div>
 
           <div className="form-group">

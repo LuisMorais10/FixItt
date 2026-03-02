@@ -11,6 +11,30 @@ class OrderSerializer(serializers.ModelSerializer):
         fields = '__all__'
         read_only_fields = ['user', 'status', 'created_at']
 
+    def validate(self, data):
+        service = data.get("service")
+
+        # Se for faxina residencial
+        if service.tipo == "faxina_residencial":
+            required_fields = [
+                "tipo_faxina",
+                "tipo_imovel",
+                "quartos",
+                "banheiros",
+                "metragem",
+                "cep",
+                "logradouro",
+                "numero"
+            ]
+
+            for field in required_fields:
+                if not data.get(field):
+                    raise serializers.ValidationError(
+                        {field: "Este campo é obrigatório para faxina residencial."}
+                    )
+
+        return data
+
 
 class RegisterSerializer(serializers.ModelSerializer):
     telefone = serializers.CharField(write_only=True)

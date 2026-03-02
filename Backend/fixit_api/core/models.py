@@ -60,10 +60,45 @@ class Order(models.Model):
         ('canceled', 'Cancelado'),
     ]
 
+    FAXINA_TIPO_CHOICES = [
+        ('padrao', 'Faxina Padrão'),
+        ('diaria_completa', 'Diária Completa'),
+    ]
+
+    IMOVEL_CHOICES = [
+        ('casa', 'Casa'),
+        ('apartamento', 'Apartamento'),
+    ]
+
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     service = models.ForeignKey('Service', on_delete=models.CASCADE)
 
+    # 🔥 NOVOS CAMPOS
+    tipo_faxina = models.CharField(
+        max_length=20,
+        choices=FAXINA_TIPO_CHOICES,
+        null=True,
+        blank=True
+    )
+
+    tipo_imovel = models.CharField(
+        max_length=20,
+        choices=IMOVEL_CHOICES,
+        null=True,
+        blank=True
+    )
+
+    quartos = models.IntegerField(null=True, blank=True)
+    banheiros = models.IntegerField(null=True, blank=True)
+    metragem = models.IntegerField(null=True, blank=True)
+
+    cep = models.CharField(max_length=20, null=True, blank=True)
+    logradouro = models.CharField(max_length=255, null=True, blank=True)
+    numero = models.CharField(max_length=20, null=True, blank=True)
+    complemento = models.CharField(max_length=255, null=True, blank=True)
+
     address = models.CharField(max_length=255, blank=True, null=True)
+
     date = models.DateField()
     time = models.TimeField(blank=True, null=True)
 
@@ -81,5 +116,4 @@ class Order(models.Model):
 
     def __str__(self):
         return f"Pedido #{self.id} - {self.user.username}"
-
 
