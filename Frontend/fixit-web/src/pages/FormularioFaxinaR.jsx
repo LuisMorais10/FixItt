@@ -1,5 +1,5 @@
 import { useNavigate, useLocation } from "react-router-dom"
-import { useState } from "react"
+import { useState,useEffect } from "react"
 
 
 function FormularioFaxina() {
@@ -22,6 +22,19 @@ function FormularioFaxina() {
   const [logradouro, setLogradouro] = useState("")
   const [numero, setNumero] = useState("")
   const [complemento, setComplemento] = useState("")
+  const [cidade, setCidade] = useState("")
+  const [bairro, setBairro] = useState("")
+
+  useEffect(() => {
+  const savedAddress = JSON.parse(localStorage.getItem("selectedAddress"))
+
+  if (savedAddress) {
+    setCep(savedAddress.cep || "")
+    setCidade(savedAddress.cidade || "")
+    setBairro(savedAddress.bairro || "")
+    setLogradouro(savedAddress.logradouro || "")
+  }
+}, [])
 
   const savedDate = JSON.parse(localStorage.getItem("agendamentoData"))
   const savedTurno = localStorage.getItem("agendamentoTurno")
@@ -45,6 +58,8 @@ function FormularioFaxina() {
       banheiros,
       metragem,
       cep,
+      cidade,
+      bairro,
       logradouro,
       numero,
       complemento,
@@ -126,6 +141,26 @@ function FormularioFaxina() {
               type="number"
               value={cep}
               onChange={(e) => setCep(e.target.value)}
+              required
+            />
+          </div>
+
+          <div className="form-group">
+            <label>Cidade</label>
+            <input 
+              type="text"
+              value={cidade}
+              onChange={(e) => setCidade(e.target.value)}
+              required
+            />
+          </div>
+
+          <div className="form-group">
+            <label>Bairro</label>
+            <input 
+              type="text"
+              value={bairro}
+              onChange={(e) => setBairro(e.target.value)}
               required
             />
           </div>

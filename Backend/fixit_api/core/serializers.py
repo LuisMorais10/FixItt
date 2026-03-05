@@ -6,6 +6,8 @@ from .models import Order
 
 
 class OrderSerializer(serializers.ModelSerializer):
+    service_nome = serializers.CharField(source='service.nome', read_only=True)
+    
     class Meta:
         model = Order
         fields = '__all__'

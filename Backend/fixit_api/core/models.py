@@ -91,8 +91,9 @@ class Order(models.Model):
     quartos = models.IntegerField(null=True, blank=True)
     banheiros = models.IntegerField(null=True, blank=True)
     metragem = models.IntegerField(null=True, blank=True)
-
     cep = models.CharField(max_length=20, null=True, blank=True)
+    cidade = models.CharField(max_length=100,default="Não informado")
+    bairro = models.CharField(max_length=100,default="Não informado")
     logradouro = models.CharField(max_length=255, null=True, blank=True)
     numero = models.CharField(max_length=20, null=True, blank=True)
     complemento = models.CharField(max_length=255, null=True, blank=True)

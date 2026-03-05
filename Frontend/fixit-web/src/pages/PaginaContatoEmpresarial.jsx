@@ -30,6 +30,28 @@ function PaginaContatoEmpresarial() {
           <label>Telefone</label>
           <input type="tel" required />
 
+          <label>Área útil</label>
+          <input type="number" required />
+
+          <label>CEP</label>
+          <input type="number" required />
+
+          <label>Cidade</label>
+          <input type="text" required />
+
+          <label>Bairro</label>
+          <input type="text" required />
+
+          <label>Logradouro</label>
+          <input type="text" required />
+
+          <label>Número</label>
+          <input type="number" required />
+
+          <label>Complemento</label>
+          <input type="text" required />
+
+
           <label>Descreva sua necessidade</label>
           <textarea
             rows={5}

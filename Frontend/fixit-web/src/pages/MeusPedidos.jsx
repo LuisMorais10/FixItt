@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react"
 import "../Styles/auth.css"
+import PedidoDetalhesModal from "../components/PedidoDetalhesModal"
 
 export default function MeusPedidos() {
   const [orders, setOrders] = useState([])
+  const [pedidoSelecionado, setPedidoSelecionado] = useState(null)
 
   useEffect(() => {
   const token = localStorage.getItem("access")
@@ -34,28 +36,40 @@ export default function MeusPedidos() {
     ) : (
       orders.map(order => (
         <div key={order.id} className="ticket">
-          
-          <div className="ticket-header">
-            <span>Pedido #{order.id}</span>
-            <span className={`status ${order.status}`}>
-              {order.status}
-            </span>
-          </div>
+            
+            <div className="ticket-header">
+              <span>Pedido #{order.id}</span>
+              <span className={`status ${order.status}`}>
+                {order.status}
+              </span>
+            </div>
 
-          <div className="ticket-body">
-            <p><strong>Serviço:</strong> {order.service}</p>
-            <p><strong>Status:</strong> {order.status}</p>
-          </div>
+            <div className="ticket-body">
+              <p><strong>Serviço:</strong> {order.service_nome || order.service}</p>
+              <p><strong>Status:</strong> {order.status}</p>
+            </div>
 
-          <div className="ticket-footer">
-            <span className="valor">
-              R$ {Number(order.value).toFixed(2)}
-            </span>
-          </div>
+            <div className="ticket-footer">
+              <span className="valor">
+                R$ {Number(order.value).toFixed(2)}
+              </span>
 
-        </div>
-      ))
-    )}
-  </div>
-)
+              <button
+                className="btn-detalhes"
+                onClick={() => setPedidoSelecionado(order)}
+              >
+                Detalhes do Pedido
+              </button>
+            </div>
+
+          </div>
+        ))
+      )}
+
+      <PedidoDetalhesModal
+        pedido={pedidoSelecionado}
+        onClose={() => setPedidoSelecionado(null)}
+      />
+    </div>
+  )
 }
