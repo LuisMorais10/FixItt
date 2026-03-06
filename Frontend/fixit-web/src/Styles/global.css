@@ -824,6 +824,67 @@ header nav {
 .btn-submit:active {
   transform: scale(0.98);
 }
+
+.label-info{
+display:flex;
+align-items:center;
+gap:8px;
+}
+
+.info-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 20px;
+  height: 20px;
+
+  font-size: 12px;
+  font-weight: bold;
+
+  border-radius: 50%;
+
+  background-color: #2563eb;
+  color: white;
+
+  cursor: pointer;
+
+  transition: all 0.2s ease;
+}
+
+/* Hover animation estilo Apple */
+.info-icon:hover {
+  background-color: #1d4ed8;
+  transform: scale(1.1);
+}
+
+/* Click feedback */
+.info-icon:active {
+  transform: scale(0.95);
+}
+
+.materiais-flags {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.flag-option {
+  display: flex;
+  gap: 8px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.materiais-list {
+  padding-left: 20px;
+  margin: 15px 0;
+}
+
+.materiais-list li {
+  margin-bottom: 6px;
+}
 /* ============================= */
 /* ESCOLHA DE PROFISSIONAL */
 /* ============================= */

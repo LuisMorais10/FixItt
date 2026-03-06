@@ -97,6 +97,7 @@ class Order(models.Model):
     logradouro = models.CharField(max_length=255, null=True, blank=True)
     numero = models.CharField(max_length=20, null=True, blank=True)
     complemento = models.CharField(max_length=255, null=True, blank=True)
+    materiais_limpeza = models.CharField(max_length=502, null=True, blank=True)
 
     address = models.CharField(max_length=255, blank=True, null=True)
 

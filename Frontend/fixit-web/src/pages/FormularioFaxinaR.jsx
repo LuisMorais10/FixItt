@@ -1,10 +1,15 @@
 import { useNavigate, useLocation } from "react-router-dom"
 import { useState,useEffect } from "react"
+import FaxinaInfoModal from "../components/FaxinaInfoModal"
+import MateriaisInfoModal from "../components/MateriaisInfoModal"
 
 
 function FormularioFaxina() {
   const navigate = useNavigate()
   const location = useLocation()
+  const [showInfo, setShowInfo] = useState(false)
+  const [showMateriaisInfo, setShowMateriaisInfo] = useState(false)
+  const [materiaisLimpeza, setMateriaisLimpeza] = useState("")
 
       let serviceId = 1
 
@@ -63,6 +68,7 @@ function FormularioFaxina() {
       logradouro,
       numero,
       complemento,
+      materiais_limpeza: materiaisLimpeza,
       value: 150
       }
 
@@ -79,7 +85,20 @@ function FormularioFaxina() {
         <form onSubmit={handleSubmit}>
 
           <div className="form-group">
-            <label>Tipo de Faxina</label>
+            <label className="label-info">
+              Tipo de Faxina
+
+              <span 
+                className="info-icon"
+                onClick={() => setShowInfo(true)}
+                title="Saiba a diferença entre os tipos de faxina"
+              >
+                i
+
+              </span>
+
+            </label>
+
             <select
               required
               value={tipoFaxina}
@@ -194,11 +213,65 @@ function FormularioFaxina() {
             />
           </div>
 
+          <div className="form-group">
+
+            <label className="label-info">
+            Materiais de limpeza
+
+            <span
+              className="info-icon"
+              onClick={() => setShowMateriaisInfo(true)}
+              title="Veja os materiais necessários para a faxina"
+            >
+              i
+          </span>
+
+        </label>
+
+          <div className="materiais-flags">
+
+            <label className="flag-option">
+            <input
+              type="radio"
+              name="materiais"
+              value="cliente"
+              checked={materiaisLimpeza === "cliente"}
+              onChange={(e) => setMateriaisLimpeza(e.target.value)}
+            />
+          Declaro que possuo os materiais de limpeza citados para a faxina selecionada
+        </label>
+
+            <label className="flag-option">
+            <input
+              type="radio"
+              name="materiais"
+              value="profissional"
+              checked={materiaisLimpeza === "profissional"}
+              onChange={(e) => setMateriaisLimpeza(e.target.value)}
+            />
+          Solicito que o profissional leve os materiais de limpeza
+        </label>
+
+      </div>
+
+    </div>
+
           <button type="submit" className="btn-submit">
             Avançar
           </button>
         </form>
       </div>
+
+      {showInfo && (
+        <FaxinaInfoModal
+          onClose={() => setShowInfo(false)}
+        />
+      )}
+
+
+      {showMateriaisInfo && (
+        <MateriaisInfoModal onClose={() => setShowMateriaisInfo(false)} />
+      )}
     </div>
   )
 }
