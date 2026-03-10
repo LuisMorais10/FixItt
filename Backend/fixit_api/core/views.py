@@ -10,6 +10,8 @@ from rest_framework import generics, permissions
 from .models import Order
 from .serializers import OrderSerializer
 from rest_framework.permissions import IsAuthenticated
+from django.core.mail import send_mail
+from django.conf import settings
 
 
 class MyOrdersView(generics.ListAPIView):
@@ -91,5 +93,38 @@ def resend_code(request):
     except User.DoesNotExist:
         return Response({"error": "Usuário não encontrado"}, status=400)
 
-    
-    
+
+@api_view(["POST"])
+def contato_empresarial(request):
+
+    if not request.user.is_authenticated:
+        return Response({"error": "Usuário não autenticado"}, status=401)
+
+    mensagem = request.data.get("mensagem")
+
+    if not mensagem:
+        return Response({"error": "Mensagem é obrigatória"}, status=400)
+
+    try:
+        send_mail(
+            subject="Recebemos sua mensagem",
+            message=f"""
+Olá {request.user.username},
+
+Recebemos sua mensagem:
+
+{mensagem}
+
+Nossa equipe responderá em breve.
+
+Equipe
+""",
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            recipient_list=[request.user.email],
+            fail_silently=False,
+        )
+
+        return Response({"success": True})
+
+    except Exception as e:
+        return Response({"error": str(e)}, status=500)

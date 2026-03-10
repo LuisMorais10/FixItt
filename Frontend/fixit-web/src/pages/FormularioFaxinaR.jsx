@@ -29,6 +29,28 @@ function FormularioFaxina() {
   const [complemento, setComplemento] = useState("")
   const [cidade, setCidade] = useState("")
   const [bairro, setBairro] = useState("")
+  const buscarCEP = async (cep) => {
+
+  const cepLimpo = cep.replace(/\D/g, "")
+
+  if (cepLimpo.length !== 8) return
+
+  try {
+
+    const response = await fetch(`https://viacep.com.br/ws/${cepLimpo}/json/`)
+    const data = await response.json()
+
+    if (!data.erro) {
+      setCidade(data.localidade || "")
+      setBairro(data.bairro || "")
+      setLogradouro(data.logradouro || "")
+    }
+
+  } catch (error) {
+    console.error("Erro ao buscar CEP:", error)
+  }
+
+}
 
   useEffect(() => {
   const savedAddress = JSON.parse(localStorage.getItem("selectedAddress"))
@@ -156,12 +178,16 @@ function FormularioFaxina() {
 
           <div className="form-group">
             <label>CEP</label>
-            <input 
-              type="number"
+            <input
+              type="text"
               value={cep}
-              onChange={(e) => setCep(e.target.value)}
-              required
-            />
+              onChange={(e) => {
+                const value = e.target.value
+                setCep(value)
+                buscarCEP(value)
+            }}
+            placeholder="00000-000"
+          />
           </div>
 
           <div className="form-group">

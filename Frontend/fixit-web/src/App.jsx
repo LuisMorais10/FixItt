@@ -14,6 +14,8 @@ import ContaVerificada from "./pages/ContaVerificada"
 import PagamentoConfirmado from "./pages/PagamentoConfirmado"
 import MeusPedidos from "./pages/MeusPedidos"
 import PaginaContatoEmpresarial from "./pages/PaginaContatoEmpresarial"
+import MensagemEnviada from "./pages/MensagemEnviadaFC"
+import Colaborador from "./pages/Colaborador"
 
 function App() {
   return (
@@ -25,10 +27,12 @@ function App() {
         <Route path="faxina" element={<Faxina />} />
         <Route path="faxina/comercial" element={<PaginaContatoEmpresarial />} />
         <Route path="faxina/hotelaria" element={<PaginaContatoEmpresarial />} />
+        <Route path="/mensagem-enviada" element={<MensagemEnviada />} />
         <Route path="entrar" element={<Entrar />} />
         <Route path="criar-conta" element={<CriarConta />} />
         <Route path="verificar-codigo" element={<VerificarCodigo />} />
         <Route path="conta-verificada" element={<ContaVerificada />} />
+        <Route path="/colaborador" element={<Colaborador />} />
 
 
         {/* PROTEGIDAS */}

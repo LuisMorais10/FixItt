@@ -4,6 +4,7 @@ from .views import RegisterView
 from .views import verify_code, resend_code
 from .views import CreateOrderView
 from .views import MyOrdersView
+from .views import contato_empresarial
 
 
 
@@ -14,5 +15,6 @@ urlpatterns = [
     path("resend-code/", resend_code),
     path('orders/create/', CreateOrderView.as_view()),
     path('orders/my/', MyOrdersView.as_view()),
+    path("contato-empresarial/", contato_empresarial),
 ]
 
