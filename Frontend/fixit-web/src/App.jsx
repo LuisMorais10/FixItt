@@ -16,6 +16,7 @@ import MeusPedidos from "./pages/MeusPedidos"
 import PaginaContatoEmpresarial from "./pages/PaginaContatoEmpresarial"
 import MensagemEnviada from "./pages/MensagemEnviadaFC"
 import Colaborador from "./pages/Colaborador"
+import Dados from './pages/Dados'
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
         <Route path="verificar-codigo" element={<VerificarCodigo />} />
         <Route path="conta-verificada" element={<ContaVerificada />} />
         <Route path="/colaborador" element={<Colaborador />} />
+        <Route path="/dados" element={<Dados />} />
 
 
         {/* PROTEGIDAS */}

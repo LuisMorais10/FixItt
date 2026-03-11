@@ -14,6 +14,24 @@ from django.core.mail import send_mail
 from django.conf import settings
 
 
+
+class UserDataView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        from .serializers import UserDataSerializer
+        serializer = UserDataSerializer(request.user)
+        return Response(serializer.data)
+
+    def put(self, request):
+        from .serializers import UserUpdateSerializer
+        serializer = UserUpdateSerializer(request.user, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({"message": "Dados atualizados com sucesso"})
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
 class MyOrdersView(generics.ListAPIView):
     serializer_class = OrderSerializer
     permission_classes = [IsAuthenticated]

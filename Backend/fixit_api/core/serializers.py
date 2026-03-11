@@ -4,6 +4,49 @@ from django.contrib.auth.models import User
 from .models import Profile
 from .models import Order
 
+class ProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        from .models import Profile
+        model = Profile
+        fields = ['telefone']
+
+class UserDataSerializer(serializers.ModelSerializer):
+    telefone = serializers.SerializerMethodField()
+
+    class Meta:
+        model = User
+        fields = ['id', 'first_name', 'last_name', 'email', 'username', 'telefone']
+
+    def get_telefone(self, obj):
+        try:
+            return obj.profile.telefone
+        except:
+            return ''
+
+class UserUpdateSerializer(serializers.ModelSerializer):
+    telefone = serializers.CharField(required=False, allow_blank=True)
+
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name', 'email', 'telefone']
+
+    def update(self, instance, validated_data):
+        telefone = validated_data.pop('telefone', None)
+
+        instance.first_name = validated_data.get('first_name', instance.first_name)
+        instance.last_name = validated_data.get('last_name', instance.last_name)
+        instance.email = validated_data.get('email', instance.email)
+        instance.save()
+
+        if telefone is not None:
+            from .models import Profile
+            profile, _ = Profile.objects.get_or_create(user=instance)
+            profile.telefone = telefone
+            profile.save()
+
+        return instance
+
+
 
 class OrderSerializer(serializers.ModelSerializer):
     service_nome = serializers.CharField(source='service.nome', read_only=True)
@@ -41,10 +84,11 @@ class OrderSerializer(serializers.ModelSerializer):
 class RegisterSerializer(serializers.ModelSerializer):
     telefone = serializers.CharField(write_only=True)
     password = serializers.CharField(write_only=True)
+    first_name = serializers.CharField(required=False, allow_blank=True)
 
     class Meta:
         model = User
-        fields = ("username", "email", "password", "telefone")
+        fields = ("username", "email", "password", "telefone","first_name")
 
     def validate_password(self, value):
         regex = r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$%^&*!])[A-Za-z\d@#$%^&*!]{8,}$'
@@ -58,11 +102,13 @@ class RegisterSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         telefone = validated_data.pop("telefone")
+        first_name = validated_data.pop("first_name", "")
 
         user = User.objects.create_user(
             username=validated_data["username"],
             email=validated_data["email"],
             password=validated_data["password"],
+            first_name=first_name,
             is_active=False  # bloqueado até verificar
         )
 

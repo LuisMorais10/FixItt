@@ -44,6 +44,7 @@ function CriarConta() {
         body: JSON.stringify({
           username: email, // Django usa username
           email: email,
+          first_name: nome,
           telefone: telefone,
           password: senha,
         }),
