@@ -256,17 +256,19 @@ header nav {
 ========================= */
 .slider {
   width: 100%;
+  height: 340px; /* altura fixa padrão */
   overflow: hidden;
   position: relative;
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
+  background: #e3f2fd;
 }
 
 .slider img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center;
+  object-position: center top; /* foca na parte de cima — melhor para pessoas */
   transition: opacity 0.5s ease-in-out;
   display: block;
 }
@@ -552,8 +554,8 @@ header nav {
 ========================= */
 
 .fixit-footer {
-  background-color: #0f172a; /* mesmo azul do header */
-  padding: 20px 0;
+  background-color: #0d47a1; 
+  padding: 28px 0;
   margin-top: 60px;
 }
 
@@ -561,16 +563,68 @@ header nav {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 24px;
-
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
-.fixit-footer p {
-  color: #e5e7eb;
-  font-size: 0.85rem;
+/* Logo */
+.footer-logo img {
+  height: 42px;
+  opacity: 0.9;
 }
+
+/* Copyright */
+.footer-copy {
+  color: #94a3b8;
+  font-size: 0.82rem;
+}
+
+/* Social */
+.footer-social {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.footer-social-label {
+  color: #94a3b8;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.footer-social-icons {
+  display: flex;
+  gap: 18px;
+  align-items: center;
+}
+
+.social-icon {
+  color: #94a3b8;
+  transition: color 0.2s ease, transform 0.2s ease;
+  display: flex;
+  align-items: center;
+}
+
+.social-icon:hover {
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .fixit-footer-inner {
+    flex-direction: column;
+    gap: 20px;
+    text-align: center;
+  }
+}
+
+
+
 
 /* Botão Instagram */
 .fixit-instagram-btn {

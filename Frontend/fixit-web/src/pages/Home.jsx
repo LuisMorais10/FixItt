@@ -3,14 +3,14 @@ import AddressSearch from "../components/AddressSearch"
 import { useNavigate } from "react-router-dom"
 
 // FAXINA
-import faxina1 from "../assets/Images/Residencial.png"
-import faxina2 from "../assets/Images/Empresarial.png"
+import faxina1 from "../assets/Images/FaxinaHome1.png"
+import faxina2 from "../assets/Images/FaxinaHome2.png"
 import faxina3 from "../assets/Images/Colaborador_2.png"
 
 // SERVIÇOS GERAIS
 import gerais1 from "../assets/Images/Eletrodomestico.png"
 import gerais2 from "../assets/Images/Eletricista.png"
-import gerais3 from "../assets/Images/Mudanca.png"
+import gerais3 from "../assets/Images/Servicos_gerais.png"
 
 
 
@@ -37,13 +37,13 @@ function Home() {
             className="service-card clickable"
             onClick={() => navigate("/faxina")}
              >
-             <ImageSlider images={[faxina1, faxina2, faxina3]} />
+             <ImageSlider images={[faxina1, faxina2, faxina3]} height="340px" />
           <h3>Faxina</h3>
            <p>Limpeza completa em casas, apartamentos e condomínios. Conforto e bem-estar para seu lar.</p>
       </div>
 
 <div className="service-card">
-  <ImageSlider images={[gerais1, gerais2, gerais3]} />
+  <ImageSlider images={[gerais1, gerais2, gerais3]} height="340px" />
 
   <h3>Serviços Gerais</h3>
   <p>Manutenções diversas, pequenos reparos e o que mais você precisar para seu espaço.</p>
