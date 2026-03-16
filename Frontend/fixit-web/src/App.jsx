@@ -17,6 +17,9 @@ import PaginaContatoEmpresarial from "./pages/PaginaContatoEmpresarial"
 import MensagemEnviada from "./pages/MensagemEnviadaFC"
 import Colaborador from "./pages/Colaborador"
 import Dados from './pages/Dados'
+import CadastroPrestador from './pages/CadastroPrestador'
+import CadastroPrestadorSucesso from './pages/CadastroPrestadorSucesso'
+import EntrarColaborador from './pages/EntrarColaborador'
 
 function App() {
   return (
@@ -35,6 +38,10 @@ function App() {
         <Route path="conta-verificada" element={<ContaVerificada />} />
         <Route path="/colaborador" element={<Colaborador />} />
         <Route path="/dados" element={<Dados />} />
+        <Route path="/colaborador/cadastro" element={<CadastroPrestador />} />
+        <Route path="/colaborador/cadastro-enviado" element={<CadastroPrestadorSucesso />} />
+        <Route path="/colaborador/entrar" element={<EntrarColaborador />} />
+        
 
 
         {/* PROTEGIDAS */}

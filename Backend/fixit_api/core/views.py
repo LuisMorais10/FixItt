@@ -5,13 +5,19 @@ from rest_framework import status
 from .serializers import RegisterSerializer
 from django.contrib.auth.models import User
 from .models import EmailVerification
-from .utils import send_verification_email
+from .utils import send_verification_email, send_order_confirmation_email
 from rest_framework import generics, permissions
 from .models import Order
 from .serializers import OrderSerializer
 from rest_framework.permissions import IsAuthenticated
 from django.core.mail import send_mail
 from django.conf import settings
+from .models import Prestador
+from .serializers import PrestadorSerializer
+from rest_framework_simplejwt.tokens import RefreshToken
+from django.contrib.auth import authenticate
+
+ 
 
 
 
@@ -38,13 +44,6 @@ class MyOrdersView(generics.ListAPIView):
 
     def get_queryset(self):
         return Order.objects.filter(user=self.request.user)
-
-class CreateOrderView(generics.CreateAPIView):
-    serializer_class = OrderSerializer
-    permission_classes = [permissions.IsAuthenticated]
-
-    def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
 
 
 class RegisterView(APIView):
@@ -146,3 +145,45 @@ Equipe
 
     except Exception as e:
         return Response({"error": str(e)}, status=500)
+    
+
+
+
+class CreateOrderView(generics.CreateAPIView):
+    serializer_class = OrderSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def perform_create(self, serializer):
+        order = serializer.save(user=self.request.user)
+        send_order_confirmation_email(self.request.user, order)
+
+
+class RegisterPrestadorView(generics.CreateAPIView):
+    from .models import Prestador
+    from .serializers import PrestadorSerializer
+    queryset = Prestador.objects.all()
+    serializer_class = PrestadorSerializer
+    permission_classes = []
+
+@api_view(['POST'])
+def login_prestador(request):
+    telefone = request.data.get('telefone')
+    password = request.data.get('password')
+
+    try:
+        prestador = Prestador.objects.get(telefone=telefone)
+    except Prestador.DoesNotExist:
+        return Response({'error': 'Telefone ou senha incorretos'}, status=400)
+
+    user = authenticate(username=prestador.user.username, password=password)
+
+    if not user:
+        return Response({'error': 'Telefone ou senha incorretos'}, status=400)
+
+    refresh = RefreshToken.for_user(user)
+    return Response({
+        'access': str(refresh.access_token),
+        'refresh': str(refresh),
+        'email': user.email,
+        'nome': prestador.nome,
+    })

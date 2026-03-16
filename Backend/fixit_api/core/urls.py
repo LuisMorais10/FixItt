@@ -6,6 +6,8 @@ from .views import CreateOrderView
 from .views import MyOrdersView
 from .views import contato_empresarial
 from .views import UserDataView
+from .views import RegisterPrestadorView
+from .views import login_prestador
 
 
 
@@ -18,5 +20,7 @@ urlpatterns = [
     path('orders/my/', MyOrdersView.as_view()),
     path("contato-empresarial/", contato_empresarial),
     path('user/data/', UserDataView.as_view()),
+    path('prestador/register/', RegisterPrestadorView.as_view()),
+    path('prestador/login/', login_prestador),
 ]
 

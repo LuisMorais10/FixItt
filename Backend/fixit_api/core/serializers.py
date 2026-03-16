@@ -1,8 +1,28 @@
 import re
 from rest_framework import serializers
 from django.contrib.auth.models import User
-from .models import Profile
+from .models import Prestador, Profile
 from .models import Order
+
+
+class PrestadorSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(write_only=True)
+
+    class Meta:
+        from .models import Prestador
+        model = Prestador
+        fields = '__all__'
+
+    def create(self, validated_data):
+        password = validated_data.pop('password')
+        telefone = validated_data.get('telefone')
+
+        user = User.objects.create_user(
+            username=telefone,
+            password=password,
+        )
+        prestador = Prestador.objects.create(user=user, **validated_data)
+        return prestador
 
 class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
@@ -101,20 +121,16 @@ class RegisterSerializer(serializers.ModelSerializer):
         return value
 
     def create(self, validated_data):
-        telefone = validated_data.pop("telefone")
-        first_name = validated_data.pop("first_name", "")
+        password = validated_data.pop('password')
+        telefone = validated_data.get('telefone')
+
+        if User.objects.filter(username=telefone).exists():
+            raise serializers.ValidationError({'telefone': 'Este telefone já está cadastrado.'})
 
         user = User.objects.create_user(
-            username=validated_data["username"],
-            email=validated_data["email"],
-            password=validated_data["password"],
-            first_name=first_name,
-            is_active=False  # bloqueado até verificar
+            username=telefone,
+            password=password,
         )
-
-        Profile.objects.create(
-            user=user,
-            telefone=telefone
-        )
-
-        return user
+        prestador = Prestador.objects.create(user=user, **validated_data)
+    
+        return prestador

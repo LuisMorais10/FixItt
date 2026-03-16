@@ -23,3 +23,26 @@ def send_verification_email(user):
         None,
         [user.email],
     )
+
+
+
+def send_order_confirmation_email(user, order):
+    send_mail(
+        subject="Solicitação recebida - FixIt",
+        message=f"""
+Olá {user.first_name or user.username},
+
+Recebemos sua solicitação de serviço! Aqui estão os detalhes:
+
+Pedido: #{order.id}
+Serviço: {order.service.nome}
+Data: {order.date.strftime('%d/%m/%Y')}
+Endereço: {order.logradouro}, {order.numero} - {order.bairro}, {order.cidade}
+
+Nossa equipe entrará em contato em breve para confirmar o agendamento.
+
+Equipe FixIt
+        """,
+        from_email=None,
+        recipient_list=[user.email],
+    )

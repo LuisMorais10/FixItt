@@ -68,7 +68,7 @@ export default function Colaborador() {
       para gerenciar serviços e oportunidades.
     </p>
 
-    <a href="/entrar" className="cta-btn">
+    <a href="/colaborador/entrar" className="cta-btn">
       Fazer login no portal
     </a>
 
@@ -84,7 +84,7 @@ export default function Colaborador() {
       de serviços na sua região.
     </p>
 
-    <a href="/criar-conta" className="cta-btn">
+    <a href="/colaborador/cadastro" className="cta-btn">
       Inscrever-se agora
     </a>
 

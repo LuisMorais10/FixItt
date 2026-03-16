@@ -4,6 +4,46 @@ import random
 from django.utils import timezone
 from datetime import timedelta
 
+class Prestador(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
+
+    SERVICO_CHOICES = [
+        ('faxina_residencial', 'Faxina Residencial'),
+        ('faxina_empresarial', 'Faxina Empresarial'),
+        ('hotelaria', 'Apoio a Redes Hoteleiras'),
+        ('mudanca', 'Mudança'),
+        ('eletrodomesticos', 'Técnico de Eletrodomésticos'),
+        ('eletricista', 'Eletricista'),
+        ('servicos_gerais', 'Serviços Gerais'),
+    ]
+ 
+    # Dados pessoais
+    foto = models.ImageField(upload_to='prestadores/', null=True, blank=True)
+    nome = models.CharField(max_length=150)
+    telefone = models.CharField(max_length=20)
+    cpf = models.CharField(max_length=14, unique=True)
+    email = models.EmailField(unique=True)
+ 
+    # Localização
+    cep = models.CharField(max_length=10)
+    cidade = models.CharField(max_length=100)
+ 
+    # Serviço
+    servico = models.CharField(max_length=50, choices=SERVICO_CHOICES)
+    eletrodomesticos = models.TextField(blank=True, null=True)  # só se servico == eletrodomesticos
+    comentarios = models.TextField(blank=True, null=True)
+    anos_experiencia = models.PositiveIntegerField()
+ 
+    # Consentimento
+    aceita_contato = models.BooleanField(default=False)
+ 
+    # Controle
+    cadastrado_em = models.DateTimeField(auto_now_add=True)
+    ativo = models.BooleanField(default=True)
+ 
+    def __str__(self):
+        return f"{self.nome} - {self.servico}"
+
 
 class EmailVerification(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
