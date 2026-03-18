@@ -22,14 +22,14 @@ class Prestador(models.Model):
     nome = models.CharField(max_length=150)
     telefone = models.CharField(max_length=20)
     cpf = models.CharField(max_length=14, unique=True)
-    email = models.EmailField(unique=True)
+    email = models.EmailField(unique=True, null=True, blank=True)
  
     # Localização
     cep = models.CharField(max_length=10)
-    cidade = models.CharField(max_length=100)
+    cidade = models.CharField(max_length=255, blank=True)
  
     # Serviço
-    servico = models.CharField(max_length=50, choices=SERVICO_CHOICES)
+    servico = models.CharField(max_length=255, blank=True)
     eletrodomesticos = models.TextField(blank=True, null=True)  # só se servico == eletrodomesticos
     comentarios = models.TextField(blank=True, null=True)
     anos_experiencia = models.PositiveIntegerField()
@@ -40,6 +40,9 @@ class Prestador(models.Model):
     # Controle
     cadastrado_em = models.DateTimeField(auto_now_add=True)
     ativo = models.BooleanField(default=True)
+    doc_frente = models.ImageField(upload_to='prestadores/docs/', null=True, blank=True)
+    doc_verso = models.ImageField(upload_to='prestadores/docs/', null=True, blank=True)
+    comprovante = models.ImageField(upload_to='prestadores/comprovantes/', null=True, blank=True)
  
     def __str__(self):
         return f"{self.nome} - {self.servico}"

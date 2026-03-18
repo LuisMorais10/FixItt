@@ -20,6 +20,7 @@ import Dados from './pages/Dados'
 import CadastroPrestador from './pages/CadastroPrestador'
 import CadastroPrestadorSucesso from './pages/CadastroPrestadorSucesso'
 import EntrarColaborador from './pages/EntrarColaborador'
+import PortalColaborador from './pages/PortalColaborador'
 
 function App() {
   return (
@@ -41,6 +42,7 @@ function App() {
         <Route path="/colaborador/cadastro" element={<CadastroPrestador />} />
         <Route path="/colaborador/cadastro-enviado" element={<CadastroPrestadorSucesso />} />
         <Route path="/colaborador/entrar" element={<EntrarColaborador />} />
+        <Route path="/colaborador/portal" element={<PortalColaborador />} />
         
 
 

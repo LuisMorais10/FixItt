@@ -13,6 +13,29 @@ const SERVICO_CHOICES = [
   { value: 'servicos_gerais', label: 'Serviços Gerais' },
 ]
 
+const CIDADES = ['Niterói', 'Rio de Janeiro', 'São Paulo']
+
+function UploadFoto({ label, id, preview, onChange }) {
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px' }}>
+      <div
+        style={{ width: '100%', height: '120px', borderRadius: '10px', background: '#e3f2fd', border: '2px dashed #0d47a1', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', cursor: 'pointer' }}
+        onClick={() => document.getElementById(id).click()}
+      >
+        {preview
+          ? <img src={preview} alt={label} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+          : <div style={{ textAlign: 'center', color: '#0d47a1' }}>
+              <div style={{ fontSize: '28px' }}>📎</div>
+              <div style={{ fontSize: '0.78rem', fontWeight: 600 }}>{label}</div>
+              <div style={{ fontSize: '0.72rem', color: '#888' }}>Clique para enviar ou tirar foto</div>
+            </div>
+        }
+      </div>
+      <input id={id} type="file" accept="image/*" capture="environment" style={{ display: 'none' }} onChange={onChange} />
+    </div>
+  )
+}
+
 export default function CadastroPrestador() {
   const navigate = useNavigate()
   const [form, setForm] = useState({
@@ -21,45 +44,74 @@ export default function CadastroPrestador() {
     cpf: '',
     email: '',
     cep: '',
-    cidade: '',
-    servico: '',
+    cidades: [],
+    servicos: [],
     eletrodomesticos: '',
     comentarios: '',
     anos_experiencia: '',
     aceita_contato: false,
     foto: null,
+    doc_frente: null,
+    doc_verso: null,
+    comprovante: null,
+  })
+  const [previews, setPreviews] = useState({
+    foto: null,
+    doc_frente: null,
+    doc_verso: null,
+    comprovante: null,
   })
   const [senha, setSenha] = useState('')
   const [confirmarSenha, setConfirmarSenha] = useState('')
   const [erro, setErro] = useState(null)
   const [salvando, setSalvando] = useState(false)
-  const [preview, setPreview] = useState(null)
+  const [cepValido, setCepValido] = useState(null)
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target
     setForm(prev => ({ ...prev, [name]: type === 'checkbox' ? checked : value }))
   }
 
-  const handleFoto = (e) => {
+  const handleFileChange = (field) => (e) => {
     const file = e.target.files[0]
     if (file) {
-      setForm(prev => ({ ...prev, foto: file }))
-      setPreview(URL.createObjectURL(file))
+      setForm(prev => ({ ...prev, [field]: file }))
+      setPreviews(prev => ({ ...prev, [field]: URL.createObjectURL(file) }))
     }
   }
 
   const handleCep = async (e) => {
-    const cep = e.target.value.replace(/\D/g, '')
-    setForm(prev => ({ ...prev, cep }))
-    if (cep.length === 8) {
-      try {
-        const res = await fetch(`https://viacep.com.br/ws/${cep}/json/`)
-        const data = await res.json()
-        if (!data.erro) {
-          setForm(prev => ({ ...prev, cidade: data.localidade }))
-        }
-      } catch {}
+  const cep = e.target.value.replace(/\D/g, '')
+  setForm(prev => ({ ...prev, cep }))
+  setCepValido(null)
+
+  if (cep.length === 8) {
+    try {
+      const res = await fetch(`https://viacep.com.br/ws/${cep}/json/`)
+      const data = await res.json()
+      setCepValido(!data.erro)
+    } catch {
+      setCepValido(false)
     }
+  }
+}
+
+  const toggleCidade = (cidade) => {
+    setForm(prev => ({
+      ...prev,
+      cidades: prev.cidades.includes(cidade)
+        ? prev.cidades.filter(c => c !== cidade)
+        : [...prev.cidades, cidade]
+    }))
+  }
+
+  const toggleServico = (valor) => {
+    setForm(prev => ({
+      ...prev,
+      servicos: prev.servicos.includes(valor)
+        ? prev.servicos.filter(v => v !== valor)
+        : [...prev.servicos, valor]
+    }))
   }
 
   const handleSubmit = async (e) => {
@@ -79,12 +131,22 @@ export default function CadastroPrestador() {
     setSalvando(true)
 
     const payload = new FormData()
-    Object.entries(form).forEach(([key, value]) => {
-      if (value !== null && value !== undefined) {
-        payload.append(key, value)
-      }
-    })
+    payload.append('nome', form.nome)
+    payload.append('telefone', form.telefone)
+    payload.append('cpf', form.cpf)
+    payload.append('email', form.email)
+    payload.append('cep', form.cep)
+    payload.append('cidade', form.cidades.join(','))
+    payload.append('servico', form.servicos.join(','))
+    payload.append('eletrodomesticos', form.eletrodomesticos)
+    payload.append('comentarios', form.comentarios)
+    payload.append('anos_experiencia', form.anos_experiencia)
+    payload.append('aceita_contato', form.aceita_contato)
     payload.append('password', senha)
+    if (form.foto) payload.append('foto', form.foto)
+    if (form.doc_frente) payload.append('doc_frente', form.doc_frente)
+    if (form.doc_verso) payload.append('doc_verso', form.doc_verso)
+    if (form.comprovante) payload.append('comprovante', form.comprovante)
 
     try {
       const res = await fetch('http://localhost:8000/api/prestador/register/', {
@@ -122,20 +184,21 @@ export default function CadastroPrestador() {
 
         <form onSubmit={handleSubmit}>
 
+          {/* FOTO DE PERFIL */}
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '24px' }}>
             <div
               style={{ width: '90px', height: '90px', borderRadius: '50%', background: '#e3f2fd', border: '2px dashed #0d47a1', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', cursor: 'pointer', marginBottom: '8px' }}
               onClick={() => document.getElementById('fotoInput').click()}
             >
-              {preview
-                ? <img src={preview} alt="Foto" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              {previews.foto
+                ? <img src={previews.foto} alt="Foto" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                 : <span style={{ fontSize: '28px' }}>📷</span>
               }
             </div>
             <span style={{ fontSize: '0.82rem', color: '#0d47a1', cursor: 'pointer', fontWeight: 600 }} onClick={() => document.getElementById('fotoInput').click()}>
               Adicionar foto
             </span>
-            <input id="fotoInput" type="file" accept="image/*" style={{ display: 'none' }} onChange={handleFoto} />
+            <input id="fotoInput" type="file" accept="image/*" capture="user" style={{ display: 'none' }} onChange={handleFileChange('foto')} />
           </div>
 
           <label>Nome completo</label>
@@ -154,26 +217,51 @@ export default function CadastroPrestador() {
           <label>CPF</label>
           <input name="cpf" type="text" placeholder="000.000.000-00" value={form.cpf} onChange={handleChange} required />
 
-          <label>E-mail</label>
-          <input name="email" type="email" placeholder="seu@email.com" value={form.email} onChange={handleChange} required />
+          <label>E-mail <span style={{ color: '#999', fontSize: '0.8rem' }}>(opcional)</span></label>
+          <input name="email" type="email" placeholder="seu@email.com" value={form.email} onChange={handleChange} />
 
           <label>CEP</label>
-          <input name="cep" type="text" placeholder="00000-000" value={form.cep} onChange={handleCep} required maxLength={9} />
+          <div style={{ position: 'relative', marginBottom: '18px' }}>
+          <input
+            name="cep"
+            type="text"
+            placeholder="00000-000"
+            value={form.cep}
+            onChange={handleCep}
+            maxLength={9}
+            style={{ marginBottom: 0, paddingRight: '40px', width: '100%',
+            borderColor: cepValido === true ? '#2e7d32' : cepValido === false ? '#c62828' : undefined
+            }}
+          />
+          {cepValido === true && (
+            <span style={{ position: 'absolute', right: '14px', top: '50%', transform: 'translateY(-50%)', color: '#2e7d32', fontSize: '18px' }}>✓</span>
+            )}
+          {cepValido === false && (
+            <span style={{ position: 'absolute', right: '14px', top: '50%', transform: 'translateY(-50%)', color: '#c62828', fontSize: '18px' }}>✗</span>
+            )}
+          </div>
 
           <label>Cidade onde realiza atendimentos</label>
-          <input name="cidade" type="text" placeholder="Cidade" value={form.cidade} onChange={handleChange} required />
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginBottom: '18px' }}>
+            {CIDADES.map(cidade => (
+              <label key={cidade} style={{ display: 'flex', alignItems: 'center', gap: '8px', fontWeight: 'normal', fontSize: '0.95rem', cursor: 'pointer' }}>
+                <input type="checkbox" checked={form.cidades.includes(cidade)} onChange={() => toggleCidade(cidade)} style={{ accentColor: '#0d47a1', width: '16px', height: '16px' }} />
+                {cidade}
+              </label>
+            ))}
+          </div>
 
           <label>Qual serviço você oferece?</label>
-          <select name="servico" value={form.servico} onChange={handleChange} required
-            style={{ width: '100%', padding: '14px', borderRadius: '8px', border: '1px solid #ccc', marginBottom: '18px', fontSize: '0.95rem' }}
-          >
-            <option value="">Selecione um serviço</option>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginBottom: '18px' }}>
             {SERVICO_CHOICES.map(s => (
-              <option key={s.value} value={s.value}>{s.label}</option>
+              <label key={s.value} style={{ display: 'flex', alignItems: 'center', gap: '8px', fontWeight: 'normal', fontSize: '0.95rem', cursor: 'pointer' }}>
+                <input type="checkbox" checked={form.servicos.includes(s.value)} onChange={() => toggleServico(s.value)} style={{ accentColor: '#0d47a1', width: '16px', height: '16px' }} />
+                {s.label}
+              </label>
             ))}
-          </select>
+          </div>
 
-          {form.servico === 'eletrodomesticos' && (
+          {form.servicos.includes('eletrodomesticos') && (
             <>
               <label>Quais eletrodomésticos você conserta?</label>
               <input name="eletrodomesticos" type="text" placeholder="Ex: geladeira, máquina de lavar, fogão..." value={form.eletrodomesticos} onChange={handleChange} />
@@ -192,6 +280,17 @@ export default function CadastroPrestador() {
 
           <label>Anos de experiência</label>
           <input name="anos_experiencia" type="number" min="0" max="60" placeholder="Ex: 5" value={form.anos_experiencia} onChange={handleChange} required />
+
+          <label style={{ marginTop: '8px' }}>Documento (RG/CNH)</label>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', marginBottom: '18px' }}>
+            <UploadFoto label="Frente" id="docFrente" preview={previews.doc_frente} onChange={handleFileChange('doc_frente')} />
+            <UploadFoto label="Verso" id="docVerso" preview={previews.doc_verso} onChange={handleFileChange('doc_verso')} />
+          </div>
+
+          <label>Comprovante de residência</label>
+          <div style={{ marginBottom: '18px' }}>
+            <UploadFoto label="Ex: conta telefônica com endereço" id="comprovante" preview={previews.comprovante} onChange={handleFileChange('comprovante')} />
+          </div>
 
           <label>Senha de acesso ao portal</label>
           <input type="password" placeholder="Crie uma senha" value={senha} onChange={(e) => setSenha(e.target.value)} required />
