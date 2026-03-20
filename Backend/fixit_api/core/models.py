@@ -47,6 +47,58 @@ class Prestador(models.Model):
     def __str__(self):
         return f"{self.nome} - {self.servico}"
 
+class DadosBancarios(models.Model):
+    TIPO_CONTA_CHOICES = [
+        ('corrente', 'Conta Corrente'),
+        ('poupanca', 'Conta Poupança'),
+    ]
+ 
+    TIPO_PIX_CHOICES = [
+        ('cpf', 'CPF'),
+        ('telefone', 'Telefone'),
+        ('email', 'E-mail'),
+        ('aleatoria', 'Chave Aleatória'),
+    ]
+ 
+    BANCOS = [
+        ('001', 'Banco do Brasil'),
+        ('033', 'Santander'),
+        ('077', 'Inter'),
+        ('104', 'Caixa Econômica Federal'),
+        ('237', 'Bradesco'),
+        ('260', 'Nubank'),
+        ('341', 'Itaú'),
+        ('422', 'Safra'),
+        ('756', 'Sicoob'),
+        ('748', 'Sicredi'),
+        ('336', 'C6 Bank'),
+        ('380', 'PicPay'),
+        ('290', 'PagBank'),
+        ('323', 'Mercado Pago'),
+        ('outro', 'Outro'),
+    ]
+ 
+    prestador = models.OneToOneField(
+        Prestador,
+        on_delete=models.CASCADE,
+        related_name='dados_bancarios'
+    )
+ 
+    # Dados da conta
+    banco = models.CharField(max_length=10, choices=BANCOS, blank=True, null=True)
+    agencia = models.CharField(max_length=10, blank=True, null=True)
+    conta = models.CharField(max_length=20, blank=True, null=True)
+    tipo_conta = models.CharField(max_length=10, choices=TIPO_CONTA_CHOICES, blank=True, null=True)
+ 
+    # PIX
+    tipo_pix = models.CharField(max_length=10, choices=TIPO_PIX_CHOICES, blank=True, null=True)
+    chave_pix = models.CharField(max_length=150, blank=True, null=True)
+ 
+    atualizado_em = models.DateTimeField(auto_now=True)
+ 
+    def __str__(self):
+        return f"Dados bancários de {self.prestador.nome}"
+
 
 class EmailVerification(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)

@@ -15,6 +15,33 @@ const SERVICO_CHOICES = [
 
 const CIDADES = ['Niterói', 'Rio de Janeiro', 'São Paulo']
 
+const BANCOS = [
+  { value: '', label: 'Selecione o banco' },
+  { value: '001', label: 'Banco do Brasil' },
+  { value: '033', label: 'Santander' },
+  { value: '077', label: 'Inter' },
+  { value: '104', label: 'Caixa Econômica Federal' },
+  { value: '237', label: 'Bradesco' },
+  { value: '260', label: 'Nubank' },
+  { value: '341', label: 'Itaú' },
+  { value: '422', label: 'Safra' },
+  { value: '756', label: 'Sicoob' },
+  { value: '748', label: 'Sicredi' },
+  { value: '336', label: 'C6 Bank' },
+  { value: '380', label: 'PicPay' },
+  { value: '290', label: 'PagBank' },
+  { value: '323', label: 'Mercado Pago' },
+  { value: 'outro', label: 'Outro' },
+]
+ 
+const TIPO_PIX = [
+  { value: '', label: 'Tipo da chave Pix' },
+  { value: 'cpf', label: 'CPF' },
+  { value: 'telefone', label: 'Telefone' },
+  { value: 'email', label: 'E-mail' },
+  { value: 'aleatoria', label: 'Chave Aleatória' },
+]
+
 function UploadFoto({ label, id, preview, onChange }) {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px' }}>
@@ -54,6 +81,12 @@ export default function CadastroPrestador() {
     doc_frente: null,
     doc_verso: null,
     comprovante: null,
+    banco: '',
+    agencia: '',
+    conta: '',
+    tipo_conta: '',
+    tipo_pix: '',
+    chave_pix: '',
   })
   const [previews, setPreviews] = useState({
     foto: null,
@@ -148,6 +181,16 @@ export default function CadastroPrestador() {
     if (form.doc_verso) payload.append('doc_verso', form.doc_verso)
     if (form.comprovante) payload.append('comprovante', form.comprovante)
 
+  const temDadosBancarios = form.banco || form.chave_pix
+    if (temDadosBancarios) {
+      payload.append('dados_bancarios[banco]', form.banco)
+      payload.append('dados_bancarios[agencia]', form.agencia)
+      payload.append('dados_bancarios[conta]', form.conta)
+      payload.append('dados_bancarios[tipo_conta]', form.tipo_conta)
+      payload.append('dados_bancarios[tipo_pix]', form.tipo_pix)
+      payload.append('dados_bancarios[chave_pix]', form.chave_pix)
+    }
+
     try {
       const res = await fetch('http://localhost:8000/api/prestador/register/', {
         method: 'POST',
@@ -173,7 +216,7 @@ export default function CadastroPrestador() {
       <div className="login-box" style={{ maxWidth: '560px' }}>
         <h2>Cadastro de Prestador</h2>
         <p style={{ color: '#555', fontSize: '0.9rem', marginBottom: '24px', textAlign: 'center' }}>
-          Preencha seus dados para fazer parte da nossa equipe
+          Preencha seus dados para fazer parte da nossa plataforma
         </p>
 
         {erro && (
@@ -290,6 +333,101 @@ export default function CadastroPrestador() {
           <label>Comprovante de residência</label>
           <div style={{ marginBottom: '18px' }}>
             <UploadFoto label="Ex: conta telefônica com endereço" id="comprovante" preview={previews.comprovante} onChange={handleFileChange('comprovante')} />
+          </div>
+
+          <div style={{ borderTop: '1px solid #e0e0e0', paddingTop: '24px', marginBottom: '8px' }}>
+            <h3 style={{ fontSize: '1rem', color: '#0d47a1', marginBottom: '4px' }}>💳 Dados Bancários</h3>
+            <p style={{ fontSize: '0.82rem', color: '#777', marginBottom: '20px' }}>
+              Opcional — informe sua conta ou chave Pix para receber pagamentos.
+            </p>
+ 
+            {/* Banco */}
+            <label>Banco</label>
+            <select
+              name="banco"
+              value={form.banco}
+              onChange={handleChange}
+              style={{ width: '100%', padding: '12px 14px', borderRadius: '8px', border: '1px solid #ccc', marginBottom: '18px', fontSize: '0.95rem', background: '#fff', color: '#333' }}
+            >
+              {BANCOS.map(b => (
+                <option key={b.value} value={b.value}>{b.label}</option>
+              ))}
+            </select>
+ 
+            {/* Agência + Conta */}
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+              <div>
+                <label>Agência</label>
+                <input name="agencia" type="text" placeholder="Ex: 0001" value={form.agencia} onChange={handleChange} />
+              </div>
+              <div>
+                <label>Conta</label>
+                <input name="conta" type="text" placeholder="Ex: 12345-6" value={form.conta} onChange={handleChange} />
+              </div>
+            </div>
+ 
+            {/* Tipo de conta */}
+            <label>Tipo de conta</label>
+            <div style={{ display: 'flex', gap: '24px', marginBottom: '18px' }}>
+              {[{ value: 'corrente', label: 'Corrente' }, { value: 'poupanca', label: 'Poupança' }].map(opt => (
+                <label key={opt.value} style={{ display: 'flex', alignItems: 'center', gap: '8px', fontWeight: 'normal', fontSize: '0.95rem', cursor: 'pointer' }}>
+                  <input
+                    type="radio"
+                    name="tipo_conta"
+                    value={opt.value}
+                    checked={form.tipo_conta === opt.value}
+                    onChange={handleChange}
+                    style={{ accentColor: '#0d47a1' }}
+                  />
+                  {opt.label}
+                </label>
+              ))}
+            </div>
+ 
+            {/* Divisor PIX */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '18px' }}>
+              <div style={{ flex: 1, height: '1px', background: '#e0e0e0' }} />
+              <span style={{ fontSize: '0.8rem', color: '#aaa', whiteSpace: 'nowrap' }}>ou informe sua chave Pix</span>
+              <div style={{ flex: 1, height: '1px', background: '#e0e0e0' }} />
+            </div>
+ 
+            {/* Tipo Pix */}
+            <label>Tipo da chave Pix</label>
+            <select
+              name="tipo_pix"
+              value={form.tipo_pix}
+              onChange={handleChange}
+              style={{ width: '100%', padding: '12px 14px', borderRadius: '8px', border: '1px solid #ccc', marginBottom: '18px', fontSize: '0.95rem', background: '#fff', color: '#333' }}
+            >
+              {TIPO_PIX.map(t => (
+                <option key={t.value} value={t.value}>{t.label}</option>
+              ))}
+            </select>
+ 
+            {/* Chave Pix — aparece só quando tipo selecionado */}
+            {form.tipo_pix && (
+              <>
+                <label>Chave Pix</label>
+                <input
+                  name="chave_pix"
+                  type="text"
+                  placeholder={
+                    form.tipo_pix === 'cpf' ? '000.000.000-00' :
+                    form.tipo_pix === 'telefone' ? '+55 (21) 99999-9999' :
+                    form.tipo_pix === 'email' ? 'seu@email.com' :
+                    'Cole a chave aleatória'
+                  }
+                  value={form.chave_pix}
+                  onChange={handleChange}
+                />
+              </>
+            )}
+          
+
+          {/* Observação somente leitura */}
+            <p style={{ fontSize: '0.78rem', color: '#666', background: '#f5f5f5', border: '1px solid #e0e0e0', borderRadius: '8px', padding: '10px 14px', marginTop: '8px', lineHeight: '1.6', userSelect: 'none' }}>
+              ⚠️ <strong style={{ color: '#444' }}>Observação:</strong> A conta será verificada pela equipe FixIt, os dados bancários e chave Pix terão que estar relacionados ao CPF indicado no formulário de cadastro de prestador.
+            </p>
           </div>
 
           <label>Senha de acesso ao portal</label>

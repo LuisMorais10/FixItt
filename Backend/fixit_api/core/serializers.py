@@ -1,8 +1,39 @@
 import re
 from rest_framework import serializers
 from django.contrib.auth.models import User
-from .models import Prestador, Profile
-from .models import Order
+from .models import Prestador, Profile, DadosBancarios, Order
+
+
+class DadosBancariosSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = DadosBancarios
+        exclude = ['prestador']  # prestador é setado automaticamente no create
+ 
+ 
+class PrestadorSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(write_only=True)
+    dados_bancarios = DadosBancariosSerializer(required=False, allow_null=True)
+ 
+    class Meta:
+        model = Prestador
+        fields = '__all__'
+ 
+    def create(self, validated_data):
+        password = validated_data.pop('password')
+        dados_bancarios_data = validated_data.pop('dados_bancarios', None)
+        telefone = validated_data.get('telefone')
+ 
+        user = User.objects.create_user(
+            username=telefone,
+            password=password,
+        )
+        prestador = Prestador.objects.create(user=user, **validated_data)
+ 
+        # Cria dados bancários se enviados
+        if dados_bancarios_data:
+            DadosBancarios.objects.create(prestador=prestador, **dados_bancarios_data)
+ 
+        return prestador
 
 
 class PrestadorSerializer(serializers.ModelSerializer):

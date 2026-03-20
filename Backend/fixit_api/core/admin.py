@@ -1,7 +1,5 @@
 from django.contrib import admin
-from .models import Service
-from .models import Order
-from .models import Prestador
+from .models import Service, Order, Prestador, DadosBancarios
 
 
 @admin.register(Service)
@@ -16,9 +14,19 @@ class OrderAdmin(admin.ModelAdmin):
     list_filter = ('status', 'service')
     search_fields = ('user__username',)
 
+class DadosBancariosInline(admin.StackedInline):
+    model = DadosBancarios
+    can_delete = False
+    verbose_name = 'Dados Bancários'
+    verbose_name_plural = 'Dados Bancários'
+    extra = 1
+
 @admin.register(Prestador)
 class PrestadorAdmin(admin.ModelAdmin):
     list_display = ('nome', 'servico', 'cidade', 'email', 'anos_experiencia', 'ativo', 'cadastrado_em')
     list_filter = ('servico', 'ativo')
     search_fields = ('nome', 'email', 'cpf')
+    inlines = [DadosBancariosInline]
+
+
 
