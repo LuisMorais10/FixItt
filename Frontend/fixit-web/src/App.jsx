@@ -21,6 +21,8 @@ import CadastroPrestador from './pages/CadastroPrestador'
 import CadastroPrestadorSucesso from './pages/CadastroPrestadorSucesso'
 import EntrarColaborador from './pages/EntrarColaborador'
 import PortalColaborador from './pages/PortalColaborador'
+import SolicitacoesDisponiveis from './pages/SolicitacoesDisponiveis'
+
 
 function App() {
   return (
@@ -43,6 +45,7 @@ function App() {
         <Route path="/colaborador/cadastro-enviado" element={<CadastroPrestadorSucesso />} />
         <Route path="/colaborador/entrar" element={<EntrarColaborador />} />
         <Route path="/colaborador/portal" element={<PortalColaborador />} />
+        <Route path="/colaborador/solicitacoes" element={<SolicitacoesDisponiveis />} />
         
 
 

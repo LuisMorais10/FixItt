@@ -29,8 +29,8 @@ function EntrarColaborador() {
         return
       }
 
-      localStorage.setItem("prestador_access", data.access)
-      localStorage.setItem("prestador_refresh", data.refresh)
+      localStorage.setItem("access", data.access)
+      localStorage.setItem("refresh", data.refresh)
       localStorage.setItem("prestador_telefone", data.telefone)
       localStorage.setItem("prestador_nome", data.nome)
 

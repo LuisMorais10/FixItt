@@ -12,7 +12,8 @@ export default function Header() {
   const [modal, setModal] = useState(false)
   const [destinoModal, setDestinoModal] = useState(null)
   
-  const prestadorLogado = !!localStorage.getItem('prestador_access') && location.pathname.startsWith('/colaborador')
+  const location = useLocation()
+  const prestadorLogado = !!localStorage.getItem('access') && location.pathname.startsWith('/colaborador')
 
   const handleNavPortal = (e, destino) => {
     if (prestadorLogado) {
@@ -23,9 +24,8 @@ export default function Header() {
   }
  
   const confirmarSaida = () => {
-    localStorage.removeItem('prestador_access')
-    localStorage.removeItem('prestador_refresh')
-    localStorage.removeItem('prestador_email')
+    localStorage.removeItem('access')
+    localStorage.removeItem('refresh')
     localStorage.removeItem('prestador_nome')
     setModal(false)
     navigate(destinoModal)

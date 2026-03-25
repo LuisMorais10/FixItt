@@ -17,10 +17,15 @@ from .serializers import PrestadorSerializer
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth import authenticate
 
+
+class AvailableOrdersView(generics.ListAPIView):
+    serializer_class = OrderSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return Order.objects.filter(status='pending').order_by('-created_at')
+
  
-
-
-
 class UserDataView(APIView):
     permission_classes = [IsAuthenticated]
 
