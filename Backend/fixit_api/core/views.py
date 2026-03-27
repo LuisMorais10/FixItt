@@ -192,3 +192,39 @@ def login_prestador(request):
         'email': user.email,
         'nome': prestador.nome,
     })
+
+@api_view(['POST'])
+def accept_order(request, pk):
+    if not request.user.is_authenticated:
+        return Response({"error": "Não autenticado"}, status=401)
+
+    try:
+        order = Order.objects.get(pk=pk)
+
+        # ✅ Verifica se ainda está disponível
+        if order.status != 'pending':
+            return Response({'error': 'Pedido não disponível'}, status=400)
+
+        # ✅ Pega o prestador logado
+        prestador = Prestador.objects.get(user=request.user)
+
+        # ✅ Atualiza pedido
+        order.status = 'confirmed'  # 🔥 PADRONIZADO
+        order.prestador = prestador
+        order.save()
+
+        return Response({'message': 'Pedido aceito com sucesso'})
+
+    except Order.DoesNotExist:
+        return Response({'error': 'Pedido não encontrado'}, status=404)
+
+    except Prestador.DoesNotExist:
+        return Response({"error": "Usuário não é um prestador"}, status=403)
+
+@api_view(['GET'])
+def my_jobs(request):
+    prestador = Prestador.objects.get(user=request.user)
+    orders = Order.objects.filter(prestador=prestador)
+
+    serializer = OrderSerializer(orders, many=True)
+    return Response(serializer.data)

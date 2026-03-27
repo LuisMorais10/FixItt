@@ -9,6 +9,8 @@ from .views import UserDataView
 from .views import RegisterPrestadorView
 from .views import login_prestador
 from .views import AvailableOrdersView
+from .views import accept_order
+from .views import my_jobs
 
 
 
@@ -24,5 +26,8 @@ urlpatterns = [
     path('prestador/register/', RegisterPrestadorView.as_view()),
     path('prestador/login/', login_prestador),
     path('orders/available/', AvailableOrdersView.as_view()),
+    path('orders/<int:pk>/accept/', accept_order),
+    path('orders/my-jobs/', my_jobs),
+
 ]
 

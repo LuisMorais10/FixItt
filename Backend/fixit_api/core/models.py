@@ -167,6 +167,13 @@ class Order(models.Model):
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     service = models.ForeignKey('Service', on_delete=models.CASCADE)
+    prestador = models.ForeignKey(
+        'Prestador',
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='orders'
+    )
 
     # 🔥 NOVOS CAMPOS
     tipo_faxina = models.CharField(

@@ -22,6 +22,7 @@ import CadastroPrestadorSucesso from './pages/CadastroPrestadorSucesso'
 import EntrarColaborador from './pages/EntrarColaborador'
 import PortalColaborador from './pages/PortalColaborador'
 import SolicitacoesDisponiveis from './pages/SolicitacoesDisponiveis'
+import MeusAgendamentos from "./pages/MeusAgendamentos"
 
 
 function App() {
@@ -46,6 +47,7 @@ function App() {
         <Route path="/colaborador/entrar" element={<EntrarColaborador />} />
         <Route path="/colaborador/portal" element={<PortalColaborador />} />
         <Route path="/colaborador/solicitacoes" element={<SolicitacoesDisponiveis />} />
+        <Route path="/colaborador/agendamentos" element={<MeusAgendamentos />} />
         
 
 

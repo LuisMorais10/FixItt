@@ -108,9 +108,14 @@ class OrderSerializer(serializers.ModelSerializer):
         read_only_fields = ['user', 'status', 'created_at']
 
     def validate(self, data):
+        if self.instance:  # update
+            return data
+
         service = data.get("service")
 
-        # Se for faxina residencial
+        if not service:
+            return data
+
         if service.tipo == "faxina_residencial":
             required_fields = [
                 "tipo_faxina",

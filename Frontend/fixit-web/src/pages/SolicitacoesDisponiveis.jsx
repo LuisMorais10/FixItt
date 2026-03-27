@@ -6,6 +6,32 @@ export default function SolicitacoesDisponiveis() {
   const [pedidos, setPedidos] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
+  const aceitarPedido = async (pedidoId) => {
+  const token = localStorage.getItem("access")
+
+    try {
+      const response = await fetch(
+        `http://localhost:8000/api/orders/${pedidoId}/accept/`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json"
+          }
+        }
+      )
+
+      if (!response.ok) {
+        throw new Error("Erro ao aceitar pedido")
+      }
+
+      setPedidos(prev => prev.filter(p => p.id !== pedidoId))
+
+    } catch (err) {
+      console.error(err)
+      alert("Erro ao aceitar pedido")
+    }
+  }
   
 
   useEffect(() => {
@@ -40,6 +66,8 @@ export default function SolicitacoesDisponiveis() {
   if (error) return <p style={{ padding: "100px" }}>{error}</p>
 
   // ✅ RENDER
+
+  
   return (
     <div className="page-container">
 
@@ -58,12 +86,12 @@ export default function SolicitacoesDisponiveis() {
           <div className="card-info">
             <h3>Pedido #{pedido.id}</h3>
 
-            <p><strong>Serviço:</strong> {pedido.servico}</p>
-            <p><strong>Data:</strong> {pedido.data}</p>
+            <p><strong>Serviço:</strong> {pedido.service_nome}</p>
+            <p><strong>Data:</strong> {pedido.date}</p>
             <p><strong>Cidade:</strong> {pedido.cidade}</p>
             <p><strong>Bairro:</strong> {pedido.bairro}</p>
 
-            <p className="preco">R$ {pedido.valor}</p>
+            <p className="preco">R$ {pedido.value}</p>
           </div>
 
           {/* DIREITA */}
@@ -71,9 +99,16 @@ export default function SolicitacoesDisponiveis() {
             <span className="status-pending">PENDING</span>
 
             <button className="btn-detalhes">
-              Ver detalhes
+            Ver detalhes
             </button>
-          </div>
+
+            <button
+            className="btn-aceitar"
+            onClick={() => aceitarPedido(pedido.id)}
+            >
+            Aceitar
+            </button>
+        </div>
 
         </div>
     ))
