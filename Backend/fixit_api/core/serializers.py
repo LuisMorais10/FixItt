@@ -13,48 +13,29 @@ class DadosBancariosSerializer(serializers.ModelSerializer):
 class PrestadorSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
     dados_bancarios = DadosBancariosSerializer(required=False, allow_null=True)
- 
+
     class Meta:
         model = Prestador
         fields = '__all__'
- 
+
     def create(self, validated_data):
         password = validated_data.pop('password')
         dados_bancarios_data = validated_data.pop('dados_bancarios', None)
         telefone = validated_data.get('telefone')
- 
+
         user = User.objects.create_user(
             username=telefone,
             password=password,
         )
+
         prestador = Prestador.objects.create(user=user, **validated_data)
- 
-        # Cria dados bancários se enviados
+
         if dados_bancarios_data:
             DadosBancarios.objects.create(prestador=prestador, **dados_bancarios_data)
- 
+
         return prestador
 
-
-class PrestadorSerializer(serializers.ModelSerializer):
-    password = serializers.CharField(write_only=True)
-
-    class Meta:
-        from .models import Prestador
-        model = Prestador
-        fields = '__all__'
-
-    def create(self, validated_data):
-        password = validated_data.pop('password')
-        telefone = validated_data.get('telefone')
-
-        user = User.objects.create_user(
-            username=telefone,
-            password=password,
-        )
-        prestador = Prestador.objects.create(user=user, **validated_data)
-        return prestador
-
+        
 class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         from .models import Profile
@@ -144,7 +125,7 @@ class RegisterSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ("username", "email", "password", "telefone","first_name")
+        fields = ("email", "password", "telefone", "first_name")
 
     def validate_password(self, value):
         regex = r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$%^&*!])[A-Za-z\d@#$%^&*!]{8,}$'
@@ -158,15 +139,23 @@ class RegisterSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         password = validated_data.pop('password')
-        telefone = validated_data.get('telefone')
+        telefone = validated_data.pop('telefone')
+        email = validated_data.get('email')
 
         if User.objects.filter(username=telefone).exists():
             raise serializers.ValidationError({'telefone': 'Este telefone já está cadastrado.'})
 
         user = User.objects.create_user(
-            username=telefone,
+            username=email,
             password=password,
+            first_name=validated_data.get('first_name', ''),
+            email=validated_data.get('email', '')
         )
-        prestador = Prestador.objects.create(user=user, **validated_data)
-    
-        return prestador
+
+        # ✅ cria profile (usuario comum)
+        Profile.objects.create(
+            user=user,
+            telefone=telefone
+        )
+
+        return user

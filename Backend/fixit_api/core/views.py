@@ -16,6 +16,7 @@ from .models import Prestador
 from .serializers import PrestadorSerializer
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth import authenticate
+from .utils import send_order_accepted_email
 
 
 class AvailableOrdersView(generics.ListAPIView):
@@ -212,6 +213,8 @@ def accept_order(request, pk):
         order.status = 'confirmed'  # 🔥 PADRONIZADO
         order.prestador = prestador
         order.save()
+
+        send_order_accepted_email(order.user, order, prestador)
 
         return Response({'message': 'Pedido aceito com sucesso'})
 

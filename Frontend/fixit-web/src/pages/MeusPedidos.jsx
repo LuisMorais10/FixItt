@@ -26,6 +26,17 @@ export default function MeusPedidos() {
       .catch(error => console.error(error))
   }, [])
 
+    const getStatusClass = (status) => {
+    switch (status) {
+    case "pending":
+      return "status status-pending"
+    case "confirmed":
+      return "status status-confirmed"
+    default:
+      return "status"
+  }
+}
+
 
   return (
   <div className="pedidos-card">
@@ -39,7 +50,7 @@ export default function MeusPedidos() {
             
             <div className="ticket-header">
               <span>Pedido #{order.id}</span>
-              <span className={`status ${order.status}`}>
+              <span className={getStatusClass (order.status)}>
                 {order.status}
               </span>
             </div>

@@ -46,3 +46,34 @@ Equipe FixIt
         from_email=None,
         recipient_list=[user.email],
     )
+
+
+
+
+def send_order_accepted_email(user, order, prestador):
+    send_mail(
+        subject="Seu pedido foi aceito! 🎉 - FixIt",
+        message=f"""
+Olá {user.first_name or user.username},
+
+Boa notícia! Seu pedido foi aceito por um prestador.
+
+Detalhes do pedido:
+Pedido: #{order.id}
+Serviço: {order.service.nome}
+Data: {order.date.strftime('%d/%m/%Y')}
+
+Prestador:
+Nome: {prestador.nome}
+Telefone: {prestador.telefone}
+
+Endereço:
+{order.logradouro}, {order.numero} - {order.bairro}, {order.cidade}
+
+Em breve o prestador poderá entrar em contato com você.
+
+Equipe FixIt
+        """,
+        from_email=None,
+        recipient_list=[user.email],
+    )
