@@ -23,6 +23,7 @@ import EntrarColaborador from './pages/EntrarColaborador'
 import PortalColaborador from './pages/PortalColaborador'
 import SolicitacoesDisponiveis from './pages/SolicitacoesDisponiveis'
 import MeusAgendamentos from "./pages/MeusAgendamentos"
+import PerfilColaborador from "./pages/PerfilColaborador"
 
 
 function App() {
@@ -48,6 +49,7 @@ function App() {
         <Route path="/colaborador/portal" element={<PortalColaborador />} />
         <Route path="/colaborador/solicitacoes" element={<SolicitacoesDisponiveis />} />
         <Route path="/colaborador/agendamentos" element={<MeusAgendamentos />} />
+        <Route path="/colaborador/perfil" element={<PerfilColaborador />} />
         
 
 

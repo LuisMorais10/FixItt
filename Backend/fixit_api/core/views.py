@@ -1,5 +1,5 @@
 from rest_framework.views import APIView
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework import status
 from .serializers import RegisterSerializer
@@ -17,6 +17,9 @@ from .serializers import PrestadorSerializer
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth import authenticate
 from .utils import send_order_accepted_email
+from .models import CodigoEncerramento
+from .utils import send_codigo_encerramento_email
+from .utils import send_ticket_completed_email
 
 
 class AvailableOrdersView(generics.ListAPIView):
@@ -225,9 +228,127 @@ def accept_order(request, pk):
         return Response({"error": "Usuário não é um prestador"}, status=403)
 
 @api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def my_jobs(request):
     prestador = Prestador.objects.get(user=request.user)
     orders = Order.objects.filter(prestador=prestador)
 
     serializer = OrderSerializer(orders, many=True)
     return Response(serializer.data)
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def perfil_prestador(request):
+    try:
+        prestador = Prestador.objects.get(user=request.user)
+        serializer = PrestadorSerializer(prestador)
+        total_servicos = Order.objects.filter(prestador=prestador).count()
+        data = serializer.data
+        data['total_servicos'] = total_servicos
+        return Response(data)
+    except Prestador.DoesNotExist:
+        return Response({'error': 'Prestador não encontrado'}, status=404)
+    
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def iniciar_servico(request, pk):
+    try:
+        order = Order.objects.get(pk=pk)
+        prestador = Prestador.objects.get(user=request.user)
+
+        if order.prestador != prestador:
+            return Response({'error': 'Sem permissão'}, status=403)
+
+        if order.status != 'confirmed':
+            return Response({'error': 'Pedido não está confirmado'}, status=400)
+
+        # Gera o código
+        codigo = CodigoEncerramento.generate_code()
+        CodigoEncerramento.objects.update_or_create(
+            order=order,
+            defaults={'codigo': codigo}
+        )
+
+        # Muda status
+        order.status = 'in_progress'
+        order.save()
+
+        # Envia email pro user com o código
+        send_codigo_encerramento_email(order.user, order, codigo)
+
+        return Response({'message': 'Serviço iniciado! Código enviado ao cliente.'})
+
+    except Order.DoesNotExist:
+        return Response({'error': 'Pedido não encontrado'}, status=404)
+    except Prestador.DoesNotExist:
+        return Response({'error': 'Não é um prestador'}, status=403)
+
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def encerrar_servico(request, pk):
+    try:
+        order = Order.objects.get(pk=pk)
+        prestador = Prestador.objects.get(user=request.user)
+
+        if order.prestador != prestador:
+            return Response({'error': 'Sem permissão'}, status=403)
+
+        if order.status != 'in_progress':
+            return Response({'error': 'Serviço não está em andamento'}, status=400)
+
+        codigo_informado = request.data.get('codigo')
+        codigo_obj = CodigoEncerramento.objects.get(order=order)
+
+        if codigo_obj.codigo != codigo_informado:
+            return Response({'error': 'Código inválido'}, status=400)
+
+        order.status = 'completed'
+        order.save()
+
+        codigo_obj.delete()
+
+        return Response({'message': 'Serviço encerrado com sucesso!'})
+
+    except Order.DoesNotExist:
+        return Response({'error': 'Pedido não encontrado'}, status=404)
+    except Prestador.DoesNotExist:
+        return Response({'error': 'Não é um prestador'}, status=403)
+    except CodigoEncerramento.DoesNotExist:
+        return Response({'error': 'Código não encontrado'}, status=404)
+    
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def encerrar_servico(request, pk):
+    try:
+        order = Order.objects.get(pk=pk)
+        prestador = Prestador.objects.get(user=request.user)
+
+        if order.prestador != prestador:
+            return Response({'error': 'Sem permissão'}, status=403)
+
+        if order.status != 'in_progress':
+            return Response({'error': 'Serviço não está em andamento'}, status=400)
+
+        codigo_informado = request.data.get('codigo')
+        codigo_obj = CodigoEncerramento.objects.get(order=order)
+
+        if codigo_obj.codigo != codigo_informado:
+            return Response({'error': 'Código inválido'}, status=400)
+
+        order.status = 'completed'
+        order.save()
+
+        codigo_obj.delete()
+
+        # envia email de conclusão
+        send_ticket_completed_email(order.user, order, prestador)
+
+        return Response({'message': 'Serviço encerrado com sucesso!'})
+
+    except Order.DoesNotExist:
+        return Response({'error': 'Pedido não encontrado'}, status=404)
+    except Prestador.DoesNotExist:
+        return Response({'error': 'Não é um prestador'}, status=403)
+    except CodigoEncerramento.DoesNotExist:
+        return Response({'error': 'Código não encontrado'}, status=404)

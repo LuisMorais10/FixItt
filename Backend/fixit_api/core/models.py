@@ -221,3 +221,15 @@ class Order(models.Model):
     def __str__(self):
         return f"Pedido #{self.id} - {self.user.username}"
 
+
+class CodigoEncerramento(models.Model):
+    order = models.OneToOneField(Order, on_delete=models.CASCADE, related_name='codigo_encerramento')
+    codigo = models.CharField(max_length=6)
+    criado_em = models.DateTimeField(auto_now_add=True)
+
+    @staticmethod
+    def generate_code():
+        return str(random.randint(100000, 999999))
+
+    def __str__(self):
+        return f"Código do pedido #{self.order.id}"

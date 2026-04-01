@@ -77,3 +77,52 @@ Equipe FixIt
         from_email=None,
         recipient_list=[user.email],
     )
+
+def send_codigo_encerramento_email(user, order, codigo):
+    send_mail(
+        subject="Código de encerramento do serviço - FixIt",
+        message=f"""
+Olá {user.first_name or user.username},
+
+O seu serviço está em andamento! Quando o prestador finalizar, forneça o código abaixo para encerrar o atendimento:
+
+Código: {codigo}
+
+Pedido: #{order.id}
+Serviço: {order.service.nome}
+Data: {order.date.strftime('%d/%m/%Y')}
+
+Guarde este código com segurança.
+
+Equipe FixIt
+        """,
+        from_email=None,
+        recipient_list=[user.email],
+    )
+
+def send_ticket_completed_email(user, order, prestador):
+    send_mail(
+        subject="Serviço concluído! Avalie sua experiência - FixIt",
+        message=f"""
+Olá {user.first_name or user.username},
+
+Seu serviço foi concluído com sucesso! Obrigado por escolher a FixIt 🎉
+
+Detalhes do serviço:
+Pedido: #{order.id}
+Serviço: {order.service.nome}
+Data: {order.date.strftime('%d/%m/%Y')}
+Prestador: {prestador.nome}
+
+---
+
+Sua opinião é muito importante para nós!
+Acesse o link abaixo para avaliar o prestador e a plataforma:
+
+👉 http://localhost:5173/avaliar/{order.id}
+
+Equipe FixIt
+        """,
+        from_email=None,
+        recipient_list=[user.email],
+    )

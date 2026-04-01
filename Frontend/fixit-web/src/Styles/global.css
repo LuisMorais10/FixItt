@@ -1296,3 +1296,311 @@ gap:8px;
   font-weight: 600;
   border: 1px solid rgba(46, 125, 50, 0.2);
 }
+
+/* =========================
+   PERFIL COLABORADOR
+========================= */
+.perfil-page {
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 100px 20px 60px;
+}
+
+.perfil-card {
+  background: white;
+  border-radius: 20px;
+  padding: 32px;
+  box-shadow: 0 8px 32px rgba(13, 71, 161, 0.10);
+}
+
+.perfil-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.perfil-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: #e3f2fd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  font-weight: 600;
+  color: #0d47a1;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.perfil-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.perfil-nome {
+  margin: 0 0 6px;
+  color: #0d47a1;
+  font-size: 20px;
+}
+
+.perfil-badge {
+  background: #e3f2fd;
+  color: #0d47a1;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.perfil-divider {
+  border: none;
+  border-top: 1px solid #f0f0f0;
+  margin: 0 0 24px;
+}
+
+.perfil-stats {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.perfil-stat-card {
+  flex: 1;
+  background: #f8fbff;
+  border-radius: 12px;
+  padding: 12px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.perfil-stat-label {
+  font-size: 12px;
+  color: #888;
+  margin-bottom: 2px;
+}
+
+.perfil-stat-value {
+  font-size: 22px;
+  font-weight: 600;
+  color: #0d47a1;
+}
+
+.perfil-stat-sub {
+  font-size: 12px;
+  color: #888;
+}
+
+.perfil-stars {
+  display: flex;
+  gap: 2px;
+}
+
+.star-filled {
+  font-size: 20px;
+  color: #EF9F27;
+}
+
+.star-empty {
+  font-size: 20px;
+  color: #ccc;
+}
+
+.perfil-info-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  font-size: 14px;
+  border-bottom: 1px solid #f8f8f8;
+}
+
+.perfil-info-label {
+  color: #888;
+}
+
+.perfil-info-value {
+  font-weight: 500;
+  color: #333;
+}
+
+/* =========================
+   MODAL - PRESTADOR RESUMO
+========================= */
+.prestador-resumo-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: #f8fbff;
+  border-radius: 12px;
+  padding: 14px;
+  margin-bottom: 16px;
+}
+
+.prestador-resumo-avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: #e3f2fd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: 600;
+  color: #0d47a1;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.prestador-resumo-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.prestador-resumo-info {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  font-size: 14px;
+  color: #444;
+}
+
+.prestador-resumo-info strong {
+  font-size: 15px;
+  color: #0d47a1;
+}
+
+.aguardando-prestador {
+  background: #fff8e1;
+  color: #ef6c00;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  margin: 12px 0;
+}
+
+.modal-section-title {
+  color: #0d47a1;
+  margin-bottom: 12px;
+  font-size: 15px;
+}
+
+/* =========================
+   MEUS AGENDAMENTOS
+========================= */
+.status-in_progress {
+  background: #e3f2fd;
+  color: #1565c0;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  border: 1px solid rgba(21, 101, 192, 0.2);
+}
+
+.status-completed {
+  background: #f3e5f5;
+  color: #6a1b9a;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  border: 1px solid rgba(106, 27, 154, 0.2);
+}
+
+.btn-iniciar {
+  padding: 8px 12px;
+  background: #1565c0;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.btn-iniciar:hover {
+  background: #0d47a1;
+  transform: translateY(-1px);
+}
+
+.encerrar-box {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-end;
+}
+
+.input-codigo {
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  text-align: center;
+  letter-spacing: 4px;
+  font-weight: 600;
+  width: 160px;
+}
+
+.btn-encerrar {
+  padding: 8px 12px;
+  background: #6a1b9a;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.btn-encerrar:hover {
+  background: #4a148c;
+  transform: translateY(-1px);
+}
+
+.agendamento-mensagem {
+  text-align: center;
+  background: #e8f5e9;
+  color: #2e7d32;
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  font-weight: 500;
+}
+
+
+/* =========================
+   CÓDIGO DE ENCERRAMENTO
+========================= */
+.codigo-encerramento-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #e3f2fd;
+  border: 1px dashed #1565c0;
+  border-radius: 10px;
+  padding: 12px 16px;
+  margin-top: 12px;
+  gap: 4px;
+}
+
+.codigo-label {
+  font-size: 12px;
+  color: #1565c0;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.codigo-valor {
+  font-size: 24px;
+  font-weight: 700;
+  color: #0d47a1;
+  letter-spacing: 6px;
+}

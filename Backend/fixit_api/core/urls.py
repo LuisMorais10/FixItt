@@ -11,6 +11,8 @@ from .views import login_prestador
 from .views import AvailableOrdersView
 from .views import accept_order
 from .views import my_jobs
+from .views import perfil_prestador
+from .views import iniciar_servico, encerrar_servico
 
 
 
@@ -28,6 +30,9 @@ urlpatterns = [
     path('orders/available/', AvailableOrdersView.as_view()),
     path('orders/<int:pk>/accept/', accept_order),
     path('orders/my-jobs/', my_jobs),
+    path('prestador/me/', perfil_prestador),
+    path('orders/<int:pk>/iniciar/', iniciar_servico),
+    path('orders/<int:pk>/encerrar/', encerrar_servico),
 
 ]
 

@@ -77,16 +77,37 @@ class UserUpdateSerializer(serializers.ModelSerializer):
             profile.save()
 
         return instance
+    
+
+class PrestadorResumoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Prestador
+        fields = ['id', 'nome', 'telefone', 'servico', 'anos_experiencia', 'foto']
+
+
+class UserResumoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['id', 'first_name', 'last_name', 'email']
 
 
 
 class OrderSerializer(serializers.ModelSerializer):
     service_nome = serializers.CharField(source='service.nome', read_only=True)
+    prestador_detalhes = PrestadorResumoSerializer(source='prestador', read_only=True)
+    user_detalhes = UserResumoSerializer(source='user', read_only=True)
+    codigo_encerramento = serializers.SerializerMethodField()
     
     class Meta:
         model = Order
         fields = '__all__'
         read_only_fields = ['user', 'status', 'created_at']
+
+    def get_codigo_encerramento(self, obj):
+        try:
+            return obj.codigo_encerramento.codigo
+        except:
+            return None    
 
     def validate(self, data):
         if self.instance:  # update

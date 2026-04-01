@@ -58,6 +58,13 @@ export default function MeusPedidos() {
             <div className="ticket-body">
               <p><strong>Serviço:</strong> {order.service_nome || order.service}</p>
               <p><strong>Status:</strong> {order.status}</p>
+
+              {order.status === 'in_progress' && order.codigo_encerramento && (
+                <div className="codigo-encerramento-box">
+                  <span className="codigo-label">Código de encerramento</span>
+                  <span className="codigo-valor">{order.codigo_encerramento}</span>
+            </div>
+    )}
             </div>
 
             <div className="ticket-footer">
