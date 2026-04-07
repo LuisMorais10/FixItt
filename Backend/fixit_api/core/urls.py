@@ -13,6 +13,8 @@ from .views import accept_order
 from .views import my_jobs
 from .views import perfil_prestador
 from .views import iniciar_servico, encerrar_servico
+from .views import criar_avaliacao, avaliacoes_do_prestador
+from .views import minhas_avaliacoes_recebidas, status_avaliacao_order
 
 
 
@@ -33,6 +35,9 @@ urlpatterns = [
     path('prestador/me/', perfil_prestador),
     path('orders/<int:pk>/iniciar/', iniciar_servico),
     path('orders/<int:pk>/encerrar/', encerrar_servico),
-
+    path('avaliacoes/criar/', criar_avaliacao),
+    path('avaliacoes/prestador/<int:prestador_id>/', avaliacoes_do_prestador),
+    path('avaliacoes/minhas/', minhas_avaliacoes_recebidas),
+    path('orders/<int:pk>/status-avaliacao/', status_avaliacao_order),
 ]
 

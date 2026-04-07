@@ -20,6 +20,9 @@ from .utils import send_order_accepted_email
 from .models import CodigoEncerramento
 from .utils import send_codigo_encerramento_email
 from .utils import send_ticket_completed_email
+from .models import Avaliacao
+from .serializers import AvaliacaoSerializer, CriarAvaliacaoSerializer
+from django.db.models import Avg
 
 
 class AvailableOrdersView(generics.ListAPIView):
@@ -352,3 +355,141 @@ def encerrar_servico(request, pk):
         return Response({'error': 'Não é um prestador'}, status=403)
     except CodigoEncerramento.DoesNotExist:
         return Response({'error': 'Código não encontrado'}, status=404)
+    
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def criar_avaliacao(request):
+    """
+    Cria uma avaliação após pedido concluído.
+    Funciona tanto para user comum quanto para prestador —
+    o serializer detecta automaticamente quem está chamando.
+ 
+    Body: { "order": <id>, "nota": 1-5, "comentario": "..." }
+    """
+    serializer = CriarAvaliacaoSerializer(
+        data=request.data,
+        context={'request': request}
+    )
+    if serializer.is_valid():
+        serializer.save()
+        return Response(
+            {'message': 'Avaliação registrada com sucesso!'},
+            status=status.HTTP_201_CREATED
+        )
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+ 
+ 
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def avaliacoes_do_prestador(request, prestador_id):
+    """
+    Lista todas as avaliações recebidas por um prestador.
+    Acessível por qualquer usuário autenticado.
+    """
+    avaliacoes = Avaliacao.objects.filter(
+        prestador_avaliado__id=prestador_id
+    ).order_by('-criado_em')
+ 
+    media = avaliacoes.aggregate(Avg('nota'))['nota__avg']
+ 
+    serializer = AvaliacaoSerializer(avaliacoes, many=True)
+ 
+    return Response({
+        'media': round(media, 1) if media else None,
+        'total': avaliacoes.count(),
+        'avaliacoes': serializer.data,
+    })
+ 
+ 
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def minhas_avaliacoes_recebidas(request):
+    """
+    Prestador logado consulta as avaliações que recebeu.
+    Retorna média, total e lista detalhada.
+    """
+    try:
+        prestador = Prestador.objects.get(user=request.user)
+    except Prestador.DoesNotExist:
+        return Response({'error': 'Usuário não é um prestador'}, status=403)
+ 
+    avaliacoes = Avaliacao.objects.filter(
+        prestador_avaliado=prestador
+    ).order_by('-criado_em')
+ 
+    media = avaliacoes.aggregate(Avg('nota'))['nota__avg']
+ 
+    serializer = AvaliacaoSerializer(avaliacoes, many=True)
+ 
+    return Response({
+        'media': round(media, 1) if media else None,
+        'total': avaliacoes.count(),
+        'avaliacoes': serializer.data,
+    })
+ 
+ 
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def status_avaliacao_order(request, pk):
+    """
+    Retorna se o usuário logado já avaliou um pedido específico.
+    Útil para o front decidir se exibe ou não o botão de avaliação.
+ 
+    Retorna:
+    {
+      "pode_avaliar": true/false,
+      "ja_avaliou": true/false,
+      "motivo": "..." (quando não pode avaliar)
+    }
+    """
+    try:
+        order = Order.objects.get(pk=pk)
+    except Order.DoesNotExist:
+        return Response({'error': 'Pedido não encontrado'}, status=404)
+ 
+    user = request.user
+ 
+    # Verifica se é prestador
+    try:
+        prestador = Prestador.objects.get(user=user)
+        is_prestador = True
+    except Prestador.DoesNotExist:
+        prestador    = None
+        is_prestador = False
+ 
+    # Pedido deve estar concluído
+    if order.status != 'completed':
+        return Response({
+            'pode_avaliar': False,
+            'ja_avaliou': False,
+            'motivo': 'Pedido ainda não foi concluído.'
+        })
+ 
+    if is_prestador:
+        if order.prestador != prestador:
+            return Response({
+                'pode_avaliar': False,
+                'ja_avaliou': False,
+                'motivo': 'Você não é o prestador deste pedido.'
+            })
+        ja_avaliou = Avaliacao.objects.filter(
+            order=order, avaliador_prestador=prestador
+        ).exists()
+    else:
+        if order.user != user:
+            return Response({
+                'pode_avaliar': False,
+                'ja_avaliou': False,
+                'motivo': 'Este pedido não pertence a você.'
+            })
+        ja_avaliou = Avaliacao.objects.filter(
+            order=order, avaliador_user=user
+        ).exists()
+ 
+    return Response({
+        'pode_avaliar': not ja_avaliou,
+        'ja_avaliou': ja_avaliou,
+        'motivo': 'Você já avaliou este pedido.' if ja_avaliou else None
+    })
+ 

@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import Service, Order, Prestador, DadosBancarios
+from .models import Service, Order, Prestador, DadosBancarios, Avaliacao
+
 
 
 @admin.register(Service)
@@ -28,5 +29,11 @@ class PrestadorAdmin(admin.ModelAdmin):
     search_fields = ('nome', 'email', 'cpf')
     inlines = [DadosBancariosInline]
 
+@admin.register(Avaliacao)
+class AvaliacaoAdmin(admin.ModelAdmin):
+    list_display  = ['order', 'nota', 'avaliador_user', 'avaliador_prestador',
+                     'prestador_avaliado', 'user_avaliado', 'criado_em']
+    list_filter   = ['nota', 'criado_em']
+    search_fields = ['order__id', 'avaliador_user__email', 'prestador_avaliado__nome']
 
 

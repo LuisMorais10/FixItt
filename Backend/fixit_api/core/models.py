@@ -233,3 +233,78 @@ class CodigoEncerramento(models.Model):
 
     def __str__(self):
         return f"Código do pedido #{self.order.id}"
+ 
+    
+class Avaliacao(models.Model):
+    """
+    Avaliação bidirecional após conclusão do pedido.
+    - avaliador_user  → usuário comum que avalia o prestador
+    - avaliador_prestador → prestador que avalia o usuário
+    Apenas um dos dois pode ser preenchido por instância.
+    """
+ 
+    NOTA_CHOICES = [(i, str(i)) for i in range(1, 6)]
+ 
+    order = models.ForeignKey(
+        Order,
+        on_delete=models.CASCADE,
+        related_name='avaliacoes'
+    )
+ 
+    # Quem avalia quem
+    avaliador_user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        related_name='avaliacoes_feitas'
+    )
+    avaliador_prestador = models.ForeignKey(
+        'Prestador',
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        related_name='avaliacoes_feitas'
+    )
+ 
+    # Quem é avaliado
+    prestador_avaliado = models.ForeignKey(
+        'Prestador',
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        related_name='avaliacoes_recebidas'
+    )
+    user_avaliado = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        related_name='avaliacoes_recebidas'
+    )
+ 
+    nota = models.PositiveSmallIntegerField(choices=NOTA_CHOICES)
+    comentario = models.TextField(blank=True, null=True)
+    criado_em = models.DateTimeField(auto_now_add=True)
+ 
+    class Meta:
+        constraints = [
+            # Garante que user avalia prestador uma única vez por pedido
+            models.UniqueConstraint(
+                fields=['order', 'avaliador_user'],
+                condition=models.Q(avaliador_user__isnull=False),
+                name='unique_avaliacao_user_por_order'
+            ),
+            # Garante que prestador avalia user uma única vez por pedido
+            models.UniqueConstraint(
+                fields=['order', 'avaliador_prestador'],
+                condition=models.Q(avaliador_prestador__isnull=False),
+                name='unique_avaliacao_prestador_por_order'
+            ),
+        ]
+ 
+    def __str__(self):
+        if self.avaliador_user:
+            return f"Pedido #{self.order.id} — User avaliou Prestador — {self.nota}★"
+        return f"Pedido #{self.order.id} — Prestador avaliou User — {self.nota}★"
+ 

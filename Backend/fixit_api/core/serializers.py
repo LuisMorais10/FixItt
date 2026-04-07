@@ -1,7 +1,96 @@
 import re
+from urllib import request
 from rest_framework import serializers
 from django.contrib.auth.models import User
 from .models import Prestador, Profile, DadosBancarios, Order
+from .models import Avaliacao
+
+
+class AvaliacaoSerializer(serializers.ModelSerializer):
+    """Leitura de avaliações — expõe quem avaliou e quem foi avaliado."""
+    avaliador_nome = serializers.SerializerMethodField()
+    avaliado_nome  = serializers.SerializerMethodField()
+ 
+    class Meta:
+        model  = Avaliacao
+        fields = [
+            'id', 'order', 'nota', 'comentario', 'criado_em',
+            'avaliador_nome', 'avaliado_nome',
+            # campos raw (úteis para lógica no front)
+            'avaliador_user', 'avaliador_prestador',
+            'prestador_avaliado', 'user_avaliado',
+        ]
+ 
+    def get_avaliador_nome(self, obj):
+        if obj.avaliador_user:
+            return obj.avaliador_user.first_name or obj.avaliador_user.email
+        if obj.avaliador_prestador:
+            return obj.avaliador_prestador.nome
+        return ''
+ 
+    def get_avaliado_nome(self, obj):
+        if obj.prestador_avaliado:
+            return obj.prestador_avaliado.nome
+        if obj.user_avaliado:
+            return obj.user_avaliado.first_name or obj.user_avaliado.email
+        return ''
+ 
+ 
+class CriarAvaliacaoSerializer(serializers.ModelSerializer):
+    """Criação de avaliação — valida regras de negócio."""
+ 
+    class Meta:
+        model  = Avaliacao
+        fields = ['order', 'nota', 'comentario']
+ 
+    def validate(self, data):
+        request = self.context['request']
+        order   = data['order']
+        user    = request.user
+ 
+        # 1. Pedido deve estar concluído
+        if order.status != 'completed':
+            raise serializers.ValidationError(
+                "Só é possível avaliar pedidos concluídos."
+            )
+ 
+        # 2. Detecta se quem chama é user comum ou prestador
+        try:
+            prestador = Prestador.objects.get(user=user)
+            is_prestador = True
+        except Prestador.DoesNotExist:
+            prestador    = None
+            is_prestador = False
+ 
+        if is_prestador:
+            # Prestador só avalia seu próprio pedido
+            if order.prestador != prestador:
+                raise serializers.ValidationError(
+                    "Você não participou deste pedido."
+                )
+            # Verifica duplicidade
+            if Avaliacao.objects.filter(order=order, avaliador_prestador=prestador).exists():
+                raise serializers.ValidationError(
+                    "Você já avaliou este pedido."
+                )
+            data['avaliador_prestador'] = prestador
+            data['user_avaliado']       = order.user
+ 
+        else:
+            # User só avalia seu próprio pedido
+            if order.user != user:
+                raise serializers.ValidationError(
+                    "Você não participou deste pedido."
+                )
+            # Verifica duplicidade
+            if Avaliacao.objects.filter(order=order, avaliador_user=user).exists():
+                raise serializers.ValidationError(
+                    "Você já avaliou este pedido."
+                )
+            data['avaliador_user']      = user
+            data['prestador_avaliado']  = order.prestador
+ 
+        return data
 
 
 class DadosBancariosSerializer(serializers.ModelSerializer):
@@ -80,9 +169,24 @@ class UserUpdateSerializer(serializers.ModelSerializer):
     
 
 class PrestadorResumoSerializer(serializers.ModelSerializer):
+    media_avaliacao = serializers.SerializerMethodField()
+    total_avaliacoes = serializers.SerializerMethodField()
+
     class Meta:
-        model = Prestador
-        fields = ['id', 'nome', 'telefone', 'servico', 'anos_experiencia', 'foto']
+        model  = Prestador
+        fields = ['id', 'nome', 'telefone', 'servico',
+                  'anos_experiencia', 'foto',
+                  'media_avaliacao', 'total_avaliacoes']   # ← adicionados
+
+    def get_media_avaliacao(self, obj):
+        from django.db.models import Avg
+        resultado = obj.avaliacoes_recebidas.aggregate(Avg('nota'))
+        media = resultado['nota__avg']
+        return round(media, 1) if media else None
+
+    def get_total_avaliacoes(self, obj):
+        return obj.avaliacoes_recebidas.count()
+    
 
 
 class UserResumoSerializer(serializers.ModelSerializer):
@@ -97,11 +201,36 @@ class OrderSerializer(serializers.ModelSerializer):
     prestador_detalhes = PrestadorResumoSerializer(source='prestador', read_only=True)
     user_detalhes = UserResumoSerializer(source='user', read_only=True)
     codigo_encerramento = serializers.SerializerMethodField()
+    ja_avaliado_pelo_user      = serializers.SerializerMethodField()
+    ja_avaliado_pelo_prestador = serializers.SerializerMethodField()
     
     class Meta:
         model = Order
         fields = '__all__'
         read_only_fields = ['user', 'status', 'created_at']
+
+    def get_ja_avaliado_pelo_user(self, obj):
+        request = self.context.get('request')
+
+        if not request:
+            return False
+        
+        return Avaliacao.objects.filter(
+            order=obj, avaliador_user=request.user
+        ).exists()
+
+    def get_ja_avaliado_pelo_prestador(self, obj):
+        request = self.context.get('request')
+        if not request:
+            return False
+        try:
+            prestador = Prestador.objects.get(user=request.user)
+            return Avaliacao.objects.filter(
+                order=obj, avaliador_prestador=prestador
+            ).exists()
+        except Prestador.DoesNotExist:
+            return False
+ 
 
     def get_codigo_encerramento(self, obj):
         try:
