@@ -308,3 +308,22 @@ class Avaliacao(models.Model):
             return f"Pedido #{self.order.id} — User avaliou Prestador — {self.nota}★"
         return f"Pedido #{self.order.id} — Prestador avaliou User — {self.nota}★"
  
+ 
+class SolicitacaoSaque(models.Model):
+    STATUS_CHOICES = [
+        ('pendente',  'Pendente'),
+        ('aprovado',  'Aprovado'),
+        ('recusado',  'Recusado'),
+    ]
+ 
+    prestador   = models.ForeignKey(
+        'Prestador', on_delete=models.CASCADE, related_name='saques'
+    )
+    valor       = models.DecimalField(max_digits=10, decimal_places=2)
+    status      = models.CharField(max_length=10, choices=STATUS_CHOICES, default='pendente')
+    solicitado_em = models.DateTimeField(auto_now_add=True)
+    processado_em = models.DateTimeField(null=True, blank=True)
+    observacao  = models.TextField(blank=True, null=True)
+ 
+    def __str__(self):
+        return f"Saque de {self.prestador.nome} — R$ {self.valor} ({self.status})"

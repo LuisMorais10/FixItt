@@ -3,6 +3,7 @@ import AddressSearch from "../components/AddressSearch"
 import { useNavigate } from "react-router-dom"
 import ComoFunciona from '../components/ComoFunciona'
 import BannerCTA from '../components/Bannercta'
+import QuemSomos from '../components/QuemSomos'
 
 // FAXINA
 import faxina1 from "../assets/Images/FaxinaHome1.png"
@@ -54,6 +55,8 @@ function Home() {
         </div>
          
          <ComoFunciona />
+
+          <QuemSomos />
 
          <BannerCTA />
 

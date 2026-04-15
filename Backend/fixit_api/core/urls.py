@@ -15,6 +15,8 @@ from .views import perfil_prestador
 from .views import iniciar_servico, encerrar_servico
 from .views import criar_avaliacao, avaliacoes_do_prestador
 from .views import minhas_avaliacoes_recebidas, status_avaliacao_order
+from .views import avaliacoes_recebidas_order
+from .views import carteira_resumo, carteira_extrato, solicitar_saque
 
 
 
@@ -39,5 +41,9 @@ urlpatterns = [
     path('avaliacoes/prestador/<int:prestador_id>/', avaliacoes_do_prestador),
     path('avaliacoes/minhas/', minhas_avaliacoes_recebidas),
     path('orders/<int:pk>/status-avaliacao/', status_avaliacao_order),
+    path('avaliacoes/order/<int:pk>/recebidas/', avaliacoes_recebidas_order),
+    path('carteira/',         carteira_resumo),
+    path('carteira/extrato/', carteira_extrato),
+    path('carteira/sacar/',   solicitar_saque),
 ]
 

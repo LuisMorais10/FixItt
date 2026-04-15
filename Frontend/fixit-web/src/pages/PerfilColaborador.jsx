@@ -15,7 +15,9 @@ function StarRating({ value }) {
   return (
     <div className="perfil-stars">
       {[1, 2, 3, 4, 5].map((i) => (
-        <span key={i} className={i <= Math.round(value) ? 'star-filled' : 'star-empty'}>★</span>
+        <span key={i} className={i <= Math.round(value) ? 'star-filled' : 'star-empty'}>
+          ★
+        </span>
       ))}
     </div>
   )
@@ -24,26 +26,42 @@ function StarRating({ value }) {
 export default function PerfilColaborador() {
   const [perfil, setPerfil] = useState(null)
   const [loading, setLoading] = useState(true)
-
-  const avaliacaoMock = 4.0
+  const [media, setMedia] = useState(null)
+  const [totalAval, setTotalAval] = useState(0)
 
   useEffect(() => {
-  authFetch('http://127.0.0.1:8000/api/prestador/me/')
-    .then(res => res.json())
-    .then(data => setPerfil(data))
-    .catch(err => console.error(err))
-    .finally(() => setLoading(false))
-}, [])
+    authFetch('http://127.0.0.1:8000/api/prestador/me/')
+      .then((res) => res.json())
+      .then((data) => setPerfil(data))
+      .catch((err) => console.error(err))
+      .finally(() => setLoading(false))
+  }, [])
 
-  if (loading) return <p style={{ textAlign: 'center', paddingTop: '100px' }}>Carregando...</p>
-  if (!perfil) return <p style={{ textAlign: 'center', paddingTop: '100px' }}>Perfil não encontrado.</p>
+  useEffect(() => {
+    if (!perfil) return
+
+    authFetch('http://127.0.0.1:8000/api/avaliacoes/minhas/')
+      .then((res) => res.json())
+      .then((data) => {
+        setMedia(data.media)
+        setTotalAval(data.total || 0)
+      })
+      .catch((err) => console.error(err))
+  }, [perfil])
+
+  if (loading)
+    return <p style={{ textAlign: 'center', paddingTop: '100px' }}>Carregando...</p>
+  if (!perfil)
+    return <p style={{ textAlign: 'center', paddingTop: '100px' }}>Perfil não encontrado.</p>
 
   const iniciais = perfil.nome
     ?.split(' ')
     .slice(0, 2)
-    .map(n => n[0])
+    .map((n) => n[0])
     .join('')
     .toUpperCase()
+
+  const temAvaliacao = totalAval > 0
 
   return (
     <div className="perfil-page">
@@ -51,9 +69,7 @@ export default function PerfilColaborador() {
 
         <div className="perfil-header">
           <div className="perfil-avatar">
-            {perfil.foto
-              ? <img src={perfil.foto} alt="foto" />
-              : iniciais}
+            {perfil.foto ? <img src={perfil.foto} alt="foto" /> : iniciais}
           </div>
           <div>
             <h2 className="perfil-nome">{perfil.nome}</h2>
@@ -66,21 +82,48 @@ export default function PerfilColaborador() {
         <hr className="perfil-divider" />
 
         <div className="perfil-stats">
+
           <div className="perfil-stat-card">
             <span className="perfil-stat-label">Avaliação</span>
-            <StarRating value={avaliacaoMock} />
-            <span className="perfil-stat-sub">{avaliacaoMock.toFixed(1)} / 5</span>
+            {temAvaliacao ? (
+              <>
+                <StarRating value={parseFloat(media)} />
+                <span className="perfil-stat-sub">{media} / 5</span>
+              </>
+            ) : (
+              <>
+                <span
+                  style={{
+                    display: 'inline-block',
+                    background: '#e3f2fd',
+                    color: '#0d47a1',
+                    fontWeight: 700,
+                    fontSize: '11px',
+                    letterSpacing: '1.5px',
+                    padding: '3px 10px',
+                    borderRadius: '20px',
+                    margin: '4px 0 2px',
+                  }}
+                >
+                  NOVO
+                </span>
+                <span className="perfil-stat-sub">sem avaliações</span>
+              </>
+            )}
           </div>
+
           <div className="perfil-stat-card">
             <span className="perfil-stat-label">Serviços</span>
             <span className="perfil-stat-value">{perfil.total_servicos ?? 0}</span>
             <span className="perfil-stat-sub">concluídos</span>
           </div>
+
           <div className="perfil-stat-card">
             <span className="perfil-stat-label">Experiência</span>
             <span className="perfil-stat-value">{perfil.anos_experiencia}</span>
             <span className="perfil-stat-sub">anos</span>
           </div>
+
         </div>
 
         <hr className="perfil-divider" />

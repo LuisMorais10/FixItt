@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import Service, Order, Prestador, DadosBancarios, Avaliacao
+from .models import Service, Order, Prestador, DadosBancarios, Avaliacao, SolicitacaoSaque
+
 
 
 
@@ -36,4 +37,11 @@ class AvaliacaoAdmin(admin.ModelAdmin):
     list_filter   = ['nota', 'criado_em']
     search_fields = ['order__id', 'avaliador_user__email', 'prestador_avaliado__nome']
 
+@admin.register(SolicitacaoSaque)
+class SolicitacaoSaqueAdmin(admin.ModelAdmin):
+    list_display  = ['prestador', 'valor', 'status', 'solicitado_em', 'processado_em']
+    list_filter   = ['status']
+    search_fields = ['prestador__nome']
+    list_editable = ['status']   # permite aprovar/recusar direto na listagem
+ 
 

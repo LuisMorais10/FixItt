@@ -23,6 +23,9 @@ from .utils import send_ticket_completed_email
 from .models import Avaliacao
 from .serializers import AvaliacaoSerializer, CriarAvaliacaoSerializer
 from django.db.models import Avg
+from django.db.models import Sum
+from .models import SolicitacaoSaque
+from .serializers import DadosBancariosSerializer
 
 
 class AvailableOrdersView(generics.ListAPIView):
@@ -492,4 +495,177 @@ def status_avaliacao_order(request, pk):
         'ja_avaliou': ja_avaliou,
         'motivo': 'Você já avaliou este pedido.' if ja_avaliou else None
     })
+ 
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def avaliacoes_recebidas_order(request, pk):
+    """
+    Retorna a avaliação que o user recebeu (do prestador) em um pedido específico.
+    Só retorna se o pedido pertence ao user logado.
+    """
+    try:
+        order = Order.objects.get(pk=pk, user=request.user)
+    except Order.DoesNotExist:
+        return Response({'error': 'Pedido não encontrado'}, status=404)
+ 
+    avaliacoes = Avaliacao.objects.filter(
+        order=order,
+        user_avaliado=request.user
+    ).order_by('-criado_em')
+ 
+    serializer = AvaliacaoSerializer(avaliacoes, many=True)
+ 
+    media = avaliacoes.aggregate(Avg('nota'))['nota__avg']
+ 
+    return Response({
+        'media': round(media, 1) if media else None,
+        'total': avaliacoes.count(),
+        'avaliacoes': serializer.data,
+    })
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def carteira_resumo(request):
+    """
+    Retorna saldo disponível, total recebido e total sacado do prestador.
+    Saldo = total de pedidos completed - total de saques aprovados.
+    """
+    try:
+        prestador = Prestador.objects.get(user=request.user)
+    except Prestador.DoesNotExist:
+        return Response({'error': 'Não é um prestador'}, status=403)
+ 
+    total_recebido = (
+        Order.objects.filter(prestador=prestador, status='completed')
+        .aggregate(total=Sum('value'))['total'] or 0
+    )
+ 
+    total_sacado = (
+        SolicitacaoSaque.objects.filter(prestador=prestador, status='aprovado')
+        .aggregate(total=Sum('valor'))['total'] or 0
+    )
+ 
+    saldo_disponivel = float(total_recebido) - float(total_sacado)
+ 
+    # Dados bancários para exibir no modal de saque
+    try:
+        db = prestador.dados_bancarios
+        dados_bancarios = {
+            'banco':      db.banco,
+            'agencia':    db.agencia,
+            'conta':      db.conta,
+            'tipo_pix':   db.tipo_pix,
+            'chave_pix':  db.chave_pix,
+        }
+    except Exception:
+        dados_bancarios = None
+ 
+    return Response({
+        'total_recebido':   str(total_recebido),
+        'total_sacado':     str(total_sacado),
+        'saldo_disponivel': f'{saldo_disponivel:.2f}',
+        'dados_bancarios':  dados_bancarios,
+    })
+ 
+ 
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def carteira_extrato(request):
+    """
+    Retorna histórico unificado: serviços concluídos + saques,
+    ordenados por data decrescente.
+    """
+    try:
+        prestador = Prestador.objects.get(user=request.user)
+    except Prestador.DoesNotExist:
+        return Response({'error': 'Não é um prestador'}, status=403)
+ 
+    # Serviços concluídos
+    orders = Order.objects.filter(
+        prestador=prestador, status='completed'
+    ).values('id', 'value', 'created_at', 'status')
+ 
+    entradas = [
+        {
+            'id':        f'order_{o["id"]}',
+            'tipo':      'servico',
+            'order_id':  o['id'],
+            'valor':     str(o['value']),
+            'data':      o['created_at'],
+            'status':    o['status'],
+        }
+        for o in orders
+    ]
+ 
+    # Saques
+    saques = SolicitacaoSaque.objects.filter(prestador=prestador).values(
+        'id', 'valor', 'solicitado_em', 'status'
+    )
+ 
+    saidas = [
+        {
+            'id':           f'saque_{s["id"]}',
+            'tipo':         'saque',
+            'valor':        str(s['valor']),
+            'data':         s['solicitado_em'],
+            'status_saque': s['status'],
+        }
+        for s in saques
+    ]
+ 
+    extrato = sorted(
+        entradas + saidas,
+        key=lambda x: x['data'],
+        reverse=True
+    )
+ 
+    return Response({'extrato': extrato})
+ 
+ 
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def solicitar_saque(request):
+    """
+    Cria uma solicitação de saque.
+    Body: { "valor": 150.00 }
+    """
+    try:
+        prestador = Prestador.objects.get(user=request.user)
+    except Prestador.DoesNotExist:
+        return Response({'error': 'Não é um prestador'}, status=403)
+ 
+    valor = request.data.get('valor')
+ 
+    if not valor:
+        return Response({'error': 'Informe o valor do saque.'}, status=400)
+ 
+    try:
+        valor = float(valor)
+    except (TypeError, ValueError):
+        return Response({'error': 'Valor inválido.'}, status=400)
+ 
+    if valor <= 0:
+        return Response({'error': 'O valor deve ser maior que zero.'}, status=400)
+ 
+    # Recalcula saldo no backend (nunca confiar só no front)
+    total_recebido = float(
+        Order.objects.filter(prestador=prestador, status='completed')
+        .aggregate(total=Sum('value'))['total'] or 0
+    )
+    total_sacado = float(
+        SolicitacaoSaque.objects.filter(prestador=prestador, status='aprovado')
+        .aggregate(total=Sum('valor'))['total'] or 0
+    )
+    saldo_disponivel = total_recebido - total_sacado
+ 
+    if valor > saldo_disponivel:
+        return Response(
+            {'error': f'Saldo insuficiente. Disponível: R$ {saldo_disponivel:.2f}'},
+            status=400
+        )
+ 
+    SolicitacaoSaque.objects.create(prestador=prestador, valor=valor)
+ 
+    return Response({'message': 'Solicitação de saque criada com sucesso!'}, status=201)
  

@@ -1760,3 +1760,106 @@ gap:8px;
   position: relative;
   z-index: 10000;
 }
+
+/* =========================
+      QUEM SOMOS 
+========================= */
+
+.quem-somos-premium {
+  padding: 100px 20px;
+  background: linear-gradient(135deg, #f4f8ff, #ffffff);
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.8s ease;
+}
+
+.quem-somos-premium.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.quem-wrapper {
+  max-width: 1200px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 60px;
+  align-items: center;
+}
+
+/* TEXTO */
+.quem-texto h2 {
+  font-size: 2.2rem;
+  color: #0d47a1;
+  margin: 15px 0;
+}
+
+.quem-texto h2 span {
+  color: #1976d2;
+}
+
+.quem-texto p {
+  color: #555;
+  line-height: 1.7;
+  margin-bottom: 25px;
+}
+
+/* BADGE */
+.badge {
+  background: #e3f2fd;
+  color: #0d47a1;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+/* CARDS */
+.quem-diferenciais {
+  display: flex;
+  gap: 15px;
+}
+
+.quem-diferenciais .card {
+  background: #fff;
+  border-radius: 14px;
+  padding: 15px;
+  flex: 1;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+  transition: transform 0.2s;
+}
+
+.quem-diferenciais .card:hover {
+  transform: translateY(-5px);
+}
+
+.quem-diferenciais .card span {
+  font-size: 22px;
+}
+
+.quem-diferenciais .card h4 {
+  margin: 8px 0 4px;
+  color: #0d47a1;
+}
+
+.quem-diferenciais .card p {
+  font-size: 13px;
+}
+
+/* ILUSTRAÇÃO */
+.quem-ilustracao img {
+  width: 100%;
+  max-width: 400px;
+}
+
+/* RESPONSIVO */
+@media (max-width: 900px) {
+  .quem-wrapper {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .quem-diferenciais {
+    flex-direction: column;
+  }
+}
