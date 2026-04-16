@@ -96,8 +96,12 @@ function FormularioFaxina() {
 
     localStorage.setItem("pendingOrder", JSON.stringify(orderData))
 
+    if (serviceId === 2) {
     navigate("/pagamento")
+  } else {
+    navigate("/faxina/residencial-agendada/profissionais")
   }
+}
 
   return (
     <div className="form-container">

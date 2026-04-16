@@ -26,6 +26,10 @@ from django.db.models import Avg
 from django.db.models import Sum
 from .models import SolicitacaoSaque
 from .serializers import DadosBancariosSerializer
+from django.contrib.auth.tokens import default_token_generator
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.utils.encoding import force_bytes, force_str
+from django.db.models import Avg, Count, Q
 
 
 class AvailableOrdersView(generics.ListAPIView):
@@ -668,4 +672,98 @@ def solicitar_saque(request):
     SolicitacaoSaque.objects.create(prestador=prestador, valor=valor)
  
     return Response({'message': 'Solicitação de saque criada com sucesso!'}, status=201)
+ 
+class PasswordResetRequestView(APIView):
+    def post(self, request):
+        email = request.data.get("email")
+
+        try:
+            user = User.objects.get(email=email)
+        except User.DoesNotExist:
+            # 🔒 segurança: não revela se o email existe
+            return Response({"message": "Se o e-mail existir, enviaremos instruções."})
+
+        uid = urlsafe_base64_encode(force_bytes(user.pk))
+        token = default_token_generator.make_token(user)
+
+        FRONTEND_URL = "http://localhost:5173"
+
+        reset_link = f"{FRONTEND_URL}/nova-senha/{uid}/{token}"
+
+        # 📩 envio de email
+        send_mail(
+            subject="Recuperação de senha - FixIt",
+            message=f"""
+Olá!
+
+Recebemos uma solicitação para redefinir sua senha.
+
+Clique no link abaixo:
+{reset_link}
+
+Se não foi você, ignore este email.
+""",
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            recipient_list=[email],
+            fail_silently=False,
+        )
+
+        return Response({"message": "Email enviado com sucesso"})
+    
+class PasswordResetConfirmView(APIView):
+    def post(self, request):
+        uid = request.data.get("uid")
+        token = request.data.get("token")
+        password = request.data.get("password")
+
+        try:
+            user_id = force_str(urlsafe_base64_decode(uid))
+            user = User.objects.get(pk=user_id)
+        except Exception:
+            return Response({"error": "Token inválido"}, status=400)
+
+        if not default_token_generator.check_token(user, token):
+            return Response({"error": "Token inválido ou expirado"}, status=400)
+
+        user.set_password(password)
+        user.save()
+
+        return Response({"message": "Senha atualizada com sucesso"})
+    
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def listar_prestadores(request):
+    """
+    Lista prestadores ativos com média de avaliação e total de serviços.
+    Query param opcional: ?servico=faxina_residencial
+    """
+    servico = request.query_params.get('servico', None)
+ 
+    qs = Prestador.objects.filter(ativo=True)
+ 
+    if servico:
+        qs = qs.filter(servico=servico)
+ 
+    prestadores = qs.annotate(
+        media_avaliacao=Avg('avaliacoes_recebidas__nota'),
+        total_avaliacoes=Count('avaliacoes_recebidas'),
+        total_servicos_count=Count('orders', filter=Q(orders__status='completed')),
+    )
+ 
+    data = []
+    for p in prestadores:
+        foto_url = request.build_absolute_uri(p.foto.url) if p.foto else None
+        data.append({
+            'id':               p.id,
+            'nome':             p.nome,
+            'servico':          p.servico,
+            'anos_experiencia': p.anos_experiencia,
+            'cidade':           p.cidade,
+            'foto':             foto_url,
+            'media_avaliacao':  round(p.media_avaliacao, 1) if p.media_avaliacao else None,
+            'total_avaliacoes': p.total_avaliacoes,
+            'total_servicos':   p.total_servicos_count,
+        })
+ 
+    return Response(data)
  

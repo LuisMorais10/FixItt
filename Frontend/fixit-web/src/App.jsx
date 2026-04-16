@@ -25,6 +25,9 @@ import SolicitacoesDisponiveis from './pages/SolicitacoesDisponiveis'
 import MeusAgendamentos from "./pages/MeusAgendamentos"
 import PerfilColaborador from "./pages/PerfilColaborador"
 import CarteiraPrestador from "./pages/CarteiraPrestador"
+import RecuperarSenha from "./pages/RecuperarSenha"
+import NovaSenha from "./pages/NovaSenha"
+import SenhaSucesso from "./pages/SenhaSucesso"
 
 
 function App() {
@@ -52,6 +55,9 @@ function App() {
         <Route path="/colaborador/agendamentos" element={<MeusAgendamentos />} />
         <Route path="/colaborador/perfil" element={<PerfilColaborador />} />
         <Route path="/colaborador/carteira" element={<CarteiraPrestador />} />
+        <Route path="/recuperar-senha" element={<RecuperarSenha />} />
+        <Route path="/nova-senha/:uid/:token" element={<NovaSenha />} />
+        <Route path="/senha-sucesso" element={<SenhaSucesso />} />
         
 
 

@@ -17,6 +17,8 @@ from .views import criar_avaliacao, avaliacoes_do_prestador
 from .views import minhas_avaliacoes_recebidas, status_avaliacao_order
 from .views import avaliacoes_recebidas_order
 from .views import carteira_resumo, carteira_extrato, solicitar_saque
+from .views import PasswordResetRequestView, PasswordResetConfirmView
+from .views import listar_prestadores
 
 
 
@@ -45,5 +47,8 @@ urlpatterns = [
     path('carteira/',         carteira_resumo),
     path('carteira/extrato/', carteira_extrato),
     path('carteira/sacar/',   solicitar_saque),
+    path("password-reset/", PasswordResetRequestView.as_view()),
+    path("password-reset-confirm/", PasswordResetConfirmView.as_view()),
+    path('prestadores/', listar_prestadores),
 ]
 
