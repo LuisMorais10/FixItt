@@ -15,12 +15,12 @@ import PagamentoConfirmado from "./pages/PagamentoConfirmado"
 import MeusPedidos from "./pages/MeusPedidos"
 import PaginaContatoEmpresarial from "./pages/PaginaContatoEmpresarial"
 import MensagemEnviada from "./pages/MensagemEnviadaFC"
-import Colaborador from "./pages/Colaborador"
+import Colaborador from "./pages/Colaborador/Colaborador"
 import Dados from './pages/Dados'
 import CadastroPrestador from './pages/CadastroPrestador'
 import CadastroPrestadorSucesso from './pages/CadastroPrestadorSucesso'
 import EntrarColaborador from './pages/EntrarColaborador'
-import PortalColaborador from './pages/PortalColaborador'
+import PortalColaborador from './pages/PortalColaborador/PortalColaborador'
 import SolicitacoesDisponiveis from './pages/SolicitacoesDisponiveis'
 import MeusAgendamentos from "./pages/MeusAgendamentos"
 import PerfilColaborador from "./pages/PerfilColaborador"

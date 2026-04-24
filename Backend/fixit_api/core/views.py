@@ -5,7 +5,7 @@ from rest_framework import status
 from .serializers import RegisterSerializer
 from django.contrib.auth.models import User
 from .models import EmailVerification
-from .utils import send_verification_email, send_order_confirmation_email
+from .utils import send_commercial_contact_email, send_verification_email, send_order_confirmation_email
 from rest_framework import generics, permissions
 from .models import Order
 from .serializers import OrderSerializer
@@ -30,6 +30,7 @@ from django.contrib.auth.tokens import default_token_generator
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes, force_str
 from django.db.models import Avg, Count, Q
+from .utils import send_password_reset_email
 
 
 class AvailableOrdersView(generics.ListAPIView):
@@ -142,23 +143,7 @@ def contato_empresarial(request):
         return Response({"error": "Mensagem é obrigatória"}, status=400)
 
     try:
-        send_mail(
-            subject="Recebemos sua mensagem",
-            message=f"""
-Olá {request.user.username},
-
-Recebemos sua mensagem:
-
-{mensagem}
-
-Nossa equipe responderá em breve.
-
-Equipe
-""",
-            from_email=settings.DEFAULT_FROM_EMAIL,
-            recipient_list=[request.user.email],
-            fail_silently=False,
-        )
+        send_commercial_contact_email(request.user, mensagem)
 
         return Response({"success": True})
 
@@ -690,23 +675,7 @@ class PasswordResetRequestView(APIView):
 
         reset_link = f"{FRONTEND_URL}/nova-senha/{uid}/{token}"
 
-        # 📩 envio de email
-        send_mail(
-            subject="Recuperação de senha - FixIt",
-            message=f"""
-Olá!
-
-Recebemos uma solicitação para redefinir sua senha.
-
-Clique no link abaixo:
-{reset_link}
-
-Se não foi você, ignore este email.
-""",
-            from_email=settings.DEFAULT_FROM_EMAIL,
-            recipient_list=[email],
-            fail_silently=False,
-        )
+        send_password_reset_email(user, reset_link)
 
         return Response({"message": "Email enviado com sucesso"})
     
