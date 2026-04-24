@@ -22,13 +22,7 @@ function Home() {
   const navigate = useNavigate()
   return (
     <>
-      <section className="hero">
-        
-        <div className="hero-content">
-          <h1>O seu portal de serviços</h1>
-        </div>
-      </section>
-
+    
       <AddressSearch />
 
       <section className="services">

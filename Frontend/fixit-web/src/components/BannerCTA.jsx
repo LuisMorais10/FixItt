@@ -4,7 +4,7 @@ export default function BannerCTA() {
   const navigate = useNavigate()
 
   return (
-    <section style={{ padding: '60px 20px', background: 'white' }}>
+    <section style={{ padding: '60px 20px', background: 'transparent' }}>
       <div style={{ maxWidth: '1100px', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '40px' }}>
 
         {/* CARD SUPORTE */}

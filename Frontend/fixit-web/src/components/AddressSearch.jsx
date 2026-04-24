@@ -48,7 +48,6 @@ export default function AddressSearch() {
 
   return (
     <section className="address-search">
-      <h2>Encontre serviços perto de você</h2>
 
       <form onSubmit={handleSearch} className="search-bar">
         <input

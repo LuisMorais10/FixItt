@@ -23,12 +23,6 @@ function Faxina() {
 
   return (
     <>
-      <section className="hero">
-        <div className="hero-content">
-          <h1>Serviços de Faxina</h1>
-          <p>Escolha o tipo de faxina ideal para sua necessidade</p>
-        </div>
-      </section>
 
       <section className="services">
         <div className="services-grid">

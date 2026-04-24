@@ -18,6 +18,7 @@ export default function ImageSlider({ images, height = "340px" }) {
 
   return (
     <div className="slider" style={{ height }}>
+      <div className="slider-inner"></div>
       <img
         src={images[index]}
         alt="Serviço"

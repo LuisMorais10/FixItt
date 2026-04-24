@@ -133,7 +133,7 @@ export default function ComoFunciona() {
   const navigate = useNavigate()
 
   return (
-    <section style={{ padding: '80px 20px', background: 'linear-gradient(to bottom, #f8fbff, #eef4ff)' }}>
+    <section style={{ padding: '80px 20px', background: 'transparent' }}>
       <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
 
         <h2 style={{ textAlign: 'center', color: '#0d47a1', fontSize: '2rem', marginBottom: '8px' }}>Como funciona?</h2>

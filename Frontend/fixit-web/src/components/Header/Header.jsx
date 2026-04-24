@@ -11,6 +11,7 @@ export default function Header() {
   const [open, setOpen] = useState(false)
   const [modal, setModal] = useState(false)
   const [destinoModal, setDestinoModal] = useState(null)
+  const [menuMobile, setMenuMobile] = useState(false)
 
   const location = useLocation()
   const prestadorLogado =
@@ -45,6 +46,36 @@ export default function Header() {
               <img src={logoFixit} alt="FixIt Logo" />
             </Link>
           </div>
+
+          {/* BOTÃO MOBILE */}
+          <div className="mobile-menu-icon" onClick={() => setMenuMobile(!menuMobile)}>
+            ☰
+          </div>
+
+          {/* MENU MOBILE */}
+          {menuMobile && (
+            <div className="mobile-menu">
+    
+              {!user && !prestadorLogado && (
+              <>
+                <Link to="/entrar" onClick={() => setMenuMobile(false)}>Entrar</Link>
+                <Link to="/criar-conta" onClick={() => setMenuMobile(false)}>Criar conta</Link>
+                <Link to="/colaborador" onClick={() => setMenuMobile(false)}>Portal do colaborador</Link>
+                <Link to="/contato" onClick={() => setMenuMobile(false)}>Contato</Link>
+              </>
+            )}
+
+              {user && (
+              <>
+                <span onClick={() => { navigate('/dados'); setMenuMobile(false) }}>Dados</span>
+                <span onClick={() => { navigate('/meus-pedidos'); setMenuMobile(false) }}>Meus pedidos</span>
+                <span onClick={() => { navigate('/Suporte'); setMenuMobile(false) }}>Ajude-me</span>
+                <span className="logout" onClick={() => { logout(); navigate('/'); setMenuMobile(false) }}>Sair</span>
+              </>
+            )}
+
+        </div>
+        )}
 
           {/* CENTRO — Links */}
           <div className="nav-center">
