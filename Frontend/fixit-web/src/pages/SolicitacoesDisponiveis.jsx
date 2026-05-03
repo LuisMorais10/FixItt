@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
+import { authFetch } from "../Services/api"
 
 
 export default function SolicitacoesDisponiveis() {
@@ -7,11 +8,11 @@ export default function SolicitacoesDisponiveis() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
   const aceitarPedido = async (pedidoId) => {
-  const token = localStorage.getItem("access")
+  
 
     try {
-      const response = await fetch(
-        `http://localhost:8000/api/orders/${pedidoId}/accept/`,
+      const response = await authFetch(
+        `/api/orders/${pedidoId}/accept/`,
         {
           method: "POST",
           headers: {
@@ -37,7 +38,7 @@ export default function SolicitacoesDisponiveis() {
   useEffect(() => {
     const token = localStorage.getItem("access")
 
-    fetch("http://localhost:8000/api/orders/available/", {
+    authFetch("/api/orders/available/", {
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json"

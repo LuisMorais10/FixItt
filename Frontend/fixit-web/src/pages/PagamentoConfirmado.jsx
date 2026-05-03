@@ -23,7 +23,7 @@ export default function PagamentoConfirmado() {
       }
 
       try {
-          const response = await authFetch("http://localhost:8000/api/orders/create/", {
+          const response = await authFetch("/api/orders/create/", {
             method: "POST",
             body: JSON.stringify(orderData)
         })

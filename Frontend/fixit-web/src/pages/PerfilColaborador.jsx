@@ -30,7 +30,7 @@ export default function PerfilColaborador() {
   const [totalAval, setTotalAval] = useState(0)
 
   useEffect(() => {
-    authFetch('http://127.0.0.1:8000/api/prestador/me/')
+    authFetch('/api/prestador/me/')
       .then((res) => res.json())
       .then((data) => setPerfil(data))
       .catch((err) => console.error(err))
@@ -40,7 +40,7 @@ export default function PerfilColaborador() {
   useEffect(() => {
     if (!perfil) return
 
-    authFetch('http://127.0.0.1:8000/api/avaliacoes/minhas/')
+    authFetch('/api/avaliacoes/minhas/')
       .then((res) => res.json())
       .then((data) => {
         setMedia(data.media)

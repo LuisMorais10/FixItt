@@ -209,6 +209,16 @@
   cursor: pointer;
 }
 
+/* Avatar no mobile (mesma posição do menu) */
+.mobile-avatar {
+  display: none;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  object-fit: cover;
+  cursor: pointer;
+}
+
 /* MENU MOBILE */
 .mobile-menu {
   position: absolute;
@@ -263,7 +273,17 @@
     display: none;
   }
 
+  /* Mostra botão menu (☰) quando NÃO logado */
   .mobile-menu-icon {
+    display: block;
+  }
+
+  /* Quando logado, mostra avatar no lugar */
+  .user-area {
+    display: none;
+  }
+
+  .mobile-avatar {
     display: block;
   }
 

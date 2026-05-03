@@ -82,7 +82,7 @@ function PaginaContatoEmpresarial() {
     try {
 
       const response = await authFetch(
-        "http://localhost:8000/api/contato-empresarial/",
+        "/api/contato-empresarial/",
         {
           method: "POST",
           body: JSON.stringify(formData)

@@ -192,3 +192,38 @@
   margin: 10px 0 16px;
   color: #6b7280;
 }
+
+/* =========================
+   MOBILE FIX
+========================= */
+@media (max-width: 768px) {
+
+  /* BENEFÍCIOS → vira 1 coluna */
+  .colab-benefits {
+    grid-template-columns: 1fr;
+  }
+
+  .benefit-card {
+    align-items: flex-start; /* evita esmagar verticalmente */
+  }
+
+  /* CTA → empilha */
+  .colab-cta {
+    grid-template-columns: 1fr;
+  }
+
+  .cta-card {
+    text-align: left;
+  }
+
+  .colab-hero {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 30px;
+  }
+
+  .hero-image-wrapper {
+    align-self: center;
+  }
+
+}

@@ -1,19 +1,22 @@
-export async function authFetch(url, options = {}) {
+const API_URL = import.meta.env.VITE_API_URL
+
+export async function authFetch(endpoint, options = {}) {
   let access = localStorage.getItem("access")
   const refresh = localStorage.getItem("refresh")
 
-  const response = await fetch(url, {
+  const response = await fetch(`${API_URL}${endpoint}`, {
     ...options,
     headers: {
       ...options.headers,
-      Authorization: `Bearer ${access}`,
+      ...(access && { Authorization: `Bearer ${access}` }),
       "Content-Type": "application/json",
     },
   })
 
+  // 🔁 tenta renovar token
   if (response.status === 401 && refresh) {
     const refreshResponse = await fetch(
-      "http://127.0.0.1:8000/api/token/refresh/",
+      `${API_URL}/api/token/refresh/`,
       {
         method: "POST",
         headers: {
@@ -32,7 +35,8 @@ export async function authFetch(url, options = {}) {
     const data = await refreshResponse.json()
     localStorage.setItem("access", data.access)
 
-    return fetch(url, {
+    // 🔁 refaz a requisição original
+    return fetch(`${API_URL}${endpoint}`, {
       ...options,
       headers: {
         ...options.headers,

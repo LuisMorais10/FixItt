@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import PedidoDetalhesModal from "../components/PedidoDetalhesModal"
+import { authFetch } from '../services/api'
 
 export default function MeusAgendamentos() {
   const [pedidos, setPedidos] = useState([])
@@ -13,7 +14,7 @@ export default function MeusAgendamentos() {
   const token = localStorage.getItem("access")
 
   useEffect(() => {
-    fetch("http://localhost:8000/api/orders/my-jobs/", {
+    authFetch('/api/orders/my-jobs/', {
       headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" }
     })
       .then(res => { if (!res.ok) throw new Error("Erro"); return res.json() })
@@ -23,7 +24,7 @@ export default function MeusAgendamentos() {
 
   const iniciarServico = async (id) => {
     setActionLoading(id)
-    const res = await fetch(`http://localhost:8000/api/orders/${id}/iniciar/`, {
+    const res = await authFetch(`/api/orders/${id}/iniciar/`, {
       method: 'POST',
       headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" }
     })
@@ -41,7 +42,7 @@ export default function MeusAgendamentos() {
     const codigo = codigoInput[id]
     if (!codigo) return
     setActionLoading(id)
-    const res = await fetch(`http://localhost:8000/api/orders/${id}/encerrar/`, {
+    const res = await authFetch(`/api/orders/${id}/encerrar/`, {
       method: 'POST',
       headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
       body: JSON.stringify({ codigo })

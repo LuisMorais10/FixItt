@@ -48,9 +48,21 @@ export default function Header() {
           </div>
 
           {/* BOTÃO MOBILE */}
-          <div className="mobile-menu-icon" onClick={() => setMenuMobile(!menuMobile)}>
-            ☰
-          </div>
+          {user ? (
+            <img
+              src={avatarDefault}
+              alt="Avatar"
+              className="mobile-avatar"
+              onClick={() => setMenuMobile(!menuMobile)}
+            />
+          ) : (
+            <div
+              className="mobile-menu-icon"
+              onClick={() => setMenuMobile(!menuMobile)}
+            >
+              ☰
+            </div>
+          )}
 
           {/* MENU MOBILE */}
           {menuMobile && (

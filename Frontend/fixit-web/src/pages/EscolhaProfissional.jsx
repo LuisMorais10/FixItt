@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react"
 import { useNavigate, useLocation } from "react-router-dom"
 import { useAuth } from "../context/AuthContext"
+import { authFetch } from '../services/api'
 
-const API = "http://127.0.0.1:8000/api"
+const BASE_URL = import.meta.env.VITE_API_URL
 
 function PrestadorCard({ p, selecionado, onSelecionar, badge }) {
   const iniciais = p.nome
@@ -48,7 +49,7 @@ function PrestadorCard({ p, selecionado, onSelecionar, badge }) {
       {/* Foto ou iniciais */}
       {p.foto ? (
         <img
-          src={`${API.replace("/api", "")}${p.foto}`}
+          src={`${BASE_URL}${p.foto}`}
           alt={p.nome}
           style={{
             width: "80px",
@@ -184,8 +185,8 @@ function EscolhaProfissional() {
       try {
         // Busca todos os prestadores ativos
         const [prestRes, pedidosRes] = await Promise.all([
-          fetch(`${API}/prestadores/`, { headers }),
-          fetch(`${API}/orders/my/`, { headers }),
+          authFetch(`/api/prestadores/`, { headers }),
+          authFetch(`/api/orders/my/`, { headers }),
         ])
 
         const prestadores = prestRes.ok ? await prestRes.json() : []

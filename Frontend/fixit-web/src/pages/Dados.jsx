@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useAuth } from '../context/AuthContext'
 import ReputacaoInfoModal from "../components/ReputacaoInfoModal"
+import { authFetch } from '../services/api'
 
 export default function Dados() {
   const { user } = useAuth()
@@ -24,7 +25,7 @@ export default function Dados() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch('http://localhost:8000/api/user/data/', {
+        const res = await authFetch('/api/user/data/', {
           headers: { Authorization: `Bearer ${user.access}` },
         })
         const data = await res.json()
@@ -49,14 +50,14 @@ export default function Dados() {
 
     const fetchAvaliacoes = async () => {
       try {
-        const res = await fetch('http://localhost:8000/api/orders/my/', {
+        const res = await authFetch('/api/orders/my/', {
           headers: { Authorization: `Bearer ${user.access}` },
         })
         const orders = await res.json()
         const completed = orders.filter((o) => o.status === 'completed')
 
         const promises = completed.map((o) =>
-          fetch(`http://localhost:8000/api/avaliacoes/order/${o.id}/recebidas/`, {
+          authFetch(`/api/avaliacoes/order/${o.id}/recebidas/`, {
             headers: { Authorization: `Bearer ${user.access}` },
           })
             .then((r) => (r.ok ? r.json() : null))
@@ -101,7 +102,7 @@ export default function Dados() {
     setErro(null)
 
     try {
-      const res = await fetch('http://localhost:8000/api/user/data/', {
+      const res = await authFetch('/api/user/data/', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

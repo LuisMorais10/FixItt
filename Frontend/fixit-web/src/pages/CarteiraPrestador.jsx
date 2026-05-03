@@ -32,8 +32,8 @@ export default function CarteiraPrestador() {
 
   useEffect(() => {
     Promise.all([
-      authFetch('http://127.0.0.1:8000/api/carteira/').then((r) => r.json()),
-      authFetch('http://127.0.0.1:8000/api/carteira/extrato/').then((r) => r.json()),
+      authFetch('/api/carteira/').then((r) => r.json()),
+      authFetch('/api/carteira/extrato/').then((r) => r.json()),
     ])
       .then(([carteiraData, extratoData]) => {
         setCarteira(carteiraData)
@@ -64,7 +64,7 @@ export default function CarteiraPrestador() {
     }
 
     try {
-      const res = await authFetch('http://127.0.0.1:8000/api/carteira/sacar/', {
+      const res = await authFetch('/api/carteira/sacar/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ valor }),

@@ -192,7 +192,7 @@ export default function CadastroPrestador() {
     }
 
     try {
-      const res = await fetch('http://localhost:8000/api/prestador/register/', {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/prestador/register/`, {
         method: 'POST',
         body: payload,
       })

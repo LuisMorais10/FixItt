@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import "../Styles/auth.css"
 import PedidoDetalhesModal from "../components/PedidoDetalhesModal"
+import { authFetch } from '../services/api'
 
 export default function MeusPedidos() {
   const [orders, setOrders] = useState([])
@@ -10,7 +11,7 @@ export default function MeusPedidos() {
   const token = localStorage.getItem("access")
   console.log("TOKEN:", localStorage.getItem("access"))
 
-    fetch("http://localhost:8000/api/orders/my/", {
+    authFetch('/api/orders/my/', {
       headers: {
         "Authorization": `Bearer ${token}`,
         "Content-Type": "application/json"

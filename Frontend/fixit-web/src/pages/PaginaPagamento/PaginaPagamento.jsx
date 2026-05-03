@@ -1,6 +1,7 @@
 import { useState } from "react"
 import "./PaginaPagamento.css"
 import { useNavigate } from "react-router-dom"
+import { authFetch } from "../../Services/api"
 
 export default function PaginaPagamento() {
   const [metodo, setMetodo] = useState("pix")
@@ -22,11 +23,10 @@ export default function PaginaPagamento() {
   }
 
   try {
-    const response = await fetch("http://localhost:8000/api/orders/create/", {
+    const response = await authFetch("/api/orders/create/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`
       },
       body: JSON.stringify(orderData)
     })

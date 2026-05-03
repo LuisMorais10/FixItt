@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom"
 import PhoneInput from "react-phone-input-2"
 import "react-phone-input-2/lib/style.css"
 import "../Styles/auth.css"
+import { authFetch } from "../Services/api"
 
 function CriarConta() {
   const navigate = useNavigate()
@@ -36,7 +37,7 @@ function CriarConta() {
     }
 
     try {
-      const response = await fetch("http://127.0.0.1:8000/api/register/", {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/register/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
