@@ -45,7 +45,7 @@ export default function VerificarCodigo() {
     setError("")
 
     try {
-      const response = await fetch("${import.meta.env.VITE_API_URL}/api/verify-code/", {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/verify-code/`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

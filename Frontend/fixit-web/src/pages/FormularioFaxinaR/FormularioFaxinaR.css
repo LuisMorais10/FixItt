@@ -1,0 +1,401 @@
+/* =========================================
+   FORMULARIO FAXINA R — scoped styles
+   All classes prefixed with .ffr-
+========================================= */
+
+/* PAGE LAYOUT */
+.ffr-page {
+  min-height: 100vh;
+  background: transparent;
+  display: flex;
+  align-items: stretch;
+  padding: 80px 24px 40px;
+  gap: 32px;
+  max-width: 1140px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+/* ─── ASIDE ─── */
+.ffr-aside {
+  width: 260px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding-top: 12px;
+}
+
+.ffr-aside-illustration {
+  width: 180px;
+  height: 180px;
+  align-self: center;
+}
+
+.ffr-aside-illustration svg {
+  width: 100%;
+  height: 100%;
+}
+
+.ffr-aside-title {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #0d47a1;
+  line-height: 1.25;
+}
+
+.ffr-aside-sub {
+  font-size: 0.9rem;
+  color: #556;
+  line-height: 1.6;
+}
+
+.ffr-features {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.ffr-features li {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.ffr-feat-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: #e3f0ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: #1a56db;
+}
+
+.ffr-feat-icon svg {
+  width: 18px;
+  height: 18px;
+}
+
+.ffr-features li strong {
+  display: block;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #1a2e52;
+  margin-bottom: 2px;
+}
+
+.ffr-features li p {
+  font-size: 0.8rem;
+  color: #666;
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* ─── MAIN CARD ─── */
+.ffr-main {
+  flex: 1;
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 36px 40px 40px;
+  box-shadow: 0 8px 40px rgba(13, 71, 161, 0.10);
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* ─── PAGE TITLE ─── */
+.ffr-page-title {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #0d47a1;
+  margin-bottom: 4px;
+}
+
+/* ─── FORM GRID ─── */
+.ffr-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.ffr-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.ffr-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* ─── LABEL ─── */
+.ffr-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #1a40a8;
+  letter-spacing: 0.01em;
+}
+
+.ffr-label-icon {
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #1a56db;
+  flex-shrink: 0;
+}
+
+.ffr-label-icon svg {
+  width: 16px;
+  height: 16px;
+}
+
+.ffr-info-btn {
+  margin-left: 4px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #1a56db;
+  color: white;
+  border: none;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background 0.2s, transform 0.15s;
+  line-height: 1;
+}
+
+.ffr-info-btn:hover {
+  background: #1241b8;
+  transform: scale(1.1);
+}
+
+/* ─── INPUTS & SELECTS ─── */
+.ffr-field input,
+.ffr-field select {
+  height: 46px;
+  border-radius: 10px;
+  border: 1.5px solid #d4ddee;
+  padding: 0 14px;
+  font-size: 0.92rem;
+  color: #222;
+  background: #fff;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  width: 100%;
+  box-sizing: border-box;
+  font-family: inherit;
+}
+
+.ffr-field input::placeholder {
+  color: #b0b8cc;
+}
+
+.ffr-field input:focus,
+.ffr-field select:focus {
+  border-color: #1a56db;
+  box-shadow: 0 0 0 3px rgba(26, 86, 219, 0.12);
+}
+
+/* ─── CEP WRAPPER ─── */
+.ffr-cep-wrap {
+  position: relative;
+  display: flex;
+}
+
+.ffr-cep-wrap input {
+  padding-right: 50px;
+  flex: 1;
+}
+
+.ffr-cep-btn {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background: #e9f0fc;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #1a56db;
+  transition: background 0.2s;
+}
+
+.ffr-cep-btn:hover {
+  background: #d0dffa;
+}
+
+.ffr-cep-btn svg {
+  width: 15px;
+  height: 15px;
+}
+
+.ffr-spinner {
+  width: 14px;
+  height: 14px;
+  border: 2px solid #b0c5f5;
+  border-top-color: #1a56db;
+  border-radius: 50%;
+  animation: ffr-spin 0.7s linear infinite;
+  display: inline-block;
+}
+
+@keyframes ffr-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ─── RADIO GROUP ─── */
+.ffr-radio-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.ffr-radio-option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border-radius: 10px;
+  border: 1.5px solid #d4ddee;
+  cursor: pointer;
+  font-size: 0.88rem;
+  color: #334;
+  transition: border-color 0.2s, background 0.2s;
+  user-select: none;
+}
+
+.ffr-radio-option input[type="radio"] {
+  display: none;
+}
+
+.ffr-radio-dot {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid #c0c8dc;
+  flex-shrink: 0;
+  transition: border-color 0.2s, background 0.2s;
+  position: relative;
+}
+
+.ffr-radio-dot::after {
+  content: "";
+  position: absolute;
+  inset: 3px;
+  border-radius: 50%;
+  background: transparent;
+  transition: background 0.2s;
+}
+
+.ffr-radio-option--selected {
+  border-color: #1a56db;
+  background: #f0f5ff;
+}
+
+.ffr-radio-option--selected .ffr-radio-dot {
+  border-color: #1a56db;
+}
+
+.ffr-radio-option--selected .ffr-radio-dot::after {
+  background: #1a56db;
+}
+
+/* ─── SUBMIT BUTTON ─── */
+.ffr-submit {
+  width: 100%;
+  height: 52px;
+  margin-top: 8px;
+  background: #1a56db;
+  color: #ffffff;
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  letter-spacing: 0.02em;
+  transition: background 0.2s, transform 0.1s, box-shadow 0.2s;
+  box-shadow: 0 4px 18px rgba(26, 86, 219, 0.25);
+}
+
+.ffr-submit:hover {
+  background: #1241b8;
+  box-shadow: 0 6px 24px rgba(26, 86, 219, 0.35);
+}
+
+.ffr-submit:active {
+  transform: scale(0.99);
+}
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 860px) {
+  .ffr-page {
+    flex-direction: column;
+    padding: 90px 16px 40px;
+  }
+
+  .ffr-aside {
+    width: 100%;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .ffr-aside-illustration {
+    display: none;
+  }
+
+  .ffr-aside-title, .ffr-aside-sub {
+    display: none;
+  }
+
+  .ffr-features {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .ffr-features li {
+    flex: 1 1 140px;
+  }
+
+  .ffr-main {
+    padding: 24px 20px;
+  }
+}
+
+@media (max-width: 560px) {
+  .ffr-row {
+    grid-template-columns: 1fr;
+  }
+
+  .ffr-stepper {
+    gap: 0;
+  }
+
+  .ffr-step-label {
+    display: none;
+  }
+}
